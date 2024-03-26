@@ -1,0 +1,24 @@
+.App {
+  font-family: "Exo2Regular" , "Exo2Light" , "IsidoraRegular";
+}
+
+.app-container{
+  width: 100%;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/*FOR WEB Site*/
+  /* background-color: beige; */
+   /* width: 80%;
+  margin-inline: auto;
+  max-width: 1366px;
+  min-width: 768px; */
+
+.card{
+  padding: 10px ;
+  border-radius: 4px;
+}
