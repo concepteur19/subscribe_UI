@@ -18,6 +18,6 @@
         "@/*": ["./*"]
       }
     },
-    "include": ["**/*.ts", "**/*.tsx", "src/index.jsx"],
+    "include": ["**/*.ts", "**/*.tsx", "src/index.jsx", "src/App.jsx"],
     "exclude": ["node_modules"]
   }
