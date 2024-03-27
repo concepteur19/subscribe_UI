@@ -24,6 +24,7 @@ export function NavBar () {
                         <a href="#">Features</a>
                         <a href="#">How it work</a>
                         <a href="#">Company</a>
+                        
                     </div>
                     <div className="nav-DarkLight-buttons">
                         <div className="DarkLight-mode-icon">
@@ -40,7 +41,8 @@ export function NavBar () {
                             </svg>
                         </div>
                         <div className="nav-buttons">
-                            <button>Login</button>
+                            <button className="login-button">Login</button>
+                            <button className="signUp-button">Get started</button>
                         </div>
                     </div>
                     
