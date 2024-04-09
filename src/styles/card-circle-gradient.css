@@ -1,0 +1,6 @@
+.linear-gratient{
+    border: 1px solid transparent;
+    background: linear-gradient(#101019, #101019) padding-box, 
+                    linear-gradient(to right,#4D4D61,#2C2C5F) border-box;
+    border-radius: 50%;
+}

@@ -18,6 +18,6 @@
         "@/*": ["./*"]
       }
     },
-    "include": ["**/*.ts", "**/*.tsx", "src/index.jsx", "src/App.jsx"],
+    "include": ["**/*.ts", "**/*.tsx", "src/index.jsx", "src/App.jsx", "src/views/components/layout/Narbar.tsx"],
     "exclude": ["node_modules"]
   }

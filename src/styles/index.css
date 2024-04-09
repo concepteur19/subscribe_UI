@@ -4,9 +4,9 @@
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+  /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+    sans-serif; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -16,7 +16,7 @@ code {
     monospace;
 }
 
-@font-face {
+/* @font-face {
   font-family: "Exo2Bold";
   src: local("Exo2Bold"),
     url("../fonts/Exo2-Bold.ttf") format("truetype");
@@ -62,4 +62,28 @@ code {
   font-family: "PoiretOneRegular";
   src: local("PoiretOneRegular"),
    url("../fonts/PoiretOne-Regular.ttf") format("truetype");
+ } */
+
+ @font-face {
+  font-family: "RedRoseLight";
+  src: local("RedRoseLight"),
+   url("../fonts/RedRose-Light.ttf") format("truetype");
+ }
+
+ @font-face {
+  font-family: "RedRoseRegular";
+  src: local("RedRoseRegular"),
+   url("../fonts/RedRose-Regular.ttf") format("truetype");
+ }
+
+ @font-face {
+  font-family: "RedRoseBold";
+  src: local("RedRoseBold"),
+   url("../fonts/RedRose-Bold.ttf") format("truetype");
+ }
+
+ @font-face {
+  font-family: "RussoOne";
+  src: local("RussoOne"),
+   url("../fonts/RussoOne-Regular.ttf") format("truetype");
  }
