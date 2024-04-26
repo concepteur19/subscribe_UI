@@ -1,5 +1,5 @@
 import "../src/styles/App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./views/components/layout/Narbar";
 import Main from "./views/components/layout/Main";
 import MobileNav from "./views/components/layout/MobileNav";
@@ -9,13 +9,10 @@ function App() {
   return (
     <BrowserRouter>
       <div className="app-container ">
-        <Routes>
-          <Route path="/:page" element={<Navbar />} />
-        </Routes>
+        <Navbar />
         <Main />
       </div>
       <MobileNav />
-
     </BrowserRouter>
   );
 }

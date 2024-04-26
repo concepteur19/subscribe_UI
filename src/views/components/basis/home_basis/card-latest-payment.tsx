@@ -2,6 +2,8 @@ import React from "react";
 import CardApproved from "./card-approved";
 
 const CardLatestPayment = () => {
+  
+  
   return (
     <div className="text-sm rounded-xl bg-[#101019] py-[14.5px] px-2 lg:px-4 flex justify-between items-center ">
       <div className=" flex items-center">
