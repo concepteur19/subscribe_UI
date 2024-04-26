@@ -1,6 +1,23 @@
 .linear-gratient{
     border: 1px solid transparent;
-    background: linear-gradient(#101019, #101019) padding-box, 
+    background: 
+    linear-gradient(#101019, #101019) padding-box, 
                     linear-gradient(to right,#4D4D61,#2C2C5F) border-box;
-    border-radius: 50%;
+    
+}
+
+.linear-gratient-card{
+    border: 1px solid transparent;
+    background: 
+    linear-gradient(#050511, #050511) padding-box, 
+                    linear-gradient(30deg,#4D4D61,#2C2C5F) border-box;
+    
+}
+
+.linear-gratient-card-spent{
+    border: 1px solid transparent;
+    background: 
+    linear-gradient(#050511, #050511) padding-box, 
+                    linear-gradient(30deg,#4d4d6107,#2c2c5f12) border-box;
+    
 }

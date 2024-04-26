@@ -7,7 +7,7 @@ const searchBar: FC = () => {
   const searchBarClick = () => {};
 
   return (
-    <div className="">
+    <div className="relative">
       <Input
         inputType="text"
         placeholder="Search publics codes ..."
@@ -21,7 +21,7 @@ const searchBar: FC = () => {
         btnP=" px-2"
         btnText=" text-[#64748B] text-[10px]"
         buttonText="⌘ K"
-        btnClass="absolute top-6 right-[180px]"
+        btnClass="absolute top-2 right-1"
         handleClick={searchBarClick}
       />
     </div>

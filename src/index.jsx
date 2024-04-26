@@ -13,6 +13,8 @@ import './fonts/isidora-bold.otf';
 import './fonts/isidora-medium.otf';
 import './fonts/isidora-regular.otf';
 import './fonts/PoiretOne-Regular.ttf';
+import './fonts/RedRose-Regular.ttf';
+
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
