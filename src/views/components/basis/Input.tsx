@@ -8,7 +8,7 @@ interface InputProps {
 }
 
 const Input = ({handleChange, inputType, inputClass, placeholder}: InputProps) => {
-  return <input type={inputType} onChange={handleChange} className={" py-2 " + inputClass } placeholder={placeholder} /> 
+  return <input type={inputType} onChange={handleChange} className={" py-2 outline-none " + inputClass } placeholder={placeholder} /> 
 }
 
 export default Input

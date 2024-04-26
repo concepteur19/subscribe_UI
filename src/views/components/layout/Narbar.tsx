@@ -13,13 +13,16 @@ let theme = require("../../../assets/images/png/theme.png") as any;
 
 const Narbar: FC = () => {
   const location = useLocation();
-  const path = location.pathname === "/";
+  const isPathTrue = location.pathname === "/";
 
+  const isPathHome = location.pathname !== '/home';
   const navbarClick = () => {};
 
   return (
-    <div className={`${path && "hidden"}`}>
-      <div className=" px-6 sm:px-[52px] md:hidden w-full">
+    <div className={`${isPathTrue && "hidden"}`}>
+
+      {/* mobile nav */}
+      <div className={`${isPathHome  && "hidden"} px-6 sm:px-[52px] md:hidden w-full `}>
         <div className=" mx-auto flex flex-col items-center justify-center">
           <div className="flex justify-between items-center w-full py-[48px] text-sm">
             <div className="flex items-center space-x-3">
@@ -29,6 +32,8 @@ const Narbar: FC = () => {
           </div>
         </div>
       </div>
+
+      {/* other nav */}
       <div className="max-md:hidden ">
         <div className="flex justify-between items-center w-full py-[17px] text-sm px-[52px]">
           <div className=" flex items-center space-x-[5px]">

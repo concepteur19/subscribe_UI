@@ -11,7 +11,7 @@ let netflix = require("../../assets/images/png/netflix.png") as any;
 const Home = () => {
   return (
     <>
-      <div className=" h-screen  bg-cover text-white-1 w-full pt-12">
+      <div className=" h-screen  bg-cover text-white-1 w-full ">
         <div className=" mx-auto flex flex-1 flex-col sm:flex-row sm:items-start sm:space-x-[46px] items-center justify-center w-full">
           <div className="flex flex-col space-y-6 md:space-y-10 w-full  md:w-[46.67%] xl:w-[39.67%] 2xl:w-[36.67%] ">
             <CardAmountSpent />

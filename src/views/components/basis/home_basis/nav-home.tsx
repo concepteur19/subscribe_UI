@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Button from "../buttons/Button";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const NavHome = () => {
   const [isActive, setActive] = useState(true);
@@ -27,25 +27,29 @@ const NavHome = () => {
           >
             <span>Overview</span>
           </li>
-          <li className={
+          <li
+            className={
               !isActive
                 ? "active-home border-[2px] border-transparent border-b-[#625AFA] pb-3"
                 : " border-[2px] border-transparent pb-3"
             }
-            onClick={() => handleNavClick("upco")}>
+            onClick={() => handleNavClick("upco")}
+          >
             <span>Upcoming payments</span>
           </li>
         </ul>
       </div>
 
       <div className="-mt-[5px]">
-        <Button
-          btnBg=" bg-[#4649E5]"
-          btnText=" text-sm font-redRoseBold text-[#ffffff]"
-          btnP="px-8 py-[6.5px] "
-          btnBorder="border border-[#625AFA] rounded"
-          buttonText="Add"
-        />
+        <Link to="/home/addSubscription">
+          <Button
+            btnBg=" bg-[#4649E5]"
+            btnText=" text-sm font-redRoseBold text-[#ffffff]"
+            btnP="px-8 py-[6.5px] "
+            btnBorder="border border-[#625AFA] rounded"
+            buttonText="Add"
+          />
+        </Link>
       </div>
     </div>
   );

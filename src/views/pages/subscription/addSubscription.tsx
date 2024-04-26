@@ -1,18 +1,16 @@
 import React from "react";
-import CardSubscription from "../../components/basis/addSubscription_basis/card-subscription";
+import CardSubscription from "../../components/basis/subscription_basis/card-subscription";
 import Input from "../../components/basis/Input";
 import { BiChevronRight, BiSearch } from "react-icons/bi";
+import { Link } from "react-router-dom";
 
 let netflix = require("../../../assets/images/png/netflix.png") as any;
 let arrowLeft = require("../../../assets/images/png/Group.png") as any;
 
 const AddSubscription = () => {
   return (
-    <div className=" flex flex-col space-y-4 md:px-[73px] lg:px-[173px] xl:px-[273px] 2xl:px-[373px]  md:py-[81px]">
-      <div className="space-y-6 md:hidden">
-        <img src={arrowLeft} alt="fleche" />
-        <h1 className=" font-redRoseBold text-2xl">All Subscriptions</h1>
-      </div>
+    <div className=" flex flex-col space-y-4 md:px-[73px] lg:px-[173px] xl:px-[273px] 2xl:px-[373px] ">
+      <h1 className="md:hidden font-redRoseBold text-2xl">All Subscriptions</h1>
 
       <div className="relative ">
         <Input
@@ -40,8 +38,11 @@ const AddSubscription = () => {
         </span>
       </div>
 
-      {Array.from({ length: 6 }).map((_, i) => (
-        <CardSubscription imgSrc={netflix} subscriName="Netflix" />
+      {Array.from({ length: 8 }).map((_, i) => (
+        <Link to={`/home/addSubscription/${i}`}>
+          <CardSubscription imgSrc={netflix} subscriName="Netflix" />
+        </Link>
+        
       ))}
     </div>
   );
