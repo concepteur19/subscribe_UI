@@ -1,23 +1,32 @@
 {
-    "compilerOptions": {
-      "target": "es6",
-      "lib": ["dom", "dom.iterable",],
-      "allowJs": true,
-      "skipLibCheck": true,
-      "strict": true,
-      "forceConsistentCasingInFileNames": true,
-      "noEmit": true,
-      "esModuleInterop": true,
-      "module": "esnext",
-      "moduleResolution": "node",
-      "resolveJsonModule": true,
-      "isolatedModules": true,
-      "jsx": "preserve",
-      "incremental": true,
-      "paths": {
-        "@/*": ["./*"]
-      }
-    },
-    "include": ["**/*.ts", "**/*.tsx", "src/index.jsx", "src/App.jsx", "src/views/components/layout/Narbar.tsx"],
-    "exclude": ["node_modules"]
-  }
+  "compilerOptions": {
+    "target": "es6",
+    "lib": ["dom", "dom.iterable"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "paths": {
+      "@/*": ["./*"]
+    }
+  },
+  // "inclu": ["custom.d.ts"],
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "src/index.jsx",
+    "src/App.jsx",
+    "src/views/components/layout/Narbar.tsx",
+    "src/views/pages/signIn/basis/connexion.tsx",
+    "src", "src/custom.d.ts"
+  ],
+  "exclude": ["node_modules"]
+}

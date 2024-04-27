@@ -1,7 +1,5 @@
 import "../src/styles/App.css";
-import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
-import Navbar from "./views/components/layout/Narbar";
-import Main from "./views/components/layout/Main";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import MobileNav from "./views/components/layout/MobileNav";
 import LandingPage from "./Landing page/LandingPage";
@@ -11,6 +9,8 @@ import Setting from "./views/pages/Setting";
 import AddSubscription from "./views/pages/subscription/addSubscription";
 import Layout from "./views/pages/layout/layout";
 import AddSubscriptionParam from "./views/pages/subscription/addSubscriptionParam";
+import LoginPage from "./views/pages/signIn/connexionPage";
+import SignUpPage from "./views/pages/signUp/registrionPage"
 
 function App() {
 
@@ -19,6 +19,8 @@ function App() {
       <div className="app-container ">
 
         <Routes>
+          <Route path="/login" Component={LoginPage} />
+          <Route path="/signUp" Component={SignUpPage} />
           <Route path="/" Component={LandingPage} />
           <Route path="/" Component={Layout}>
             <Route path="/home" Component={Home} />

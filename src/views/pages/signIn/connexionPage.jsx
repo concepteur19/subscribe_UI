@@ -1,7 +1,7 @@
 import { Navbar } from "./basis/navBar";
-import { ConnexionPageElements } from "./basis/connexion";
+import ConnexionPageElements from "./basis/connexion";
 
-export function ConnexionPage() {
+export function LoginPage() {
     return (
         <>
             <div className="registration-page">
@@ -13,4 +13,4 @@ export function ConnexionPage() {
     )
 }
 
-export default ConnexionPage;
+export default LoginPage;

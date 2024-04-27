@@ -1,7 +1,7 @@
 import { Navbar } from "../signIn/basis/navBar";
-import { RegistrationPageElements } from "./basis/registration";
+import RegistrationPageElements from "./basis/registration";
 
-export function RegistrationPage() {
+export default function SignUpPage() {
     return (
         <>
             <div className="registration-page">

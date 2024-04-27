@@ -1,4 +1,5 @@
-import logo from "@/assets/logo.svg";
+// import logo from "@/assets/logo.svg";
+let logo = require("../../../../assets/logo.svg") as any;
 
 export function Navbar(){
     return (
