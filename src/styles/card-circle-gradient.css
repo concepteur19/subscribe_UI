@@ -21,3 +21,12 @@
                     linear-gradient(30deg,#4d4d6107,#2c2c5f12) border-box;
     
 }
+
+/* .linear-card-select{
+    border: 1px solid transparent;
+    background: 
+    linear-gradient(#00000006, #00000006) padding-box, 
+                    linear-gradient(30deg,#4D4D6102,#2C2C5F02) border-box;
+    backdrop-filter: blur(9px);
+    
+} */

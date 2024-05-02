@@ -5,7 +5,7 @@ import { BiChevronRight, BiSearch } from "react-icons/bi";
 import { Link } from "react-router-dom";
 
 let netflix = require("../../../assets/images/png/netflix.png") as any;
-let arrowLeft = require("../../../assets/images/png/Group.png") as any;
+// let arrowLeft = require("../../../assets/images/png/Group.png") as any;
 
 const AddSubscription = () => {
   return (

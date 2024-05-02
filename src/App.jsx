@@ -7,7 +7,7 @@ import Home from "./views/pages/Home";
 import Payment from "./views/pages/Payment";
 import Setting from "./views/pages/Setting";
 import AddSubscription from "./views/pages/subscription/addSubscription";
-import Layout from "./views/pages/layout/layout";
+import Layout from "./views/layout/layout";
 import AddSubscriptionParam from "./views/pages/subscription/addSubscriptionParam";
 import LoginPage from "./views/pages/signIn/connexionPage";
 import SignUpPage from "./views/pages/signUp/registrionPage"
@@ -16,7 +16,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div className="app-container ">
+      <div className="app-container text-white-0 text-sm font-redRose">
 
         <Routes>
           <Route path="/login" Component={LoginPage} />
@@ -32,7 +32,6 @@ function App() {
           </Route>
         </Routes>
       </div>
-      <MobileNav />
     </BrowserRouter>
   );
 }

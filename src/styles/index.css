@@ -4,6 +4,7 @@
 
 body {
   margin: 0;
+  background-color: #050511;
   /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif; */
@@ -12,57 +13,9 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+  font-family: "RedRoseRegular", source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
-
-/* @font-face {
-  font-family: "Exo2Bold";
-  src: local("Exo2Bold"),
-    url("../fonts/Exo2-Bold.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "Exo2Light";
-  src: local("Exo2Light"),
-   url("../fonts/Exo2-Light.ttf") format("truetype");
- }
-
-@font-face {
-  font-family: "Exo2Regular";
-  src: local("Exo2Regular"),
-   url("../fonts/Exo2-Regular.ttf") format("truetype");
- }
-
- @font-face {
-  font-family: "Exo2SemiBold";
-  src: local("Exo2SemiBold"),
-   url("../fonts/Exo2-SemiBold.ttf") format("truetype");
- }
-
- @font-face {
-  font-family: "IsidoraBold";
-  src: local("IsidoraBold"),
-   url("../fonts/isidora-bold.otf") format("truetype");
- }
-
- @font-face {
-  font-family: "IsidoraMedium";
-  src: local("IsidoraMedium"),
-   url("../fonts/isidora-medium.otf") format("truetype");
- }
-
- @font-face {
-  font-family: "IsidoraRegular";
-  src: local("IsidoraRegular"),
-   url("../fonts/isidora-regular.otf") format("truetype");
- }
-
- @font-face {
-  font-family: "PoiretOneRegular";
-  src: local("PoiretOneRegular"),
-   url("../fonts/PoiretOne-Regular.ttf") format("truetype");
- } */
 
  @font-face {
   font-family: "RedRoseLight";

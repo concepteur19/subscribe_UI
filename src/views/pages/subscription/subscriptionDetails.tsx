@@ -7,35 +7,31 @@ import Netflix from "../../../assets/images/png/netflix.png";
 import Button from "../../components/basis/buttons/Button";
 import CardSelect from "../../components/basis/subscription_basis/card-select";
 import { IoChevronDown } from "react-icons/io5";
-import InputDiv from "../../components/basis/inputDiv";
 // import Input from '../../components/basis/Input';
 
 // limit month naviqgation
 
-const AddSubscriptionParam = () => {
-  const selectsLabels = ["Type", "Cycle", "Payment Method", "Remind me"];
+const SubscriptionDetails = () => {
+  const selectsLabels = ["Cycle", "Payment Method", "Remind me"];
 
-  const options = {
-    plan: ["Base", "Standart", "Premium"],
-    cycle: ["Monthly", "Semester", "Yearly"],
-    payment: ["UPI", "Stripe", "Paypal"],
-    remind: ["Never", "1 day before", "3 days before", "7 days before"],
-  };
+  const options = [
+    ["Monthly", "Quaterly", "Yearly"],
+    ["UPI", "Stripe", "Paypal"],
+    ["Never", "1 day before", "3 days before", "7 days before"],
+  ];
 
   // const optionsCycle = ["Monthly", "Quaterly", "Yearly"];
   // const optionsPayment = ["UPI", "Stripe", "Paypal"];
   // const optionsRemind = ["1 day before", "3 days before", "7 days before"];
 
-  const [optionPayment, setOptionPayment] = useState<string>(
-    options.payment[0]
-  );
-  const [optionCycle, setOptionCycle] = useState<string>(options.cycle[0]);
-  const [optionRemind, setOptionRemind] = useState<string>(options.remind[0]);
+  const [optionPayment, setOptionPayment] = useState<string>(options[1][0]);
+  const [optionCycle, setOptionCycle] = useState<string>(options[0][0]);
+  const [optionRemind, setOptionRemind] = useState<string>(options[2][0]);
 
   const today = new Date();
   const [selected, setSelected] = useState<Date | undefined>();
   const [isDatePickerOpen, setPickerOpen] = useState<Boolean>(false);
-  const [planType, setPlanType] = useState<string>("Select the plan type");
+  const [planType, setPlanType] = useState<string>("Basic Plan");
 
   const [isInputShow, setIsInputShow] = useState<boolean>(false);
 
@@ -109,8 +105,8 @@ const AddSubscriptionParam = () => {
   }, [isDatePickerOpen, isInputShow]);
 
   return (
-    <div className="md:flex md:flex-col lg:flex-row items-start md:space-y-48 lg:space-y-0 md:px-[50px] lg:px-[100px] xl:px-[220px] 2xl:px-[20%] font-redRoseBold ">
-      <div className="relative flex flex-col justify-between h-[85vh] md:h-fit w-full md:space-y-12">
+    <div className="md:flex md:flex-col lg:flex-row items-start lg:space-x-[66px] md:space-y-48 lg:space-y-0 font-redRoseBold ">
+      <div className="relative flex flex-col justify-between h-[85vh] md:h-fit w-full ">
         <div className="space-y-6 ">
           <div className=" space-y-4">
             <LogoCard imgSrc={Netflix} />
@@ -118,25 +114,17 @@ const AddSubscriptionParam = () => {
           </div>
 
           <div className="space-y-4">
-            <div ref={rootRef}>
-              {/* <div className=" flex justify-between p-4 bg-black-2 rounded-xl ">
+            <div>
+              <div className=" flex justify-between p-4 bg-black-2 rounded-xl ">
                 <span className=" font-redRoseLight ">Started on</span>
                 <div
+                  ref={rootRef}
                   className="cursor-pointer"
                   onClick={() => setPickerOpen(!isDatePickerOpen)}
                 >
                   {dateSelected}
                 </div>
-              </div> */}
-
-              <InputDiv label="Started on">
-                <div
-                  className="cursor-pointer"
-                  onClick={() => setPickerOpen(!isDatePickerOpen)}
-                >
-                  {dateSelected}
-                </div>
-              </InputDiv>
+              </div>
 
               <div
                 className={
@@ -170,7 +158,8 @@ const AddSubscriptionParam = () => {
                 </div>
               </div>
             </div>
-            {/* <div
+            {/* <div className=""> */}
+            <div
               ref={planTypeInputRef}
               className="flex relative justify-between items-center p-4 bg-black-2 rounded-xl "
             >
@@ -192,44 +181,28 @@ const AddSubscriptionParam = () => {
               >
                 {planType ? planType : "Enter a plan"}{" "}
               </span>
-            </div> */}
-
-            {/* add a ccomponent */}
+            </div>
+            {/* </div> */}
             {selectsLabels.map((label, index) => {
-              let options$: string[] = [];
-              if (index === 0) {
-                options$ = options.plan;
-              } else if (index === 1) {
-                options$ = options.cycle;
-              } else if (index === 2) {
-                options$ = options.payment;
-              } else if (index === 3) {
-                options$ = options.remind;
-              }
-
               return (
                 <CardSelect
                   key={label + index}
                   setOption={
-                    index === 1
+                    index === 0
                       ? setOptionCycle
-                      : index === 2
+                      : index === 1
                       ? setOptionPayment
-                      : index === 0
-                      ? setPlanType
                       : setOptionRemind
                   }
                   option={
-                    index === 1
+                    index === 0
                       ? optionCycle
-                      : index === 2
+                      : index === 1
                       ? optionPayment
-                      : index === 0
-                      ? planType
                       : optionRemind
                   }
                   label={label}
-                  options={options$}
+                  options={options[index]}
                 />
               );
             })}
@@ -240,15 +213,16 @@ const AddSubscriptionParam = () => {
           <Button
             btnBg=" bg-primary-0"
             btnBorder=" rounded-xl"
-            btnClass=" center w-full md:w-fit"
-            btnP="py-[14px] md:px-10 "
+            btnClass="text center w-full md:w-fit"
+            // btnIcon={}
+            btnP="py-[14px] px-auto px-6 "
             btnText="font-redRoseBold text-[16px] text-[#fff] "
             buttonText="Add Subscription"
           />
         </div>
       </div>
 
-      {/* <div className="max-md:hidden rounded-[10px] md:flex justify-between items-start lg:block text-[#30313D] bg-[#12121C] lg:space-y-7 p-6 py-6 lg:w-[30%] md:w-full">
+      <div className="max-md:hidden rounded-[10px] md:flex justify-between items-start lg:block text-[#30313D] bg-[#12121C] lg:space-y-7 p-6 py-6 lg:w-[30%] md:w-full">
         <div className=" space-y-1">
           <h2 className=" font-redRoseBold">Version</h2>
           <span>V0.1.1</span>
@@ -313,9 +287,9 @@ const AddSubscriptionParam = () => {
           btnP=" px-2 py-1"
           btnText="text-[#3C4257] "
         />
-      </div> */}
+      </div>
     </div>
   );
 };
 
-export default AddSubscriptionParam;
+export default SubscriptionDetails;

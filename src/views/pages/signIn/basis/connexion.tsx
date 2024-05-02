@@ -59,7 +59,7 @@ const ConnexionPageElements: FC = () => {
       >
         <div className="hero-section-content flex flex-col items-center pt-28">
           <div
-            className="connexion-card flex bg-white"
+            className="connexion-card flex bg-[#fff] "
             style={{
               padding: "20px 30px",
               borderRadius: "14px",
@@ -78,14 +78,14 @@ const ConnexionPageElements: FC = () => {
                     lineHeight: "130%",
                   }}
                 >
-                  Registration
+                  Login
                 </h1>
               </div>
               <div className="card-inputs flex flex-col gap-4">
                 <div className="input-email flex flex-col gap-2">
                   <label htmlFor="inputEmail">Email</label>
                   <input
-                    className="outline-none border border-solid"
+                    className="outline-none border text-black-0"
                     style={{
                       borderColor: "#D8DADC",
                       borderRadius: "10px",
@@ -140,7 +140,7 @@ const ConnexionPageElements: FC = () => {
                 <div className="input-password flex flex-col gap-2">
                   <label htmlFor="inputPassword">Create password</label>
                   <input
-                    className="outline-none border border-solid"
+                    className="outline-none border text-black-0"
                     style={{
                       borderColor: "#D8DADC",
                       borderRadius: "10px",

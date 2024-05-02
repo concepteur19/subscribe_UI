@@ -5,15 +5,15 @@ const CardLatestPayment = () => {
   
   
   return (
-    <div className="text-sm rounded-xl bg-[#101019] py-[14.5px] px-2 lg:px-4 flex justify-between items-center ">
-      <div className=" flex items-center">
+    <div className="text-sm rounded-xl bg-[#101019] py-[14.5px] px-2 lg:px-4 flex justify-around items-center ">
+      {/* <div className=" flex items-center">
         <input
           className=" rounder-[2px] border-[#C0C8D2] w-[14px] h-[14px]"
           type="checkbox"
           name=""
           id=""
         />
-      </div>
+      </div> */}
 
       <div className="flex space-x-2 ">
         <span className=" text-[#fff]">$24.00</span>

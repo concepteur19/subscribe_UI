@@ -1,5 +1,5 @@
-// import logo from "@/assets/logo.svg";
-let logo = require("../../../../assets/logo.svg") as any;
+import logo from "../../../../assets/logo.svg";
+// let logo = require("../../../../assets/logo.svg") as any;
 
 export function Navbar(){
     return (
@@ -10,28 +10,28 @@ export function Navbar(){
                         <img src={logo} alt="" />
                     </div>
                     <div className="nav-links flex items-center max-lg:hidden">
-                        <a href="#" 
+                        <a href="#1" 
                             style={{
                                 padding: "9.95px 14.46px 10.44px 14.46px",
                                 color: "#fff",
                                 fontSize: "15.5px"
                             }}
                         >product</a>
-                        <a href="#"
+                        <a href="#2"
                             style={{
                                 padding: "9.95px 14.46px 10.44px 14.46px",
                                 color: "#fff",
                                 fontSize: "15.5px"
                             }}
                         >Feature</a>
-                        <a href="#"
+                        <a href="#3"
                             style={{
                                 padding: "9.95px 14.46px 10.44px 14.46px",
                                 color: "#fff",
                                 fontSize: "15.5px"
                             }}
                         >How it work</a>
-                        <a href="#"
+                        <a href="#4"
                             style={{
                                 padding: "9.95px 14.46px 10.44px 14.46px",
                                 color: "#fff",

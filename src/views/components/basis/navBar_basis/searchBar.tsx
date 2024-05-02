@@ -10,7 +10,7 @@ const searchBar: FC = () => {
     <div className="relative">
       <Input
         inputType="text"
-        placeholder="Search publics codes ..."
+        placeholder="Search subscription..."
         handleChange={searchBarChange}
         inputClass=" w-[288px] bg-transparent border border-[#212A3B] pl-4 py-2 rounded-[8px] text-sm"
       />

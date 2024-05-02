@@ -73,15 +73,15 @@ const RegistrationPageElements: FC= () => {
   return (
     <>
       <div
-        className="hero-section-wrapper truncate"
+        className="hero-section-wrapper truncate "
         style={{
           position: "relative",
           height: "100vh",
         }}
       >
-        <div className="hero-section-content flex flex-col items-center pt-10">
+        <div className="hero-section-content flex flex-col items-center pt-10 ">
           <div
-            className="registration-card flex bg-white"
+            className="registration-card flex bg-[#fff] "
             style={{
               padding: "20px 30px",
               borderRadius: "14px",
