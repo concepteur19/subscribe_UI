@@ -9,8 +9,7 @@ import Setting from "./views/pages/Setting";
 import AddSubscription from "./views/pages/subscription/addSubscription";
 import Layout from "./views/layout/layout";
 import AddSubscriptionParam from "./views/pages/subscription/addSubscriptionParam";
-import LoginPage from "./views/pages/signIn/connexionPage";
-import SignUpPage from "./views/pages/signU/registrionPage"
+
 import { SignIn } from "./views/pages/Login/signIn";
 import { SignUp } from "./views/pages/signUp/signUp";
 
@@ -23,7 +22,6 @@ function App() {
         <Routes>
           <Route path="/signUp" Component={SignUp} />
           <Route path="/Login" Component={SignIn} />
-          
           <Route path="/" Component={LandingPage} />
           <Route path="/" Component={Layout}>
             <Route path="/home" Component={Home} />
