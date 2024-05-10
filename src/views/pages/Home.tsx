@@ -15,7 +15,7 @@ import ScreenSizeContext from "../../contexts/screenSizeContext";
 const Home = () => {
   const { screenSize } = useContext(ScreenSizeContext)!;
 
-  const isDataReturn = false;
+  const isDataReturn = true;
 
   return (
     <>
@@ -36,9 +36,11 @@ const Home = () => {
 
               {isDataReturn ? (
                 <div className=" flex flex-col space-y-3">
-                  {Array.from({ length: 7 }).map((_, i) => (
-                    <CardLatestPayment />
-                  ))}
+                  <div className=" max-sm:hidden" >
+                    {Array.from({ length: 7 }).map((_, i) => (
+                      <CardLatestPayment />
+                    ))}
+                  </div>
 
                   {/* Mobile component */}
                   <div className="md:hidden block w-full space-y-4">

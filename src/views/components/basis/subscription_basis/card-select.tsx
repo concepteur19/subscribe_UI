@@ -1,11 +1,11 @@
 import React, { FC, useEffect, useRef, useState } from "react";
-import { IoChevronDown } from "react-icons/io5";
+import { IoChevronDown, IoChevronUp } from "react-icons/io5";
 import InputDiv from "../inputDiv";
 
 interface CardSelectProps {
-  setOption: (option: string) => void;
-  option: string;
-  options: string[];
+  setOption?: (option: string) => void;
+  option?: string;
+  options?: string[];
   label: string;
 }
 
@@ -19,7 +19,9 @@ const CardSelect: FC<CardSelectProps> = ({
   const selectRef = useRef<HTMLDivElement>(null);
 
   const handleSelectedOption = (option: string) => {
-    setOption(option);
+    if (setOption) {
+      setOption(option);
+    }
     setSelectOpen(!isSelectOpen);
   };
 
@@ -42,41 +44,48 @@ const CardSelect: FC<CardSelectProps> = ({
 
   return (
     <div ref={selectRef}>
-      {/* <div className="flex justify-between  p-4 bg-black-2 rounded-xl ">
-        <span className=" font-redRoseLight ">{label}</span>
-      </div> */}
 
       <InputDiv label={label}>
         <div
           className=" cursor-pointer flex items-center space-x-1"
-          onClick={() => setSelectOpen(!isSelectOpen)}
+          onClick={options && (() => setSelectOpen(!isSelectOpen))}
         >
           <span> {option} </span>
-          <IoChevronDown size={18} />
+          {options && (
+            <span>
+              {!isSelectOpen ? (
+                <IoChevronDown size={18} />
+              ) : (
+                <IoChevronUp size={18} />
+              )}
+            </span>
+          )}
         </div>
       </InputDiv>
 
-      <div className="flex justify-end relative">
-        <ul
-          className={
-            isSelectOpen
-              ? "absolute bg-[#00000006] backdrop-blur-[9px] border border-primary-2 -top-3 right-3 rounded-xl py-3"
-              : "hidden"
-          }
-        >
-          {options.map((option, index) => {
-            return (
-              <li
-                key={option + index}
-                className={`py-[10px] pl-5 pr-7 hover:bg-black-2 cursor-pointer `}
-                onClick={() => handleSelectedOption(option)}
-              >
-                {option}
-              </li>
-            );
-          })}
-        </ul>
-      </div>
+      {options && (
+        <div className="flex justify-end relative">
+          <ul
+            className={
+              isSelectOpen
+                ? "absolute bg-[#00000006] backdrop-blur-[9px] border border-primary-2 -top-3 right-3 rounded-xl py-3"
+                : "hidden"
+            }
+          >
+            {options.map((option, index) => {
+              return (
+                <li
+                  key={option + index}
+                  className={`py-[10px] pl-5 pr-7 hover:bg-black-2 cursor-pointer `}
+                  onClick={() => handleSelectedOption(option)}
+                >
+                  {option}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      )}
     </div>
   );
 };

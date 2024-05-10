@@ -11,6 +11,7 @@ import Layout from "./views/layout/layout";
 import AddSubscriptionParam from "./views/pages/subscription/addSubscriptionParam";
 import LoginPage from "./views/pages/signIn/connexionPage";
 import SignUpPage from "./views/pages/signUp/registrionPage"
+import SubscriptionDetails from "./views/pages/subscription/subscriptionDetails";
 
 function App() {
 
@@ -28,7 +29,7 @@ function App() {
             <Route path="/settings" Component={Setting} />
             <Route path="/home/addSubscription" Component={AddSubscription} />
             <Route path="/home/addSubscription/:param" Component={AddSubscriptionParam} />
-            <Route path="/home/subscription/:id" Component={AddSubscription} />
+            <Route path="/home/subscription/:id" Component={SubscriptionDetails} />
           </Route>
         </Routes>
       </div>
