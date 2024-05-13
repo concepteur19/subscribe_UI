@@ -2,13 +2,14 @@ import React from "react";
 
 interface Props {
   children?: React.ReactNode;
-  label?: string
+  label?: string;
+  inputBg?: string
 }
 
-const InputDiv: React.FC<Props> = ({ children, label }) => {
+const InputDiv: React.FC<Props> = ({ children, label, inputBg }) => {
   return (
     <>
-      <div className=" flex justify-between p-4 bg-black-2 rounded-xl ">
+      <div className={` flex justify-between p-4  rounded-xl ${inputBg? inputBg : 'bg-black-2'}`}>
        {label && <span className=" font-redRoseLight "> {label} </span>}
         {children}
       </div>
