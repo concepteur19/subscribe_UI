@@ -11,7 +11,7 @@ export function SponsorSection(){
                 <div className="flex justify-center pt-7 pb-1 mx-auto max-w-[1276.8px]">
                     <div className="sponsor-section-container w-full flex flex-col items-center gap-16 pb-[68px] max-sm:gap-[53px]"
                         style={{
-                            borderBottom: "2px solid #0B0B20"
+                            borderBottom: "1px solid #1B1B3D"
                         }}
                     >
                         <p className='text-white text-center text-2xl max-sm:text-[20px]'>Loved by product folks at</p>
