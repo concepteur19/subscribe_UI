@@ -19,8 +19,8 @@ export function TrySubScribeSection () {
                         <h2 className='text-[52.74px] leading-[110%] tracking-[-1.34px] font-redRoseBold text-[#fff] text-center max-w-[560px] text-white max-sm:text-[32px] max-sm:text-center max-sm:w-[300px]'>Try SubScribe now</h2>
                     </div>
                     <div className="flex gap-[20px] max-sm:flex-col">
-                        <button className='text-[16.53px] bg-[#fff] text-[#2B44E7] cursor-pointer py-[18px] px-8 rounded-[8px]'>Get Started now</button>
-                        <button className='text-[16.53px] bg-none text-[#fff] cursor-pointer py-[18px] px-8 border border-solid border-[#fff] rounded-[8px]'>Book a demo</button>
+                        <button className='text-[16.53px] bg-[#fff] font-redRoseBold text-[#2B44E7] cursor-pointer py-[18px] px-8 rounded-[8px]'>Get Started now</button>
+                        <button className='text-[16.53px] bg-none text-[#fff] font-redRoseBold cursor-pointer py-[18px] px-8 border border-solid border-[#fff] rounded-[8px]'>Book a demo</button>
                     </div>
                     <img src={funFlip} alt="" className='absolute bottom-[-50px] right-[50.14px] max-sm:right-[10.14px] max-sm:bottom-[-70.14px] '/>
                 </div>

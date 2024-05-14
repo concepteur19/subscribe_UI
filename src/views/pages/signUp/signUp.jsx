@@ -65,7 +65,7 @@ export function SignUp(){
                             onSubmit={handleSubmit}
                         >
                             
-                            <h1 className='font-redRoseBold text-[22px] text-[#000]'>Login</h1>
+                            <h1 className='font-redRoseBold text-[22px] text-[#000]'>Create Account</h1>
                             <div className='flex flex-col gap-4 w-full'>
                             <div className="flex flex-col gap-2">
                                     <label
@@ -204,7 +204,7 @@ export function SignUp(){
                                 className='py-3 px-4 text-white rounded-md cursor-pointer font-semiBold  text-[16px] bg-[#4649E5] hover:bg-[#3B3EAC] transition duration-300 ease-in-out w-full text-[#fff]'
                                 
                             >
-                                Log in
+                                Sign Up
                             </button>
                         </form>
                     </div>

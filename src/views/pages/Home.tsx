@@ -36,7 +36,7 @@ const Home = () => {
 
               {isDataReturn ? (
                 <div className=" flex flex-col space-y-3">
-                  <div className=" max-sm:hidden" >
+                  <div className=" max-sm:hidden flex flex-col gap-3" >
                     {Array.from({ length: 7 }).map((_, i) => (
                       <CardLatestPayment />
                     ))}

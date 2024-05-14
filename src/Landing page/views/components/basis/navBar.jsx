@@ -23,8 +23,8 @@ export function Navbar(){
                             </svg>
                         </div>
                         <div className="nav-buttons max-sm:hidden">
-                            <button className="login-button px-[14px] py-[13px] text-[15.5px] bg-transparent text-white rounded-[8px] cursor-pointer">Login</button>    
-                            <button className="getStarted-button px-[24.34px] py-[11.59px] text-[15.5px] bg-[#4649E5] text-white rounded-[8px] cursor-pointer">Get started</button>
+                            <button className="login-button px-[14px] py-[13px] text-[15.5px] bg-transparent text-[#fff] rounded-[8px] cursor-pointer">Login</button>    
+                            <button className="getStarted-button px-[24.34px] py-[11.59px] text-[15.5px] bg-[#4649E5] text-[#fff] font-redRoseBold rounded-[8px] cursor-pointer">Get started</button>
                             
                         </div>
                     </div>
