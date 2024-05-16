@@ -7,6 +7,10 @@ interface CardSelectProps {
   option?: string;
   options?: string[];
   label: string;
+  type?: string;
+  cycle?: string;
+  remind?: string;
+  payment?: string;
 }
 
 const CardSelect: FC<CardSelectProps> = ({
@@ -14,6 +18,10 @@ const CardSelect: FC<CardSelectProps> = ({
   options,
   option,
   label,
+  type,
+  cycle,
+  remind,
+  payment,
 }) => {
   const [isSelectOpen, setSelectOpen] = useState<Boolean>(false);
   const selectRef = useRef<HTMLDivElement>(null);
@@ -44,13 +52,25 @@ const CardSelect: FC<CardSelectProps> = ({
 
   return (
     <div ref={selectRef}>
-
       <InputDiv label={label}>
         <div
-          className=" cursor-pointer flex items-center space-x-1"
+          className={`${
+            options && "cursor-pointer"
+          } flex items-center space-x-1`}
           onClick={options && (() => setSelectOpen(!isSelectOpen))}
         >
-          <span> {option} </span>
+          { !options? <span>
+            {label === "Type" ? (
+              <span> {type} </span>
+            ) : label === "Cycle" ? (
+              <span> {cycle} </span>
+            ) : label === "Payment Method" ? (
+              <span> {payment} </span>
+            ) : label === "Remind me" ? (
+              <span> {remind} </span>
+            ) : null}
+          </span> : <span> {option} </span> }
+
           {options && (
             <span>
               {!isSelectOpen ? (

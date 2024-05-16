@@ -3,11 +3,17 @@ import React, { FC, useEffect, useRef, useState } from "react";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import LogoCard from "../../../components/basis/logoCard";
-import Netflix from "../../../../assets/images/png/netflix.png";
+import dollar from "../../../../assets/images/png/$.png";
 import Button from "../../../components/basis/buttons/Button";
 import InputDiv from "../../../components/basis/inputDiv";
 import SelectList from "../../../components/basis/subscription_basis/select_list";
 
+export interface DetailSubscription {
+  type: string;
+  cycle: string;
+  remind: string;
+  payment: string;
+}
 interface Props {
   amount?: string;
   cycle?: string;
@@ -16,6 +22,9 @@ interface Props {
   subscriptionLabel: string;
   btnBgColor?: string;
   buttonText?: string;
+  detailSubscription?: DetailSubscription | undefined;
+  logo?: string;
+  sizeLogo?: number
 }
 
 const AddSubscriptionComponent: FC<Props> = ({
@@ -26,6 +35,10 @@ const AddSubscriptionComponent: FC<Props> = ({
   subscriptionLabel,
   btnBgColor,
   buttonText,
+  logo,
+  sizeLogo,
+
+  detailSubscription,
 }) => {
   const selectsLabels = ["Type", "Cycle", "Payment Method", "Remind me"];
 
@@ -124,7 +137,7 @@ const AddSubscriptionComponent: FC<Props> = ({
         <div className="space-y-6 ">
           <div className=" flex justify-between ">
             <div className="space-y-4">
-              <LogoCard imgSrc={Netflix} />
+              <LogoCard imgSrc={logo? logo : dollar} s={sizeLogo}/>
               <h1 className="  text-2xl text-white-1">{subscriptionLabel}</h1>
             </div>
 
@@ -151,14 +164,31 @@ const AddSubscriptionComponent: FC<Props> = ({
           </div>
 
           <div className="space-y-4">
+            {amount && (
+              <InputDiv
+                label="Missed Payement On"
+                inputBg="text-black-2 bg-white-2"
+              >
+                {" "}
+                <div className=" font-redRose text-red ">
+                  {" "}
+                  12 Dec 2023{" "}
+                </div>{" "}
+              </InputDiv>
+            )}
+
             <div ref={rootRef}>
-              <InputDiv label="Started on" >
-                <div
-                  className="cursor-pointer"
-                  onClick={() => setPickerOpen(!isDatePickerOpen)}
-                >
-                  {dateSelected}
-                </div>
+              <InputDiv label="Started on">
+                {!amount ? (
+                  <div
+                    className="cursor-pointer"
+                    onClick={() => setPickerOpen(!isDatePickerOpen)}
+                  >
+                    {dateSelected}
+                  </div>
+                ) : (
+                  "17 May 2024"
+                )}
               </InputDiv>
 
               <div
@@ -207,6 +237,7 @@ const AddSubscriptionComponent: FC<Props> = ({
               setOptionRemind={setOptionRemind}
               planType={planType}
               setPlanType={setPlanType}
+              detailSubscription={detailSubscription}
             />
           </div>
         </div>
@@ -223,6 +254,7 @@ const AddSubscriptionComponent: FC<Props> = ({
             />
           </div>
         )}
+
       </div>
     </div>
   );

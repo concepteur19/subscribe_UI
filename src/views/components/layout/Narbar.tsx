@@ -7,7 +7,7 @@ import { useLocation } from "react-router-dom";
 import logo from '../../../assets/images/png/logo.png'
 
 // let logo = require("../../../assets/images/png/logo.png") as any;
-let git = require("../../../assets/images/png/git.png") as any;
+// let git = require("../../../assets/images/png/git.png") as any;
 let profile = require("../../../assets/images/png/profile.png") as any;
 let theme = require("../../../assets/images/png/theme.png") as any;
 
@@ -24,7 +24,7 @@ const Narbar: FC = () => {
       {/* mobile nav */}
       <div className={`${isPathHome  && "hidden"} px-6 sm:px-[52px] md:hidden w-full `}>
         <div className=" mx-auto flex flex-col items-center justify-center">
-          <div className="flex justify-between items-center w-full py-[48px] text-sm">
+          <div className="flex justify-between items-center w-full pt-12 pb-3 text-sm">
             <div className="flex items-center space-x-3">
               <img src={profile} alt="profile" />
               <span className=" text-[16px] "> Morning, Zain</span>

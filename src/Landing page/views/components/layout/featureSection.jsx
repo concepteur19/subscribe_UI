@@ -5,12 +5,12 @@ export function FeatureSection() {
 
 
     return (
-        <div className="flex justify-center pb-[180px] px-8 max-sm:px-4 max-sm:pb-[80px]">
+        <div id='feature' className="flex justify-center pb-[180px] px-8 max-sm:px-4 max-sm:pb-[80px]">
             <div className="flex justify-between max-w-[1276.8px] w-full gap-3 mx-auto max-lg:flex-col max-lg:items-center">
                 <div className="feature-section-container-left max-lg:max-w-[578px]">
                     <div className="flex items-start flex-col gap-5">
-                        <h2 className='text-[52.74px] leading-[110%] tracking-[-1.34px] font-bold text-white text-center max-w-[578px] text-start max-lg:max-w-full max-lg:text-center max-sm:text-[32px]'>Features that meet the specific needs of users</h2>
-                        <p className='text-[24.8px] leading-[150%] text-white text-center max-w-[403px] text-start mb-[30px] max-lg:max-w-full max-lg:text-center max-sm:text-[20px]'>Power your subscription experience with features tailored to each user.</p>
+                        <h2 className='text-[52.74px] leading-[110%] tracking-[-1.34px] font-bold text-white max-w-[578px] text-start max-lg:max-w-full max-lg:text-center max-sm:text-[32px]'>Features that meet the specific needs of users</h2>
+                        <p className='text-[24.8px] leading-[150%] text-white max-w-[403px] text-start mb-[30px] max-lg:max-w-full max-lg:text-center max-sm:text-[20px]'>Power your subscription experience with features tailored to each user.</p>
                     </div>
                     <div className="features-list flex flex-col justify-center">
                         <div className="flex gap-5 items-center h-[69.61px] max-lg:justify-center">

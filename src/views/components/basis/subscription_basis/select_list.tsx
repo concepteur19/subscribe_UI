@@ -1,5 +1,7 @@
 import React, { FC } from "react";
 import CardSelect from "./card-select";
+import { useLocation } from "react-router-dom";
+import { DetailSubscription } from "./addSubscriptionComponent";
 
 interface OptionProps {
   plan: string[];
@@ -23,6 +25,8 @@ interface Props {
 
   planType?: string | undefined;
   setPlanType?: (option: string) => void;
+
+  detailSubscription: DetailSubscription | undefined;
 }
 
 const SelectList: FC<Props> = ({
@@ -35,14 +39,20 @@ const SelectList: FC<Props> = ({
   optionRemind,
   setOptionRemind,
   planType,
-  setPlanType
+  setPlanType,
+
+  detailSubscription,
 }) => {
-  
+  const location = useLocation();
+  const ispath = location.pathname === "/home/addSubscription";
+  const path = location.pathname;
+  const pathTab = path.split("/");
 
   return (
     <div className="space-y-4">
       {/* add a ccomponent */}
-      {options && selectsLabels &&
+      {options &&
+        selectsLabels &&
         selectsLabels.map((label, index) => {
           let options$: string[] = [];
           if (index === 0) {
@@ -56,29 +66,41 @@ const SelectList: FC<Props> = ({
           }
 
           return (
-            <CardSelect
-              key={label + index}
-              setOption={
-                index === 1
-                  ? setOptionCycle
-                  : index === 2
-                  ? setOptionPayment
-                  : index === 0
-                  ? setPlanType
-                  : setOptionRemind
-              }
-              option={
-                index === 1
-                  ? optionCycle
-                  : index === 2
-                  ? optionPayment
-                  : index === 0
-                  ? planType
-                  : optionRemind
-              }
-              label={label}
-              options={options$}
-            />
+            <div>
+              {pathTab[pathTab.length - 2] !== "subscription" && pathTab[3] !== "custom" ? (
+                <CardSelect
+                  key={label + index}
+                  setOption={
+                    index === 1
+                      ? setOptionCycle
+                      : index === 2
+                      ? setOptionPayment
+                      : index === 0
+                      ? setPlanType
+                      : setOptionRemind
+                  }
+                  option={
+                    index === 1
+                      ? optionCycle
+                      : index === 2
+                      ? optionPayment
+                      : index === 0
+                      ? planType
+                      : optionRemind
+                  }
+                  label={label}
+                  options={options$}
+                />
+              ) : (
+                <CardSelect
+                  label={label}
+                  type={detailSubscription?.type}
+                  cycle={detailSubscription?.cycle}
+                  payment={detailSubscription?.payment}
+                  remind={detailSubscription?.remind}
+                />
+              )}
+            </div>
           );
         })}
     </div>
