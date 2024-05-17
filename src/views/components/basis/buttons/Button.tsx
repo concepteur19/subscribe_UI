@@ -15,8 +15,8 @@ interface ButtonProps {
 const Button: FC<ButtonProps> = ({btnBg, btnBorder, btnP, btnText, buttonText, btnIcon, btnClass, handleClick}) => {
   return (
     <>
-        <button onClick={handleClick} className={`${btnP} ${btnText} ${btnBg} ${btnBorder} ${btnClass}`} >
-            {btnIcon? btnIcon : ''} {buttonText}
+        <button onClick={handleClick} className={`flex items-center space-x-[6px] ${btnP} ${btnText} ${btnBg} ${btnBorder} ${btnClass}`} >
+            {btnIcon? btnIcon : ''}  <span>{buttonText}</span>
         </button>
     </>
   )
