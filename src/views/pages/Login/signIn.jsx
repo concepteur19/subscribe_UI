@@ -113,7 +113,7 @@ export function SignIn (){
                             </div>
                             <button
                                 type="submit"
-                                className='py-3 px-4 text-white rounded-md cursor-pointer font-semiBold  text-[16px] bg-[#4649E5] hover:bg-[#3B3EAC] transition duration-300 ease-in-out w-full text-white'
+                                className='py-3 px-4 text-white rounded-md cursor-pointer font-semiBold  text-[16px] bg-[#4649E5] hover:bg-[#3B3EAC] transition duration-300 ease-in-out w-full text-[#fff] font-redRoseBold'
                                 
                             >
                                 Log in

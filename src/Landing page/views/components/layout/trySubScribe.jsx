@@ -16,11 +16,11 @@ export function TrySubScribeSection () {
                     }}
                 >
                     <div className="flex flex-col items-center gap-[20px]">
-                        <h2 className='text-[52.74px] leading-[110%] tracking-[-1.34px] font-bold text-white text-center max-w-[560px] text-white max-sm:text-[32px] max-sm:text-center max-sm:w-[300px]'>Try SubScribe now</h2>
+                        <h2 className='text-[52.74px] leading-[110%] tracking-[-1.34px] font-redRoseBold text-[#fff] text-center max-w-[560px] text-white max-sm:text-[32px] max-sm:text-center max-sm:w-[300px]'>Try SubScribe now</h2>
                     </div>
                     <div className="flex gap-[20px] max-sm:flex-col">
-                        <button className='text-[16.53px] bg-[#fff] text-[#2B44E7] cursor-pointer py-[18px] px-8 rounded-[8px]'>Get Started now</button>
-                        <button className='text-[16.53px] bg-none text-white cursor-pointer py-[18px] px-8 border border-solid border-[#fff] rounded-[8px]'>Book a demo</button>
+                        <button className='text-[16.53px] bg-[#fff] font-redRoseBold text-[#2B44E7] cursor-pointer py-[18px] px-8 rounded-[8px]'>Get Started now</button>
+                        <button className='text-[16.53px] bg-none text-[#fff] font-redRoseBold cursor-pointer py-[18px] px-8 border border-solid border-[#fff] rounded-[8px]'>Book a demo</button>
                     </div>
                     <img src={funFlip} alt="" className='absolute bottom-[-50px] right-[50.14px] max-sm:right-[10.14px] max-sm:bottom-[-70.14px] '/>
                 </div>
@@ -32,9 +32,9 @@ export function TrySubScribeSection () {
                                 <img src={footerLogo} alt="" />
                             </div>
                             <div className="flex gap-[79px] items-center max-md:gap-[20px]">
-                                <a href="#">Features</a>
-                                <a href="#">Company</a>
-                                <a href="#">Legal</a>
+                                <a href="#" className='text-[#000]'>Features</a>
+                                <a href="#" className='text-[#000]'>Company</a>
+                                <a href="#" className='text-[#000]'>Legal</a>
                             </div>
                             <div className="flex gap-[15px] items-center">
                                 <div className="w-[42px] h-[42px] border border-solid border-[#D8D8E6] flex justify-center items-center rounded-full">
