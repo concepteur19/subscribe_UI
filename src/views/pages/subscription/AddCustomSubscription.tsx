@@ -3,7 +3,12 @@ import AddSubscriptionComponent from "../../components/basis/subscription_basis/
 
 const AddCustomSubscription = () => {
   return (
-    <div></div>
+    <AddSubscriptionComponent
+      subscriptionLabel="Create a customize subsription"
+    //   sizeLogo={14}
+      buttonText="Add Subscription"
+      btnBgColor=" bg-primary-0"
+    />
   );
 };
 

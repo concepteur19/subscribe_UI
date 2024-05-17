@@ -24,7 +24,7 @@ interface Props {
   buttonText?: string;
   detailSubscription?: DetailSubscription | undefined;
   logo?: string;
-  sizeLogo?: number
+  sizeLogo?: number;
 }
 
 const AddSubscriptionComponent: FC<Props> = ({
@@ -132,13 +132,17 @@ const AddSubscriptionComponent: FC<Props> = ({
   }, [isDatePickerOpen, isInputShow]);
 
   return (
-    <div className="md:flex md:flex-col lg:flex-row items-start md:space-y-48 lg:space-y-0 md:px-[50px] lg:px-[100px] xl:px-[220px] 2xl:px-[20%] font-redRoseBold ">
+    <div className=" md:flex md:flex-col lg:flex-row items-start md:space-y-48 lg:space-y-0 md:px-[50px] lg:px-[100px] xl:px-[220px] 2xl:px-[20%] font-redRoseBold ">
       <div className="relative flex flex-col justify-between h-[85vh] md:h-fit w-full md:space-y-10">
-        <div className="space-y-6 ">
+        <div className={sizeLogo || logo ? "space-y-6" : "space-y-[42px]"}>
           <div className=" flex justify-between ">
             <div className="space-y-4">
-              <LogoCard imgSrc={logo? logo : dollar} s={sizeLogo}/>
-              <h1 className="  text-2xl text-white-1">{subscriptionLabel}</h1>
+              {sizeLogo || logo ? (
+                <LogoCard imgSrc={logo ? logo : dollar} s={sizeLogo} />
+              ) : null}
+              <h1 className="  text-2xl text-white-1 w-64">
+                {subscriptionLabel}
+              </h1>
             </div>
 
             {amount && (
@@ -164,6 +168,14 @@ const AddSubscriptionComponent: FC<Props> = ({
           </div>
 
           <div className="space-y-4">
+            {!(sizeLogo || logo) && (
+              <div className=" flex flex-col space-y-4 font-redRoseLight text-sm ">
+                <input type="text" placeholder="Enter the subscription name" className=" p-4 outline-none rounded-xl bg-black-2"/>
+                <input type="text" placeholder="Enter a plan type" className=" p-4 outline-none rounded-xl bg-black-2 "/>
+                <input type="text" placeholder="Enter the subscription amount" className=" p-4 outline-none rounded-xl bg-black-2 "/>
+              </div>
+            )}
+
             {amount && (
               <InputDiv
                 label="Missed Payement On"
@@ -254,7 +266,6 @@ const AddSubscriptionComponent: FC<Props> = ({
             />
           </div>
         )}
-
       </div>
     </div>
   );
