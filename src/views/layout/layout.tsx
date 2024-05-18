@@ -43,17 +43,20 @@ const Layout = () => {
 
   const handleReturn = () => {
     console.log(pathTab);
-    if( pathTab[1] === "home" && pathTab.length === 3  ) {
-      navigate(pathTab[1])
-    } else if( pathTab[1] === "home" && pathTab.length > 3  ) {
-      navigate(pathTab[1 ] +"/"+ pathTab[2])
-    } else if( pathTab[1] === "settings" ) {
-      navigate("home")
+    if (pathTab[1] === "home" && pathTab.length === 3) {
+      navigate(pathTab[1]);
+    } else if (pathTab[pathTab.length - 2] === "custom" ) {
+      navigate("home");
+    } else if (pathTab[1] === "home" && pathTab.length > 3) {
+      if(pathTab[2] === "subscription") {
+        navigate("home")
+        return
+      }
+      navigate(pathTab[1] + "/" + pathTab[2]);
+    } else if (pathTab[1] === "settings") {
+      navigate("home");
     } 
-  }
-  
-
-  
+  };
 
   return (
     <div className="relative ">
@@ -68,13 +71,15 @@ const Layout = () => {
               : "py-6"
           }`}
         >
-
           {/* return button */}
           {(pathTab[1] === "home" && pathTab.length > 2) ||
-          pathTab[1] === "settings" || pathTab[1] === "payments" ? (
-            <div onClick={handleReturn}
-              className={`cursor-pointer ${windowSize.width < 768 &&
-                pathTab[1] === "settings" && "pt-6" } mb-6 md:hidden`}
+          pathTab[1] === "settings" ||
+          pathTab[1] === "payments" ? (
+            <div
+              onClick={handleReturn}
+              className={`cursor-pointer ${
+                windowSize.width < 768 && pathTab[1] === "settings" && "pt-6"
+              } mb-6 md:hidden`}
             >
               <img src={arrowLeft} alt="fleche" />
             </div>

@@ -27,16 +27,19 @@ const AddSubscription = () => {
         />
       </div>
 
+      <Link to="/home/addSubscription/custom">
       <div
-        className={`flex justify-between items-center text-[16px] text-white-1 rounded-xl p-4 xl:pr-5 md:py-[14.5px]   m-0 w-full
+        className={` cursor-pointer hover:opacity-50 flex justify-between items-center text-[16px] text-white-1 rounded-xl p-4 xl:pr-5 md:py-[14.5px]   m-0 w-full
         linear-gratient-card`}
       >
         <span>Custom Subscription</span>
 
-        <span className="cursor-pointer text-[#E3E3EC] flex items-center justify-center">
+        <span className=" text-[#E3E3EC] flex items-center justify-center">
           <BiChevronRight size={24} />
         </span>
       </div>
+      </Link>
+      
 
       {Array.from({ length: 8 }).map((_, i) => (
         <Link to={`/home/addSubscription/${i}`}>

@@ -3,11 +3,17 @@ import React, { FC, useEffect, useRef, useState } from "react";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import LogoCard from "../../../components/basis/logoCard";
-import Netflix from "../../../../assets/images/png/netflix.png";
+import dollar from "../../../../assets/images/png/$.png";
 import Button from "../../../components/basis/buttons/Button";
 import InputDiv from "../../../components/basis/inputDiv";
 import SelectList from "../../../components/basis/subscription_basis/select_list";
 
+export interface DetailSubscription {
+  type: string;
+  cycle: string;
+  remind: string;
+  payment: string;
+}
 interface Props {
   amount?: string;
   cycle?: string;
@@ -16,6 +22,9 @@ interface Props {
   subscriptionLabel: string;
   btnBgColor?: string;
   buttonText?: string;
+  detailSubscription?: DetailSubscription | undefined;
+  logo?: string;
+  sizeLogo?: number;
 }
 
 const AddSubscriptionComponent: FC<Props> = ({
@@ -26,6 +35,10 @@ const AddSubscriptionComponent: FC<Props> = ({
   subscriptionLabel,
   btnBgColor,
   buttonText,
+  logo,
+  sizeLogo,
+
+  detailSubscription,
 }) => {
   const selectsLabels = ["Type", "Cycle", "Payment Method", "Remind me"];
 
@@ -119,13 +132,17 @@ const AddSubscriptionComponent: FC<Props> = ({
   }, [isDatePickerOpen, isInputShow]);
 
   return (
-    <div className="md:flex md:flex-col lg:flex-row items-start md:space-y-48 lg:space-y-0 md:px-[50px] lg:px-[100px] xl:px-[220px] 2xl:px-[20%] font-redRoseBold ">
+    <div className=" md:flex md:flex-col lg:flex-row items-start md:space-y-48 lg:space-y-0 md:px-[50px] lg:px-[100px] xl:px-[220px] 2xl:px-[20%] font-redRoseBold ">
       <div className="relative flex flex-col justify-between h-[85vh] md:h-fit w-full md:space-y-10">
-        <div className="space-y-6 ">
+        <div className={sizeLogo || logo ? "space-y-6" : "space-y-[42px]"}>
           <div className=" flex justify-between ">
             <div className="space-y-4">
-              <LogoCard imgSrc={Netflix} />
-              <h1 className="  text-2xl text-white-1">{subscriptionLabel}</h1>
+              {sizeLogo || logo ? (
+                <LogoCard imgSrc={logo ? logo : dollar} s={sizeLogo} />
+              ) : null}
+              <h1 className="  text-2xl text-white-1 w-64">
+                {subscriptionLabel}
+              </h1>
             </div>
 
             {amount && (
@@ -151,14 +168,39 @@ const AddSubscriptionComponent: FC<Props> = ({
           </div>
 
           <div className="space-y-4">
+            {!(sizeLogo || logo) && (
+              <div className=" flex flex-col space-y-4 font-redRoseLight text-sm ">
+                <input type="text" placeholder="Enter the subscription name" className=" p-4 outline-none rounded-xl bg-black-2"/>
+                <input type="text" placeholder="Enter a plan type" className=" p-4 outline-none rounded-xl bg-black-2 "/>
+                <input type="text" placeholder="Enter the subscription amount" className=" p-4 outline-none rounded-xl bg-black-2 "/>
+              </div>
+            )}
+
+            {amount && (
+              <InputDiv
+                label="Missed Payement On"
+                inputBg="text-black-2 bg-white-2"
+              >
+                {" "}
+                <div className=" font-redRose text-red ">
+                  {" "}
+                  12 Dec 2023{" "}
+                </div>{" "}
+              </InputDiv>
+            )}
+
             <div ref={rootRef}>
-              <InputDiv label="Started on" >
-                <div
-                  className="cursor-pointer"
-                  onClick={() => setPickerOpen(!isDatePickerOpen)}
-                >
-                  {dateSelected}
-                </div>
+              <InputDiv label="Started on">
+                {!amount ? (
+                  <div
+                    className="cursor-pointer"
+                    onClick={() => setPickerOpen(!isDatePickerOpen)}
+                  >
+                    {dateSelected}
+                  </div>
+                ) : (
+                  "17 May 2024"
+                )}
               </InputDiv>
 
               <div
@@ -207,6 +249,7 @@ const AddSubscriptionComponent: FC<Props> = ({
               setOptionRemind={setOptionRemind}
               planType={planType}
               setPlanType={setPlanType}
+              detailSubscription={detailSubscription}
             />
           </div>
         </div>

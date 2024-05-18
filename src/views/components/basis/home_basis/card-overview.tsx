@@ -1,5 +1,6 @@
 import React from "react";
 import LogoCard from "../logoCard";
+import { Link } from "react-router-dom";
 
 interface CardOverviewProps {
   due: number;
@@ -10,6 +11,7 @@ interface CardOverviewProps {
   positionCard?: string;
   flexCard?: string;
   typePlan?: string;
+  id?: number;
 }
 
 const CardOverview: React.FC<CardOverviewProps> = ({
@@ -20,7 +22,8 @@ const CardOverview: React.FC<CardOverviewProps> = ({
   dMy,
   positionCard,
   flexCard,
-  typePlan
+  typePlan,
+  id
 }) => {
   return (
     <div
@@ -29,7 +32,12 @@ const CardOverview: React.FC<CardOverviewProps> = ({
       }`}
     >
       <div className={`flex ${flexCard ? flexCard : "space-x-3 items-center"}`}>
-      <LogoCard imgSrc={imgSrc} />
+        <Link to={`/home/subscription/${id? id : 1}`}>
+          {" "}
+          <span className=" cursor-pointer">
+            <LogoCard imgSrc={imgSrc} />
+          </span>
+        </Link>
 
         <div
           className={`flex flex-col sm:flex-row xl:flex-row sm:space-x-20 md:space-x-3 xl:space-x-16 2xl:space-x-20 sm:space-y-0 xl:space-y-0   ${

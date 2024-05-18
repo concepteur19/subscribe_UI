@@ -51,7 +51,7 @@ export function SignIn (){
                             onSubmit={handleSubmit}
                         >
                             
-                            <h1 className='font-redRoseBold text-[22px] text-[#000]'>Login</h1>
+                            <h1 className=' font-redRoseBold text-[22px] text-[#000]'>Login</h1>
                             <div className='flex flex-col gap-4 w-full'>
                                 <div className="flex flex-col gap-2">
                                     <label

@@ -1,25 +1,4 @@
-.app-container{
-  /* width: 90%; */
-  /* height: 100vh;
-
-  display: flex;
-  flex-direction: column; */
-  /* color: #ffffff; */
-}
-
-/* .card{
-  padding: 10px ;
-  border-radius: 4px;
-} */
-
-.active{
-  color: #ffffff;
-}
-
-.active-home{
-  color: #625AFA;
-}
-
-/* .custom-daypicker .DayPicker-Day--hovered .hovered-date {
-  background-color: #625AFA;
-} */
+@tailwind base;
+  @tailwind components;
+  @tailwind utilities;
+  

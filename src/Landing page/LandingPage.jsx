@@ -8,14 +8,14 @@ import { TrySubScribeSection } from './views/components/layout/trySubScribe'
 
 function LandingPage() {
   return (
-    <>
+    <div className=' text-white-2'>
       <HeroSection/>
       <SponsorSection/>
       <DashboardPresentationSection/>
       <FeatureSection/>
       <Testimonial/>
       <TrySubScribeSection/>
-    </>
+    </div>
   )
 }
 

@@ -2,7 +2,7 @@
 export function HeroSectionElements(){
     return (
         <>
-            <div className="hero-section px-8 pb-[100px] max-sm:px-4 max-sm:pb-[70px]">
+            <div id="product" className="hero-section px-8 pb-[100px] max-sm:px-4 max-sm:pb-[70px]">
                 <div className="hero-section-content flex flex-col items-center pt-[110px] mx-auto max-w-[1276.8px] max-sm:pt-[101px]">
                     <div className="title">
                         <h1 className='text-[76px] text-[#fff] text-center font-redRoseBold leading-[110%] tracking-[1.96px] max-w-[655px] mb-[20px] w-full max-sm:text-[40px] max-sm:mb-[20px] '>

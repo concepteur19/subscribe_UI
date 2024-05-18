@@ -98,7 +98,7 @@ export function SignUp() {
                                         onChange={handleChange}
                                     />
                                     {errors.username && (
-                                        <div className='flex items-center gap-2'>
+                                        <di v className='flex items-center gap-2'>
                                             <div className='flex items-center justify-center'>
                                                 <svg        
                                                     className="vuesax-outline-info-circle2"
@@ -125,7 +125,7 @@ export function SignUp() {
                                             <p className='text-[14px] text-[#F01A16] leading-[125%] font-sembold'>
                                                 {errors.username}
                                             </p>
-                                        </div>
+                                        </di>
                                     )}
                                 </div>
                                 <div className="flex flex-col gap-2">
@@ -189,7 +189,7 @@ export function SignUp() {
                                             <div className='flex items-center justify-center'>
                                                 <svg        
                                                     className="vuesax-outline-info-circle2"
-                                                    width="18"
+                                                    width="18" Flogin
                                                     height="19"
                                                     viewBox="0 0 18 19"
                                                     fill="none"
