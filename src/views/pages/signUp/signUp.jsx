@@ -1,55 +1,72 @@
-import subscribe from '../../../assets/images/subscribeIcon.svg'
-import { useState } from 'react'
+import subscribe from '../../../assets/images/subscribeIcon.svg';
+import { useState } from 'react';
+import axios from 'axios';
 
-export function SignUp(){
-
+export function SignUp() {
     const [data, setData] = useState({
         username: '',
         email: '',
         password: ''
-    })
+    });
 
-    const [errors, setErrors] = useState({
-        username: '',
-        email: '',
-        password: ''
-    })
+    const [errors, setErrors] = useState({});
 
     const handleChange = (e) => {
-        const {name, value} = e.target
+        const { name, value } = e.target;
         setData({
             ...data,
             [name]: value
-        })
-    }
+        });
+    };
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        const validationErrros = {
-            username: '',
-            email: '',
-            password: ''
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const validationErrors = {};
+
+        if (!data.email.trim()) {
+            validationErrors.email = 'Email is required';
+        } else if (!/\S+@\S+\.\S+/.test(data.email)) {
+            validationErrors.email = 'Email is invalid';
+        } 
+
+        if (!data.username.trim()) {
+            validationErrors.username = 'Username is required';
         }
 
-        if(!data.email.trim()){
-            validationErrros.email = 'Email is required'
-        } else if(!/\S+@\S+\.\S+/.test(data.email)){
-            validationErrros.email = 'Email is invalid'
+        if (!data.password.trim()) { 
+            validationErrors.password = 'Password is required';
+        } else if (data.password.length < 6) {
+            validationErrors.password = 'Password must be at least 6 characters';
         }
 
-        if(!data.username.trim()){
-            validationErrros.username = 'Username is required'
+        
+
+        if (!validationErrors.email && !validationErrors.username && !validationErrors.password) {
+            try {
+                const response = await axios.post('http://localhost:8000/api/register', {
+                    username: data.username,
+                    email: data.email,
+                    password: data.password
+                });
+
+                console.log(response.data.status_code);
+
+                console.log(response.data);
+                if (response.data.status_code === 422) {
+                    validationErrors.email = 'Email is taken';
+                }
+                // redirect to login page
+
+                
+
+            } catch (error) {
+                console.error(error);
+                // Handle error (e.g., show error message)
+            }
         }
 
-        if(!data.password.trim()){ 
-            validationErrros.password = 'Password is required'
-        } else if(data.password.length < 6){
-            validationErrros.password = 'Password must be at least 6 characters'
-        }
-
-
-        setErrors(validationErrros)
-    }
+        setErrors(validationErrors);
+    };
 
 
     return (
@@ -69,14 +86,14 @@ export function SignUp(){
                             <div className='flex flex-col gap-4 w-full'>
                             <div className="flex flex-col gap-2">
                                     <label
-                                        htmlFor="inputUserName"
+                                        htmlFor="username"
                                         className='text-[#000] font-medium text-[14px]'
                                     >username</label>
                                     <input 
                                         type="text" 
                                         placeholder="janeDoe56"
                                         autoComplete="off"
-                                        name="inputUserName"
+                                        name="username"
                                         className="border border-stone-300 rounded-md px-3 py-4 w-full leading-[125%] border-[#D8DADC] outline-none text-[#000] font-medium text-[14px]"
                                         onChange={handleChange}
                                     />
@@ -113,14 +130,14 @@ export function SignUp(){
                                 </div>
                                 <div className="flex flex-col gap-2">
                                     <label
-                                        htmlFor="inputEmail"
+                                        htmlFor="email"
                                         className='text-[#000] font-medium text-[14px]'
                                     >Email</label>
                                     <input 
                                         type="email" 
                                         placeholder="example@gmail.com"
                                         autoComplete="off"
-                                        name="inputEmail"
+                                        name="email"
                                         className="border border-stone-300 rounded-md px-3 py-4 w-full leading-[125%] border-[#D8DADC] outline-none text-[#000] font-medium text-[14px]"
                                         onChange={handleChange}
                                     />
@@ -157,13 +174,13 @@ export function SignUp(){
                                 </div>
                                 <div className="flex flex-col gap-2">
                                     <label
-                                        htmlFor="inputPassword"
+                                        htmlFor="password"
                                         className='text-[#000] font-medium text-[14px]'
                                     >Password</label>
                                     <input 
                                         type="password" 
                                         placeholder="********"
-                                        name="inputPassword"
+                                        name="password"
                                         className="border border-stone-300 rounded-md px-3 py-4 w-full leading-[125%] border-[#D8DADC] outline-none text-[#000] font-medium text-[14px]"
                                         onChange={handleChange}
                                     />
