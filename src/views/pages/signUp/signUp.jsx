@@ -52,7 +52,7 @@ export function SignUp() {
                 console.log(response.data.status_code);
 
                 console.log(response.data);
-                if (response.data.status_code === 422) {
+                if (response.data.status_code === 400) {
                     validationErrors.email = 'Email is taken';
                 }
                 // redirect to login page

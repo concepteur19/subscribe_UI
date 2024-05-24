@@ -32,9 +32,9 @@ export function TrySubScribeSection () {
                                 <img src={footerLogo} alt="" />
                             </div>
                             <div className="flex gap-[79px] items-center max-md:gap-[20px]">
-                                <a href="#" className='text-[#000]'>Features</a>
-                                <a href="#" className='text-[#000]'>Company</a>
-                                <a href="#" className='text-[#000]'>Legal</a>
+                                <a href="#feature" className='text-[#000]'>Features</a>
+                                <a href="#Company" className='text-[#000]'>Company</a>
+                                <a href="#legal" className='text-[#000]'>Legal</a>
                             </div>
                             <div className="flex gap-[15px] items-center">
                                 <div className="w-[42px] h-[42px] border border-solid border-[#D8D8E6] flex justify-center items-center rounded-full">

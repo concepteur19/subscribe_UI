@@ -1,6 +1,6 @@
 import React from "react";
 import LogoCard from "../logoCard";
-import { PiPlus, PiPlusCircleFill } from "react-icons/pi";
+import { PiPlus } from "react-icons/pi";
 
 interface CardSubscriptionProps {
   subscriName: string;

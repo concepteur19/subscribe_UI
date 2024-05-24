@@ -106,7 +106,7 @@ const AddSubscriptionComponent: FC<Props> = ({
       ) {
         setPickerOpen(false);
       }
-
+  
       if (
         planTypeInputRef.current &&
         !planTypeInputRef.current.contains(event.target as Node) &&
@@ -115,18 +115,10 @@ const AddSubscriptionComponent: FC<Props> = ({
         setIsInputShow(false);
       }
     };
-
-    rootRef.current?.addEventListener("click", handleDocumentClick);
-    // planTypeInputRef.current?.addEventListener("click", handleDocumentClick);
-
+  
     document.addEventListener("click", handleDocumentClick);
-
+  
     return () => {
-      rootRef.current?.removeEventListener("click", handleDocumentClick);
-      planTypeInputRef.current?.removeEventListener(
-        "click",
-        handleDocumentClick
-      );
       document.removeEventListener("click", handleDocumentClick);
     };
   }, [isDatePickerOpen, isInputShow]);

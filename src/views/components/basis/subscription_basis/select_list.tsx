@@ -44,7 +44,7 @@ const SelectList: FC<Props> = ({
   detailSubscription,
 }) => {
   const location = useLocation();
-  const ispath = location.pathname === "/home/addSubscription";
+  // const ispath = location.pathname === "/home/addSubscription";
   const path = location.pathname;
   const pathTab = path.split("/");
 

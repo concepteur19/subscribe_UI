@@ -12,7 +12,7 @@ export function DashboardPresentationSection() {
                     </div>
                     <div className="flex flex-col justify-center items-center bg-[#101019] max-w-[1276.8px] w-full h-[748.09px] rounded-[24px] max-lg:h-[573px]">
                         <img src={dashboardImage} className='max-[1350px]:w-[937.69px] max-[1350px]:h-[549.6px] max-lg:w-[791.26px] max-lg:h-[463.77px] max-sm:hidden' alt="" />
-                        <img src={phoneDashboard} className='hidden max-sm:block'/>
+                        <img src={phoneDashboard} className='hidden max-sm:block' alt=''/>
                     </div>
                 </div>
             </div>

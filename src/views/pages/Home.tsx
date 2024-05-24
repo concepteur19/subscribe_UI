@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import "../../styles/card-circle-gradient.css";
 import CardLatestPayment from "../components/basis/home_basis/card-latest-payment";
 import CardAmountSpent from "../components/basis/home_basis/card-amount-spent";
@@ -19,84 +19,107 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
+  // DialogTrigger,
   DialogFooter,
 } from "../components/ui/dialog";
 import { PiCheck } from "react-icons/pi";
 import { RxCross2 } from "react-icons/rx";
+import subscribe from "../../assets/images/subscribeIcon.svg";
 
 const Home = () => {
   const { screenSize } = useContext(ScreenSizeContext)!;
+  const [isDialogOpen, setIsDialogOpen] = useState(true);
 
   const isDataReturn = true;
 
   return (
     <>
-      <Dialog>
-        <DialogTrigger className=" bg-primary-0 p-4 rounded-lg" >Open</DialogTrigger>
-        <DialogContent className="text-[#2F384F]">
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <div
+          className={`fixed inset-0 z-50 bg-[#050511] bg-opacity-0 backdrop-blur-[6px] ${
+            isDialogOpen ? "block" : "hidden"
+          }`}
+        ></div>
+        {/* <DialogTrigger className=" bg-primary-0 p-4 rounded-lg">
+          Open
+        </DialogTrigger> */}
+        <DialogContent className="text-[#ffffff] bg-[#0B0C26] border border-[#303163] rounded-3xl ">
           <DialogHeader>
-            <DialogTitle className=" font-redRoseBold text-xl ">Hollupppp!!!</DialogTitle>
-            <DialogDescription className=" font-redRose text-sm py-3">
-            You are in serious action now. Be careful before you delete this field. It will be disappear at universe, forever.
-            </DialogDescription>
+            <DialogTitle className="text-2xl font-russOne font-normal text-white-2 text-center flex flex-col items-center space-y-4 ">
+              <div className="p-[23px] rounded-full bg-[#4649E512] ">
+                <img src={subscribe} alt="Logo" />
+              </div>
+              <h1>SubScribe Tracker</h1>
+            </DialogTitle>
 
-            <div className="flex justify-between items-center py-4">
-              <div className=" flex space-x-4">
-                <img src={netflix} alt="" />
-                <div className=" flex flex-col space-y-[6px]">
-                  <span className="text-[16px]">Netflix</span>
-                  <div className=" text-[13px] space-x-2 ">
-                    <span className=" text-[#9898AA] ">Due date:</span> <span className=" text-red">15/04/2024</span>
+            <div className=" space-y-6">
+              <div className="flex justify-between items-center">
+                <div className=" flex space-x-1 sm:space-x-4">
+                  <img src={netflix} alt="" />
+                  <div className=" flex flex-col space-y-[6px]">
+                    <span className="text-[16px]">Netflix</span>
+                    <div className=" text-[13px] space-x-2 ">
+                      <span className=" text-[#9898AA] ">Due date :</span>{" "}
+                      <span className=" text-[#F01A16]">15/04/2024</span>
+                    </div>
                   </div>
+                </div>
+
+                <div className=" font-redRose  space-x-2 space-y-2 sm:space-y-0 flex flex-col sm:flex-row  items-center">
+                  <Button
+                    btnText="text-[16px] text-[#9898AA] items-start space-x-[6px]"
+                    buttonText="Rejected"
+                    btnIcon={<RxCross2 size={14} />}
+                  />
+                  <Button
+                    btnText="text-[16px] text-[#625AFA] items-start space-x-[6px]"
+                    buttonText="Done"
+                    btnIcon={<PiCheck size={14} />}
+                  />
                 </div>
               </div>
 
-              <div className=" space-x-2 flex">
-                <Button 
-                  buttonText="Rejected"
-                  btnIcon={<RxCross2 />}
-                />
-                <Button 
-                  buttonText="Done"
-                  btnIcon={<PiCheck />}
-                />
-              </div>
-            </div>
-
-            <div className="flex justify-between items-center py-4">
-              <div className=" flex space-x-4">
-                <img src={spotify} alt="" />
-                <div className=" flex flex-col space-y-[6px]">
-                  <span className="text-[16px]">Spotify</span>
-                  <div className=" text-[13px] space-x-2 ">
-                    <span className=" text-[#9898AA] ">Due date:</span> <span className=" text-red">15/04/2024</span>
+              <div className="flex justify-between items-center">
+                <div className=" flex space-x-1 sm:space-x-4">
+                  <img src={spotify} alt="" />
+                  <div className=" flex flex-col space-y-[6px]">
+                    <span className="text-[16px]">Spotify</span>
+                    <div className=" text-[13px] space-x-2 ">
+                      <span className=" text-[#9898AA] ">Due date :</span>{" "}
+                      <span className=" text-[#F01A16]">15/04/2024</span>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div className=" space-x-2 flex">
-              <Button 
-                  buttonText="Rejected"
-                  // btnClass=" flex "
-                  btnIcon={<RxCross2 />}
-                />
-                <Button 
-                  buttonText="Done"
-                  btnIcon={<PiCheck />}
-                />
+                <div className=" font-redRose  space-x-2 space-y-2 sm:space-y-0 flex flex-col sm:flex-row justify-end items-center">
+                  <Button
+                    btnText="text-[16px] text-[#9898AA] items-start space-x-[6px]"
+                    buttonText="Rejected"
+                    btnIcon={<RxCross2 size={14} />}
+                  />
+                  <Button
+                    btnText="text-[16px] text-[#625AFA] items-start space-x-[6px]"
+                    buttonText="Done"
+                    btnIcon={<PiCheck size={14} />}
+                  />
+                </div>
               </div>
             </div>
-
           </DialogHeader>
-          <DialogFooter>
-            <Button 
+          <DialogFooter className="w-full">
+            <Button
               buttonText="Confirm"
-              btnBorder=" rounded border-none"
-              btnBg=" bg-primary-0 "
-              btnP="px-4 py-1"
-              btnText=" text-[#f2f2f2] font-redRoseBold text-[16px] "
+              btnBorder=" rounded-[6px] border-none"
+              btnBg=" bg-white-2 "
+              btnP="p-4 py-[10px]"
+              btnText=" text-primary-0 font-redRoseBold text-[16px] justify-center "
+              handleClick={() => setIsDialogOpen(false)}
             />
+
+            <DialogDescription className=" font-redRose font-light text-sm text-white-2 text-center">
+              By clicking Confirm, you approve all these subscriptions. This
+              action is irreversible.
+            </DialogDescription>
           </DialogFooter>
         </DialogContent>
       </Dialog>

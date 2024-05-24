@@ -1,11 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/layout/Narbar";
 import MobileNav from "../components/layout/MobileNav";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import arrowLeft from "../../assets/images/png/Group.png";
-import ScreenSizeContext, {
-  ScreenSizeProvider,
-} from "../../contexts/screenSizeContext";
+import   { ScreenSizeProvider } from "../../contexts/screenSizeContext";
 // let arrowLeft = require("../../../assets/images/png/Group.png") as any;
 
 interface ScreenSize {
@@ -45,17 +43,17 @@ const Layout = () => {
     console.log(pathTab);
     if (pathTab[1] === "home" && pathTab.length === 3) {
       navigate(pathTab[1]);
-    } else if (pathTab[pathTab.length - 2] === "custom" ) {
+    } else if (pathTab[pathTab.length - 2] === "custom") {
       navigate("home");
     } else if (pathTab[1] === "home" && pathTab.length > 3) {
-      if(pathTab[2] === "subscription") {
-        navigate("home")
-        return
+      if (pathTab[2] === "subscription") {
+        navigate("home");
+        return;
       }
       navigate(pathTab[1] + "/" + pathTab[2]);
     } else if (pathTab[1] === "settings") {
       navigate("home");
-    } 
+    }
   };
 
   return (

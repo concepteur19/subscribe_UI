@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Button from "../buttons/Button";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const NavHome = () => {
   const [isActive, setActive] = useState(true);
