@@ -94,7 +94,7 @@ export function SignUp() {
                                         placeholder="janeDoe56"
                                         autoComplete="off"
                                         name="username"
-                                        className="border border-stone-300 rounded-md px-3 py-4 w-full leading-[125%] border-[#D8DADC] outline-none text-[#000] font-medium text-[14px]"
+                                        className="border border-stone-300 rounded-md px-3 py-4 w-full leading-[125%] border-[#D8DADC] outline-none text-[#000] font-medium text-[16px]"
                                         onChange={handleChange}
                                     />
                                     {errors.username && (
@@ -138,7 +138,7 @@ export function SignUp() {
                                         placeholder="example@gmail.com"
                                         autoComplete="off"
                                         name="email"
-                                        className="border border-stone-300 rounded-md px-3 py-4 w-full leading-[125%] border-[#D8DADC] outline-none text-[#000] font-medium text-[14px]"
+                                        className="border border-stone-300 rounded-md px-3 py-4 w-full leading-[125%] border-[#D8DADC] outline-none text-[#000] font-medium text-[16px]"
                                         onChange={handleChange}
                                     />
                                     {errors.email && (
@@ -181,7 +181,7 @@ export function SignUp() {
                                         type="password" 
                                         placeholder="********"
                                         name="password"
-                                        className="border border-stone-300 rounded-md px-3 py-4 w-full leading-[125%] border-[#D8DADC] outline-none text-[#000] font-medium text-[14px]"
+                                        className="border border-stone-300 rounded-md px-3 py-4 w-full leading-[125%] border-[#D8DADC] outline-none text-[#000] font-medium text-[16px]"
                                         onChange={handleChange}
                                     />
                                     {errors.password && (

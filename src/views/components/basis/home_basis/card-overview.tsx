@@ -28,7 +28,7 @@ const CardOverview: React.FC<CardOverviewProps> = ({
   return (
     <div
       className={`relative text-sm text-white-1 font-redRoseBold rounded-xl p-4 xl:pr-[44.56px] md:py-[14.5px] flex justify-between lg:items-center  m-0 w-full ${
-        positionCard ? " bg-black-2" : "linear-gratient-card"
+        positionCard ? " bg-[#0B0B1A]" : "linear-gratient-card"
       }`}
     >
       <div className={`flex ${flexCard ? flexCard : "space-x-3 items-center"}`}>

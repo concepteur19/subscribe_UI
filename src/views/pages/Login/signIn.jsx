@@ -63,7 +63,7 @@ export function SignIn (){
                                         placeholder="example@gmail.com"
                                         autoComplete="off"
                                         name="inputEmail"
-                                        className="border border-stone-300 rounded-md px-3 py-4 w-full leading-[125%] border-[#D8DADC] outline-none"
+                                        className="text-[16px] border border-stone-300 rounded-md px-3 py-4 w-full leading-[125%] border-[#D8DADC] outline-none"
                                         onChange={handleChange}
                                     />
                                     {errors.email && (
@@ -106,7 +106,7 @@ export function SignIn (){
                                         type="password" 
                                         placeholder="********"
                                         name="inputPassword"
-                                        className="border border-stone-300 rounded-md px-3 py-4 w-full leading-[125%] border-[#D8DADC] outline-none"
+                                        className="text-[16px] border border-stone-300 rounded-md px-3 py-4 w-full leading-[125%] border-[#D8DADC] outline-none"
                                         onChange={handleChange}
                                     />
                                 </div>
