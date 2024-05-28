@@ -1,8 +1,11 @@
 import subscribe from '../../../assets/images/subscribeIcon.svg';
 import { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export function SignUp() {
+    const navigate = useNavigate();
+    
     const [data, setData] = useState({
         username: '',
         email: '',
@@ -55,13 +58,9 @@ export function SignUp() {
                 if (response.data.status_code === 400) {
                     validationErrors.email = 'Email is taken';
                 }
-                // redirect to login page
-
-                
 
             } catch (error) {
                 console.error(error);
-                // Handle error (e.g., show error message)
             }
         }
 

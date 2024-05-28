@@ -25,12 +25,13 @@ import {
 import { PiCheck } from "react-icons/pi";
 import { RxCross2 } from "react-icons/rx";
 import subscribe from "../../assets/images/subscribeIcon.svg";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const { screenSize } = useContext(ScreenSizeContext)!;
   const [isDialogOpen, setIsDialogOpen] = useState(true);
 
-  const isDataReturn = true;
+  const isDataReturn = false;
 
   return (
     <>
@@ -227,15 +228,16 @@ const Home = () => {
                 <p className=" font-redRoseBold text-[16px] text-[#808080]">
                   You don’t have any subscriptions now.
                 </p>
-
-                <Button
-                  btnBg=" bg-[#ffffff] "
-                  btnText=" text-black-0 font-redRoseBold"
-                  btnP="py-[6.5px] px-9 "
-                  btnBorder=" border border-primary-0 rounded"
-                  buttonText="Add subscription"
-                  btnClass=""
-                />
+                <Link to="/home/addSubscription">
+                  <Button
+                    btnBg=" bg-[#ffffff] "
+                    btnText=" text-black-0 font-redRoseBold"
+                    btnP="py-[6.5px] px-9 "
+                    btnBorder=" border border-primary-0 rounded"
+                    buttonText="Add subscription"
+                    btnClass=""
+                  />
+                </Link>
               </div>
             )}
           </div>
