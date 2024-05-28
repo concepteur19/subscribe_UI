@@ -9,7 +9,7 @@ interface Props {
 const InputDiv: React.FC<Props> = ({ children, label, inputBg }) => {
   return (
     <>
-      <div className={` flex justify-between p-4  rounded-xl ${inputBg? inputBg : 'bg-black-2'}`}>
+      <div className={` flex justify-between p-4  rounded-xl ${inputBg? inputBg : 'bg-[#0B0B1A]'}`}>
        {label && <span className=" font-redRoseLight "> {label} </span>}
         {children}
       </div>

@@ -162,9 +162,9 @@ const AddSubscriptionComponent: FC<Props> = ({
           <div className="space-y-4">
             {!(sizeLogo || logo) && (
               <div className=" flex flex-col space-y-4 font-redRoseLight text-sm ">
-                <input type="text" placeholder="Enter the subscription name" className=" p-4 outline-none rounded-xl bg-black-2"/>
-                <input type="text" placeholder="Enter a plan type" className=" p-4 outline-none rounded-xl bg-black-2 "/>
-                <input type="text" placeholder="Enter the subscription amount" className=" p-4 outline-none rounded-xl bg-black-2 "/>
+                <input type="text" placeholder="Enter the subscription name" className=" p-4 outline-none rounded-xl bg-[#0B0B1A] text-[16px]"/>
+                <input type="text" placeholder="Enter a plan type" className=" p-4 outline-none rounded-xl bg-[#0B0B1A] text-[16px] "/>
+                <input type="text" placeholder="Enter the subscription amount" className=" p-4 outline-none rounded-xl bg-[#0B0B1A] text-[16px] "/>
               </div>
             )}
 

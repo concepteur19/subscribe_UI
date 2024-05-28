@@ -14,6 +14,8 @@ export function SignUp() {
 
     const [errors, setErrors] = useState({});
 
+    const navigate = useNavigate();
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setData({
@@ -52,13 +54,16 @@ export function SignUp() {
                     password: data.password
                 });
 
-                console.log(response.data.status_code);
-
                 console.log(response.data);
-                if (response.data.status_code === 400) {
+
+                if (response.data.code === 200) {
+                    // Redirect to login page
+
+                    navigate('/Login'); // If using react-router-dom v5
+                    // navigate('/login'); // If using react-router-dom v6
+                } else if (response.data.status_code === 422) {
                     validationErrors.email = 'Email is taken';
                 }
-
             } catch (error) {
                 console.error(error);
             }
@@ -93,7 +98,7 @@ export function SignUp() {
                                         placeholder="janeDoe56"
                                         autoComplete="off"
                                         name="username"
-                                        className="border border-stone-300 rounded-md px-3 py-4 w-full leading-[125%] border-[#D8DADC] outline-none text-[#000] font-medium text-[14px]"
+                                        className="border border-stone-300 rounded-md px-3 py-4 w-full leading-[125%] border-[#D8DADC] outline-none text-[#000] font-medium text-[16px]"
                                         onChange={handleChange}
                                     />
                                     {errors.username && (
@@ -137,7 +142,7 @@ export function SignUp() {
                                         placeholder="example@gmail.com"
                                         autoComplete="off"
                                         name="email"
-                                        className="border border-stone-300 rounded-md px-3 py-4 w-full leading-[125%] border-[#D8DADC] outline-none text-[#000] font-medium text-[14px]"
+                                        className="border border-stone-300 rounded-md px-3 py-4 w-full leading-[125%] border-[#D8DADC] outline-none text-[#000] font-medium text-[16px]"
                                         onChange={handleChange}
                                     />
                                     {errors.email && (
@@ -180,7 +185,7 @@ export function SignUp() {
                                         type="password" 
                                         placeholder="********"
                                         name="password"
-                                        className="border border-stone-300 rounded-md px-3 py-4 w-full leading-[125%] border-[#D8DADC] outline-none text-[#000] font-medium text-[14px]"
+                                        className="border border-stone-300 rounded-md px-3 py-4 w-full leading-[125%] border-[#D8DADC] outline-none text-[#000] font-medium text-[16px]"
                                         onChange={handleChange}
                                     />
                                     {errors.password && (

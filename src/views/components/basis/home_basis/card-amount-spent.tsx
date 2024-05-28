@@ -6,7 +6,7 @@ interface AmountSpentProps {
 
 const CardAmountSpent: React.FC<AmountSpentProps> = ({ amount }) => {
   return (
-    <div className="relative flex flex-col text-center items-center py-6 bg-[#101019] rounded-xl space-y-4">
+    <div className="relative flex flex-col text-center items-center py-6 bg-[#0B0B1A] rounded-xl space-y-4">
       <span className="linear-gratient rounded-full w-10 h-10 flex items-center justify-center text-[32px] mb-4 z-20">
         $
       </span>

@@ -9,7 +9,7 @@ export function FeatureSection() {
             <div className="flex justify-between max-w-[1276.8px] w-full gap-3 mx-auto max-lg:flex-col max-lg:items-center">
                 <div className="feature-section-container-left max-lg:max-w-[578px]">
                     <div className="flex items-start flex-col gap-5">
-                        <h2 className='text-[52.74px] leading-[110%] tracking-[-1.34px] font-bold text-white max-w-[578px] text-start max-lg:max-w-full max-lg:text-center max-sm:text-[32px]'>Features that meet the specific needs of users</h2>
+                        <h2 className='text-[52.74px] leading-[110%] tracking-[-1.34px] font-redRoseBold text-white max-w-[578px] text-start max-lg:max-w-full max-lg:text-center max-sm:text-[32px]'>Features that meet the specific needs of users</h2>
                         <p className='text-[24.8px] leading-[150%] text-white max-w-[403px] text-start mb-[30px] max-lg:max-w-full max-lg:text-center max-sm:text-[20px]'>Power your subscription experience with features tailored to each user.</p>
                     </div>
                     <div className="features-list flex flex-col justify-center">
@@ -36,7 +36,7 @@ export function FeatureSection() {
                         </div>
                     </div>
                 </div>
-                <div className="pt-[38px] pr-[4.8px] pb-[48.52px] pl-[57.6px] bg-[#101019] inline-flex rounded-[24px] max-xl:pl-[26px]">
+                <div className="pt-[38px] pr-[4.8px] pb-[48.52px] pl-[57.6px] bg-[#0B0B1A] inline-flex rounded-[24px] max-xl:pl-[26px]">
                     <div className="inline-flex flex-col items-center gap-[50px]">
                         <div className="character-cap-green flex items-center justify-end max-w-[530px] w-full">
                             <img src={characterCapGreen} alt="" />

@@ -5,6 +5,7 @@ import { DashboardPresentationSection } from './views/components/layout/Dashboar
 import { FeatureSection } from './views/components/layout/featureSection'
 import { Testimonial } from './views/components/layout/testimonial'
 import { TrySubScribeSection } from './views/components/layout/trySubScribe'
+import { FaqSection } from './views/components/layout/faqSection'
 
 function LandingPage() {
   return (
@@ -13,6 +14,7 @@ function LandingPage() {
       <SponsorSection/>
       <DashboardPresentationSection/>
       <FeatureSection/>
+      <FaqSection/>
       <Testimonial/>
       <TrySubScribeSection/>
     </div>
