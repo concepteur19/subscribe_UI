@@ -4,9 +4,34 @@ import profileM from "../../assets/images/png/ProfileM.png";
 import InputDiv from "../components/basis/inputDiv";
 import Button from "../components/basis/buttons/Button";
 import ScreenSizeContext from "../../contexts/screenSizeContext";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Setting() {
   const { screenSize } = useContext(ScreenSizeContext)!;
+
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    
+    
+    try {
+        const token = localStorage.getItem('token');
+        await axios.post('http://localhost:8000/api/logout', {}, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        localStorage.removeItem('token');
+
+        navigate('/Login');
+
+    } catch (error) {
+        console.error('Logout error', error);
+    }
+};
+
 
   return (
     <div className=" w-full md:space-y-12 ">
@@ -46,11 +71,12 @@ function Setting() {
       <div className="fixed md:relative bottom-0 left-0 flex justify-center md:justify-start items-center p-6 w-full sm:px-24 md:px-28 lg:px-36 xl:px-[25%] 2xl:px-[30%] ">
         <Button
           buttonText="Logout"
-          btnClass="w-full md:w-[134px] "
+          btnClass="w-full md:w-[134px] flex items-center justify-center"
           btnP=" px-auto py-[14px]"
           btnBorder=" rounded-xl "
           btnText=" text-[16px] font-redRoseBold "
           btnBg=" bg-red"
+          handleClick={handleLogout}
         />
       </div>
     </div>

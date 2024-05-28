@@ -1,6 +1,7 @@
 import subscribe from '../../../assets/images/subscribeIcon.svg';
 import { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export function SignUp() {
     const [data, setData] = useState({
@@ -10,6 +11,8 @@ export function SignUp() {
     });
 
     const [errors, setErrors] = useState({});
+
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -49,16 +52,16 @@ export function SignUp() {
                     password: data.password
                 });
 
-                console.log(response.data.status_code);
-
                 console.log(response.data);
-                if (response.data.status_code === 400) {
+
+                if (response.data.code === 200) {
+                    // Redirect to login page
+
+                    navigate('/Login'); // If using react-router-dom v5
+                    // navigate('/login'); // If using react-router-dom v6
+                } else if (response.data.status_code === 422) {
                     validationErrors.email = 'Email is taken';
                 }
-                // redirect to login page
-
-                
-
             } catch (error) {
                 console.error(error);
                 // Handle error (e.g., show error message)

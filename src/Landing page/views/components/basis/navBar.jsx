@@ -64,9 +64,11 @@ export function Navbar() {
                   Login
                 </button>
               </Link>
-              <button className="getStarted-button px-[24.34px] py-[11.59px] text-[15.5px] bg-[#4649E5] text-white rounded-[8px] cursor-pointer">
-                Get started
-              </button>
+              <Link to="/signup">
+                <button className="getStarted-button px-[24.34px] py-[11.59px] text-[15.5px] bg-[#4649E5] text-white rounded-[8px] cursor-pointer">
+                  Get started
+                </button>
+              </Link>
             </div>
           </div>
         </div>
