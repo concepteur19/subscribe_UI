@@ -1,12 +1,8 @@
-import axiosAuth from "@/src/lib/axios";
-import ResponseModel from "@/src/models/Response.model";
-import User from "@/src/models/User.model";
+import axiosAuth from "../../lib/axios";
+import ResponseModel from "../../models/Response.model";
+import User from "../../models/User.model";
 
-// const RegisterController = {
-
-// }
-
-export default async function userRegisteration(user: User): Promise<any> {
+export default async function userRegisteration(user: User): Promise<ResponseModel<User>> {
     try {
         const response = await axiosAuth.post<ResponseModel<User>>(`/register`, user);
 

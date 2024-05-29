@@ -1,7 +1,7 @@
-import axiosAuth from "@/src/lib/axios";
-import DefaultSubscription from "@/src/models/DefaultSubscription.model";
-import ResponseModel from "@/src/models/Response.model";
-import Subscription from "@/src/models/Subscription.model";
+import axiosAuth from "../../lib/axios";
+import DefaultSubscription from "../../models/DefaultSubscription.model";
+import ResponseModel from "../../models/Response.model";
+import Subscription from "../../models/Subscription.model";
 
 const SubscriptionController = {
     //  ajouter unz souscription
@@ -26,7 +26,7 @@ const SubscriptionController = {
 
     getDefaultSubscription: async (): Promise<ResponseModel<DefaultSubscription[]>> => {
         try {
-            const response = await axiosAuth.get<ResponseModel<DefaultSubscription[]>>('/subscriptions/default_subscriptions');
+            const response = await axiosAuth.post<ResponseModel<DefaultSubscription[]>>('/subscriptions/defaultSubscriptions');
             return response.data;
         } catch (error) {
             throw error;

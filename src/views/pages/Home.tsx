@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "../../styles/card-circle-gradient.css";
 import CardLatestPayment from "../components/basis/home_basis/card-latest-payment";
 import CardAmountSpent from "../components/basis/home_basis/card-amount-spent";
@@ -29,7 +29,8 @@ import { Link } from "react-router-dom";
 
 const Home = () => {
   const { screenSize } = useContext(ScreenSizeContext)!;
-  const [isDialogOpen, setIsDialogOpen] = useState(true);
+  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(true);
+  // const [errorMessage, setErrorServer] = useState<String>("");
 
   const isDataReturn = false;
 
@@ -142,7 +143,7 @@ const Home = () => {
                 <div className=" flex flex-col ">
                   <div className=" max-sm:hidden space-y-3 sm:mb-3 md:mb-0">
                     {Array.from({ length: 7 }).map((_, i) => (
-                      <CardLatestPayment />
+                      <CardLatestPayment key={i+"LP"} />
                     ))}
                   </div>
 
@@ -213,6 +214,7 @@ const Home = () => {
               <div className="flex flex-col space-y-3">
                 {Array.from({ length: 8 }).map((_, i) => (
                   <CardOverview
+                  key={i+"$"}
                     due={8}
                     imgSrc={netflix}
                     subscriName="Netflix"

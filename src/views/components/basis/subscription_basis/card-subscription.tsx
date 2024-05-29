@@ -17,7 +17,7 @@ const CardSubscription: React.FC<CardSubscriptionProps> = ({
         linear-gratient-card`}
     >
       <div className={`flex space-x-3 items-center`}>
-        <LogoCard imgSrc={imgSrc} />
+        <LogoCard imgSrc={imgSrc} s={32} />
         <span className=" text-[16px] ">{subscriName} </span>
       </div>
 
