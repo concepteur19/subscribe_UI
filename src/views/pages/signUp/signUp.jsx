@@ -4,7 +4,6 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 export function SignUp() {
-    const navigate = useNavigate();
     
     const [data, setData] = useState({
         username: '',
