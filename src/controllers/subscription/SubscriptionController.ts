@@ -33,6 +33,15 @@ const SubscriptionController = {
         }
     },
 
+    getOneDefaultSubscription: async (defaulSub_id: number): Promise<ResponseModel<DefaultSubscription>> => {
+        try {
+            const response = await axiosAuth.get<ResponseModel<DefaultSubscription>>(`/subscriptions/defaultSubscriptions/${defaulSub_id}`);
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    },
+
     // toute les souscriptions  d'un utilisateur
     getUserSubscriptions: async (user_id: number): Promise<ResponseModel<Subscription[]>> => {
         try {

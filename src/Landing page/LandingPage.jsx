@@ -9,7 +9,7 @@ import { FaqSection } from './views/components/layout/faqSection'
 
 function LandingPage() {
   return (
-    <div className=' text-white-2'>
+    <div className=' text-white-2 font-redRose'>
       <HeroSection/>
       <SponsorSection/>
       <DashboardPresentationSection/>

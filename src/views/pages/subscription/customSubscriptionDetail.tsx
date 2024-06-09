@@ -7,6 +7,7 @@ const CustomSubscriptionDetail = () => {
     cycle: "Monthly",
     payment: "UPI",
     remind: "2 days before",
+    end_on: "12 Dec 2000"
   };
 
   return (
@@ -18,7 +19,7 @@ const CustomSubscriptionDetail = () => {
       amount="8.44"
       dueDate="5"
       cycle="Monthly"
-      plan="premium"
+      planDetail="premium"
       detailSubscription={detailSubscription}
     />
   );

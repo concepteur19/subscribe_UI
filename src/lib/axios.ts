@@ -1,4 +1,5 @@
-import axios, { InternalAxiosRequestConfig } from 'axios';
+import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const axiosAuth = axios.create({
     baseURL: 'http://localhost:8000/api'
@@ -13,6 +14,21 @@ axiosAuth.interceptors.request.use((config: InternalAxiosRequestConfig) => {
     }
 
     return config;
-})
+});
+
+axiosAuth.interceptors.response.use(
+    (response) => {
+        return response;
+    },
+    (error: AxiosError) => {
+        if (error.response) {
+            if (error.response.status === 401 || error.response.status === 403) {
+                const navigate = useNavigate();
+                navigate('/Login');
+            }
+        }
+        return Promise.reject(error);
+    }
+);
 
 export default axiosAuth;

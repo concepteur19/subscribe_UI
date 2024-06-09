@@ -19,7 +19,6 @@ const AddSubscription = () => {
       await SubscriptionController.getDefaultSubscription()
         .then((response) => {
           setDefaultSub(response.data);
-          console.log(response.data);
         })
         .catch((error) => {
           console.log(error.message);

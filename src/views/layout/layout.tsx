@@ -3,7 +3,8 @@ import Navbar from "../components/layout/Narbar";
 import MobileNav from "../components/layout/MobileNav";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import arrowLeft from "../../assets/images/png/Group.png";
-import   { ScreenSizeProvider } from "../../contexts/screenSizeContext";
+import { ScreenSizeProvider } from "../../contexts/screenSizeContext";
+import { UserProvider } from "../../contexts/userDataContext";
 // let arrowLeft = require("../../../assets/images/png/Group.png") as any;
 
 interface ScreenSize {
@@ -59,42 +60,44 @@ const Layout = () => {
   return (
     <div className="relative ">
       <ScreenSizeProvider>
-        <Navbar />
-        <div
-          className={`relative px-6 sm:px-[52px]  ${
-            ispath ? "lg:py-[81px]  " : "md:pt-12 "
-          } ${
-            windowSize.width < 768 && pathTab[1] === "settings"
-              ? "py-0"
-              : "py-6"
-          }`}
-        >
-          {/* return button */}
-          {(pathTab[1] === "home" && pathTab.length > 2) ||
-          pathTab[1] === "settings" ||
-          pathTab[1] === "payments" ? (
-            <div
-              onClick={handleReturn}
-              className={`cursor-pointer ${
-                windowSize.width < 768 && pathTab[1] === "settings" && "pt-6"
-              } mb-6 md:hidden`}
-            >
-              <img src={arrowLeft} alt="fleche" />
-            </div>
-          ) : (
-            ""
-          )}
+        <UserProvider>
+          <Navbar />
           <div
-            className={`${
-              windowSize.width < 768 &&
-              pathTab[1] === "settings" &&
-              "-z-10 absolute top-0 left-0 w-full"
+            className={`relative px-6 sm:px-[52px]  ${
+              ispath ? "lg:py-[81px]  " : "md:pt-12 "
+            } ${
+              windowSize.width < 768 && pathTab[1] === "settings"
+                ? "py-0"
+                : "py-6"
             }`}
           >
-            <Outlet />
+            {/* return button */}
+            {(pathTab[1] === "home" && pathTab.length > 2) ||
+            pathTab[1] === "settings" ||
+            pathTab[1] === "payments" ? (
+              <div
+                onClick={handleReturn}
+                className={`cursor-pointer ${
+                  windowSize.width < 768 && pathTab[1] === "settings" && "pt-6"
+                } mb-6 md:hidden`}
+              >
+                <img src={arrowLeft} alt="fleche" />
+              </div>
+            ) : (
+              ""
+            )}
+            <div
+              className={`${
+                windowSize.width < 768 &&
+                pathTab[1] === "settings" &&
+                "-z-10 absolute top-0 left-0 w-full"
+              }`}
+            >
+              <Outlet />
+            </div>
           </div>
-        </div>
-        <MobileNav />
+          <MobileNav />
+        </UserProvider>
       </ScreenSizeProvider>
     </div>
   );

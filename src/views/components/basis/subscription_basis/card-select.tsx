@@ -11,6 +11,8 @@ interface CardSelectProps {
   cycle?: string;
   remind?: string;
   payment?: string;
+
+  // isSubmitable? : boolean;
 }
 
 const CardSelect: FC<CardSelectProps> = ({
@@ -22,6 +24,7 @@ const CardSelect: FC<CardSelectProps> = ({
   cycle,
   remind,
   payment,
+  // isSubmitable
 }) => {
   const [isSelectOpen, setSelectOpen] = useState<Boolean>(false);
   const selectRef = useRef<HTMLDivElement>(null);
@@ -59,17 +62,21 @@ const CardSelect: FC<CardSelectProps> = ({
           } flex items-center space-x-1`}
           onClick={options && (() => setSelectOpen(!isSelectOpen))}
         >
-          { !options? <span>
-            {label === "Type" ? (
-              <span> {type} </span>
-            ) : label === "Cycle" ? (
-              <span> {cycle} </span>
-            ) : label === "Payment Method" ? (
-              <span> {payment} </span>
-            ) : label === "Remind me" ? (
-              <span> {remind} </span>
-            ) : null}
-          </span> : <span> {option} </span> }
+          {!options ? (
+            <div>
+              {label === "Type" ? (
+                <span> {type} </span>
+              ) : label === "Cycle" ? (
+                <span> {cycle} </span>
+              ) : label === "Payment Method" ? (
+                <span> {payment} </span>
+              ) : label === "Remind me" ? (
+                <span> {remind} </span>
+              ) : null}
+            </div>
+          ) : (
+            <option> {option} </option>
+          )}
 
           {options && (
             <span>

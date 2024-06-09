@@ -27,6 +27,8 @@ interface Props {
   setPlanType?: (option: string) => void;
 
   detailSubscription: DetailSubscription | undefined;
+
+  // isSubmitable?: boolean
 }
 
 const SelectList: FC<Props> = ({
@@ -42,6 +44,7 @@ const SelectList: FC<Props> = ({
   setPlanType,
 
   detailSubscription,
+  // isSubmitable,
 }) => {
   const location = useLocation();
   // const ispath = location.pathname === "/home/addSubscription";
@@ -90,6 +93,8 @@ const SelectList: FC<Props> = ({
                   }
                   label={label}
                   options={options$}
+
+                  // isSubmitable={isSubmitable}
                 />
               ) : (
                 <CardSelect

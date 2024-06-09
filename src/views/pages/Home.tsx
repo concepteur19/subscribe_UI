@@ -26,13 +26,31 @@ import { PiCheck } from "react-icons/pi";
 import { RxCross2 } from "react-icons/rx";
 import subscribe from "../../assets/images/subscribeIcon.svg";
 import { Link } from "react-router-dom";
+import SubscriptionController from "../../controllers/subscription/SubscriptionController";
+import UserContext from "../../contexts/userDataContext";
+import Subscription from "@/src/models/Subscription.model";
 
 const Home = () => {
+  const { id } = useContext(UserContext)!;
   const { screenSize } = useContext(ScreenSizeContext)!;
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(true);
-  // const [errorMessage, setErrorServer] = useState<String>("");
+  const [subscriptions, setUserSubscription] = useState<Subscription[]>([]);
+  const [isDataReturn, setIsDataReturn] = useState<boolean>(false);
 
-  const isDataReturn = false;
+  useEffect(() => {
+    const fetchUserSubsciptions = async () => {
+      const response = await SubscriptionController.getUserSubscriptions(id!);
+
+      console.log("user subscription", response);
+      setUserSubscription(response.data!);
+      if (response.data?.length! > 0) {
+        console.log("data sup 0");
+        setIsDataReturn(true);
+      }
+    };
+
+    fetchUserSubsciptions();
+  }, [id]);
 
   return (
     <>
@@ -143,7 +161,7 @@ const Home = () => {
                 <div className=" flex flex-col ">
                   <div className=" max-sm:hidden space-y-3 sm:mb-3 md:mb-0">
                     {Array.from({ length: 7 }).map((_, i) => (
-                      <CardLatestPayment key={i+"LP"} />
+                      <CardLatestPayment key={i + "LP"} />
                     ))}
                   </div>
 
@@ -212,9 +230,23 @@ const Home = () => {
 
             {isDataReturn ? (
               <div className="flex flex-col space-y-3">
-                {Array.from({ length: 8 }).map((_, i) => (
+                {subscriptions.map((subscription, index) => {
+                  return (
+                    <CardOverview
+                      key={index + "-" + subscription.service_name}
+                      due={8}
+                      imgSrc={'http://localhost:8000/storage/'+subscription.logo}
+                      subscriName={subscription.service_name!}
+                      price={subscription.amount!}
+                      dMy={subscription.cycle}
+                      typePlan={subscription.type}
+                      id={subscription.id}
+                    />
+                  );
+                })}
+                {/* {Array.from({ length: 8 }).map((_, i) => (
                   <CardOverview
-                  key={i+"$"}
+                    key={i + "$"}
                     due={8}
                     imgSrc={netflix}
                     subscriName="Netflix"
@@ -223,7 +255,7 @@ const Home = () => {
                     typePlan="Basic Plan"
                     id={i}
                   />
-                ))}
+                ))} */}
               </div>
             ) : (
               <div className=" flex flex-col items-center justify-center pt-28 space-y-11 ">

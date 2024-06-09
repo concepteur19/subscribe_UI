@@ -1,4 +1,5 @@
 export default interface Subscription {
+    id?: number
     user_id: number,
     defaultSub_id?: number,
     service_name?: string,
@@ -9,5 +10,6 @@ export default interface Subscription {
     payment_method: string,
     cycle: string,
     plan_type: string,
+    type?: string 
     reminder: number,
 }
