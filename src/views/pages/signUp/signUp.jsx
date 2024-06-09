@@ -5,11 +5,12 @@ import { useNavigate } from "react-router-dom";
 import userRegisteration from "../../../controllers/auth/resgisterController";
 
 export function SignUp() {
-  const [data, setData] = useState({
-    username: "",
-    email: "",
-    password: "",
-  });
+    
+    const [data, setData] = useState({
+        username: '',
+        email: '',
+        password: ''
+    });
 
   const [errors, setErrors] = useState({});
 
