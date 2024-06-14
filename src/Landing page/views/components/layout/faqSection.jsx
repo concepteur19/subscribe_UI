@@ -11,34 +11,22 @@ export function FaqSection (){
                     <div className="flex gap-7 max-[875px]:flex-col max-[875px]:gap-8">
                         <div className="flex flex-col gap-7">
                             <div className="flex flex-col gap-2 p-8 bg-[#0B0B1A] rounded-[8px]">
-                                <h3 className="text-redRoseBold text-[18.4px]">What is Design Maestro?</h3>
-                                <p className="text-[#A2A2A2] text-[16px] max-w-[436.72px] leading-[26px]">Design Maestro is a FREE package of macros that you
-                                can use in the Keyboard Maestro app for macOS.
-                                Wonder how Design Maestro automations can help
-                                you? Read </p>
+                                <h3 className="text-redRoseBold text-[18.4px]">What is Subscribe?</h3>
+                                <p className="text-[#A2A2A2] text-[16px] max-w-[436.72px] leading-[26px]">Subscribe is an intuitive platform designed to help you manage all your subscriptions in one convenient location. It streamlines your subscription management.</p>
                             </div>
                             <div className="flex flex-col gap-2 p-8 bg-[#0B0B1A] rounded-[8px]">
-                                <h3 className="text-redRoseBold text-[18.4px]">I have an idea for automation! Where do I submit it?</h3>
-                                <p className="text-[#A2A2A2] text-[16px] max-w-[436.72px] leading-[26px]">If you have an idea for automation that we could
-                                implement in the next versions of Design Maestro let us
-                                know . We’ll review it and if it will find it useful we will implement it!  </p>
+                                <h3 className="text-redRoseBold text-[18.4px]">Is my data safe with Subscribe?</h3>
+                                <p className="text-[#A2A2A2] text-[16px] max-w-[436.72px] leading-[26px]">Absolutely. At Subscribe, we prioritize your data security. We use advanced encryption methods to ensure that all your personal information and subscription details are stored securely.</p>
                             </div>
                         </div>
                         <div className="flex flex-col gap-7">
                             <div className="flex flex-col gap-2 p-8 bg-[#0B0B1A] rounded-[8px]">
-                                <h3 className="text-redRoseBold text-[18.4px]">What is Keyboard Maestro?</h3>
-                                <p className="text-[#A2A2A2] text-[16px] max-w-[436.72px] leading-[26px]">macOS where you can automate virtually anything.
-                                Applications or websites, text or images, simple or
-                                complex, on command or scheduled. If you can
-                                perform it manually, Keyboard Maestro can almost
-                                certainly automate it for you. Whether it is typing your
-                                email address, going to Gmail or Twitter, launching
-                                Pages, or duplicating a line, Keyboard Maestro can
-                                help.</p>
+                                <h3 className="text-redRoseBold text-[18.4px]">How can Subscribe help me?</h3>
+                                <p className="text-[#A2A2A2] text-[16px] max-w-[436.72px] leading-[26px]">Subscribe helps you keep track of all your subscription services, reminding you of renewal dates, tracking your expenses, and ensuring you never miss an important update or payment. It’s your go-to tool for efficient subscription management.</p>
                             </div>
                             <div className="flex flex-col gap-2 p-8 bg-[#0B0B1A] rounded-[8px]">
-                                <h3 className="text-redRoseBold text-[18.4px]">Can I use Keyboard Maestro for Windows or Linux?</h3>
-                                <p className="text-[#A2A2A2] text-[16px] max-w-[436.72px] leading-[26px]">No. Keyboard Maestro is only available for macOS.</p>
+                                <h3 className="text-redRoseBold text-[18.4px]">Can I use Subscribe on multiple devices?</h3>
+                                <p className="text-[#A2A2A2] text-[16px] max-w-[436.72px] leading-[26px]">Yes, Subscribe is designed to work seamlessly across multiple devices.</p>
                             </div>
                         </div>
                     </div>
