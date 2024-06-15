@@ -134,7 +134,7 @@ export function SignIn() {
     <>
       <div className="px-3 pt-[120px] max-sm:pt-[70px]">
         <div className="bg-[#fff] py-[35px] px-[25px] max-w-[370px] rounded-xl m-auto">
-          <div className="flex flex-col items-start gap-6">
+          <div className="flex flex-col items-center gap-6">
             <div className="flex items-center justify-center">
               <img src={subscribe} alt="Logo" />
             </div>
@@ -214,7 +214,8 @@ export function SignIn() {
               >
                 Log in
               </button>
-            </form>
+              <p className='text-[14px] text-[#2F384F] text-center flex flex-col items-center gap-2'>By clicking continue, you acknowledge that you have read and agree to Terms of Service & Privacy Policy.</p>
+            </div>
           </div>
         </div>
       </div>
