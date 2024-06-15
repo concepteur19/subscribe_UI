@@ -61,7 +61,7 @@ export function SignUp() {
         //     password: data.password
         // });
 
-       
+        console.log("-----------------------user", response, "--------------------");
 
         if (response.code === 200) {
             console.log("-----------------------user", response.data, "--------------------");
