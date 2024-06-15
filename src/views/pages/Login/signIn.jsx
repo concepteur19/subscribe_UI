@@ -1,7 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import subscribe from "../../../assets/images/subscribeIcon.svg";
 import userSignIn from "../../../controllers/auth/loginController";
+import { useGoogleLogin } from "@react-oauth/google";
+import axios from "axios";
+import Button from "../../components/basis/buttons/Button";
+import { BiLogoGoogle } from "react-icons/bi";
+import RegisterController from "@/src/controllers/auth/resgisterController";
 
 export function SignIn() {
   const navigate = useNavigate();
@@ -59,7 +64,7 @@ export function SignIn() {
 
         if (responseLogin.status) {
           const user = responseLogin.data;
-          localStorage.setItem('user', JSON.stringify(user));
+          localStorage.setItem("user", JSON.stringify(user));
           // console.log(responseLogin.data.token);
           localStorage.setItem("token", user.token);
           navigate("/home");
@@ -72,6 +77,58 @@ export function SignIn() {
       }
     }
   };
+
+  const [user, setUser] = useState([]);
+  const [userToRegistrate, setUserToRe] = useState({})
+
+  const login = useGoogleLogin({
+    onSuccess: (codeResponse) => setUser(codeResponse),
+    onError: (error) => console.log('Login Failed:', error)
+  });
+
+  useEffect(() => {
+    if (user) {
+      axios
+        .get(
+          `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`,
+          {
+            headers: {
+              Authorization: `Bearer ${user.access_token}`,
+              Accept: "application/json",
+            },
+          }
+        )
+        .then((res) => {
+          console.log("response google", res.data);
+          setUserToRe(res.data)
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [user]);
+
+  useEffect(
+    () => {
+      const registerUser = async () => {
+        const response = await RegisterController.googleRegistration({username: userToRegistrate.name, email: userToRegistrate.email})
+        console.log(response);
+
+        if (response.status) {
+          const user = response.data;
+          localStorage.setItem("user", JSON.stringify(user));
+          // console.log(responseLogin.data.token);
+          localStorage.setItem("token", user.token);
+          navigate("/home");
+        } else {
+          console.log("Invalid credentials");
+          // setErrors({ ...errors, general: "Invalid credentials" });
+        }
+      }
+      
+      registerUser()
+    },
+    [userToRegistrate]
+  )
+
 
   return (
     <>
@@ -136,9 +193,24 @@ export function SignIn() {
                   )}
                 </div>
               </div>
+              {/* Bouton de connexion avec Google */}
+              <div className=" w-full flex justify-center items-center hover:text-white-2 text-primary-0">
+                <Button 
+                  handleClick={login}
+                  btnIcon={ <BiLogoGoogle className="" size={24}/> }
+                  buttonText=" Se connecter avec google "
+                  btnP="py-3"
+                  btnType="button"
+                  btnClass="w-full hover:text-black-0 "
+                  btnText="text-primary-0 hover:text-white-2 text-sm"
+                  btnBorder="  rounded border border-primary-0 hover:border-none border-opacity-60 hover:bg-primary-0 "
+                />
+                
+              </div>
+
               <button
                 type="submit"
-                className="py-3 px-4 text-white rounded-md cursor-pointer font-semiBold text-[16px] bg-[#4649E5] hover:bg-[#3B3EAC] transition duration-300 ease-in-out w-full text-[#fff] font-redRoseBold"
+                className=" py-3 px-4 text-white rounded-md cursor-pointer font-semiBold text-[16px] bg-[#4649E5] hover:bg-[#3B3EAC] transition duration-300 ease-in-out w-full text-[#fff] font-redRoseBold"
               >
                 Log in
               </button>

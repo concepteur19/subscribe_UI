@@ -2,15 +2,16 @@ import { format, getYear } from "date-fns";
 import React, { FC, useContext, useEffect, useRef, useState } from "react";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
-import LogoCard from "../../../components/basis/logoCard";
-import dollar from "../../../../assets/images/png/$.png";
-import Button from "../../../components/basis/buttons/Button";
-import InputDiv from "../../../components/basis/inputDiv";
-import SelectList from "../../../components/basis/subscription_basis/select_list";
-import PlanType from "../../../../models/PlanType.model";
-import SubscriptionController from "../../../../controllers/subscription/SubscriptionController";
+import LogoCard from "@/src/views/components/basis/logoCard";
+import dollar from "@/src/assets/images/png/$.png";
+import Button from "@/src/views/components/basis/buttons/Button";
+import InputDiv from "@/src/views/components/basis/inputDiv";
+import SelectList from "@/src/views/components/basis/subscription_basis/select_list";
+import PlanType from "@/src/models/PlanType.model";
+import SubscriptionController from "@/src/controllers/subscription/SubscriptionController";
 import { useNavigate } from "react-router-dom";
-import UserContext from "../../../../contexts/userDataContext";
+import UserContext from "@/src/contexts/userDataContext";
+import Input from "../Input";
 
 export interface DetailSubscription {
   type: string;
@@ -52,26 +53,18 @@ const AddSubscriptionComponent: FC<Props> = ({
 }) => {
   const { id } = useContext(UserContext)!;
 
-  const handleSettingType = (plantypeMap: string[] | undefined) => {
-    setPlan(plantypeMap ? plantypeMap : []);
-  };
-
-  useEffect(() => {
-    console.log("subscription plan types", planTypes);
-
-    const plantypeMap = planTypes?.map((planType, index) => {
-      return planType.type;
-    });
-
-    handleSettingType(plantypeMap);
-  }, [planTypes]);
-
-  const [planName, setPlan] = useState<string[]>([]);
+  const [planName, setPlan] = useState<string[] | undefined>([]);
+  const [subscriptionName, setName] = useState<string>("");
+  const [amount$, setAmount] = useState<number>();
+  const [selected, setSelected] = useState<Date | undefined>();
+  const [isDatePickerOpen, setPickerOpen] = useState<Boolean>(false);
+  const [isInputShow, setIsInputShow] = useState<boolean>(false);
+  const [isSubmitable, setIsSubmitable] = useState<boolean>(true);
 
   const selectsLabels = ["Type", "Cycle", "Payment Method", "Remind me"];
 
   const options = {
-    plan: planName, //["Base", "Standart", "Premium"],
+    plan: planName,
     cycle: ["Monthly", "Semester", "Yearly"],
     payment: ["UPI", "Stripe", "Paypal"],
     remind: [
@@ -84,49 +77,24 @@ const AddSubscriptionComponent: FC<Props> = ({
   };
 
   const [optionPayment, setOptionPayment] = useState<string | undefined>(
-    options?.payment[0]
+    options.payment[0]
   );
   const [optionCycle, setOptionCycle] = useState<string | undefined>(
-    options?.cycle[0]
+    options.cycle[0]
   );
   const [optionRemind, setOptionRemind] = useState<string | undefined>(
-    options?.remind[0]
+    options.remind[0]
   );
   const [planType, setPlanType] = useState<string>("Select the plan type");
 
-  const today = new Date();
-  const [selected, setSelected] = useState<Date | undefined>(); //new Date()
-  const [isDatePickerOpen, setPickerOpen] = useState<Boolean>(false);
-
-  const [isInputShow, setIsInputShow] = useState<boolean>(false);
-
-  let dateSelected = <p>Select date</p>;
-  if (selected) {
-    dateSelected = <p> {format(selected, "dd MMM yyyy")}</p>;
-  }
+  useEffect(() => {
+    const plantypeMap = planTypes?.map((planType) => planType.type);
+    setPlan(plantypeMap);
+  }, [planTypes]);
 
   const handleDaySelection = () => {
     setPickerOpen(false);
   };
-
-  const css = `
-  .rdp-day_selected{
-    background-color: #4649E5;
-    font-weight: bold;
-  }
-
-  .DayPicker-Day--hover{
-    background-color: #4649E5;
-    font-weight: bold;
-  }
-
-  .rdp-dropdown{
-    background: #101019;
-    outline: none;
-    border: none;
-  }
-
-`;
 
   const rootRef = useRef<HTMLDivElement>(null);
   const planTypeInputRef = useRef<HTMLInputElement>(null);
@@ -140,7 +108,6 @@ const AddSubscriptionComponent: FC<Props> = ({
       ) {
         setPickerOpen(false);
       }
-
       if (
         planTypeInputRef.current &&
         !planTypeInputRef.current.contains(event.target as Node) &&
@@ -151,7 +118,6 @@ const AddSubscriptionComponent: FC<Props> = ({
     };
 
     document.addEventListener("click", handleDocumentClick);
-
     return () => {
       document.removeEventListener("click", handleDocumentClick);
     };
@@ -159,22 +125,22 @@ const AddSubscriptionComponent: FC<Props> = ({
 
   const navigate = useNavigate();
 
-  const [isSubmitable, setIsSubmitable] = useState<boolean>(true);
-
   const submitSubscription = async (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
-    // event.preventDefault()
-    if (planName.indexOf(planType) === -1) {
+    event.preventDefault();
+    if (
+      (!defaultSub_id &&
+        (planName?.indexOf(planType) === -1 || planType === "" || !selected)) ||
+      !selected
+    ) {
       setIsSubmitable(false);
-    } else if (!selected) {
-      setIsSubmitable(false);
-    } else {
-      setIsSubmitable(true);
+      return;
     }
 
-    const indexOfRemind = options.remind.indexOf(optionRemind!);
+    setIsSubmitable(true);
 
+    const indexOfRemind = options.remind.indexOf(optionRemind!);
     const reminder =
       indexOfRemind === 0
         ? 0
@@ -184,18 +150,18 @@ const AddSubscriptionComponent: FC<Props> = ({
         ? 3
         : indexOfRemind === 3
         ? 5
-        : indexOfRemind === 4
-        ? 7
-        : 0;
+        : 7;
 
-    const plantypeFound = planTypes?.find((plantype$) => {
-      return plantype$.type === planType;
-    });
+    const plantypeFound = planTypes?.find(
+      (plantype$) => plantype$.type === planType
+    );
 
     const response = await SubscriptionController.addSubscription({
       user_id: id!,
-      defaultSub_id: defaultSub_id,
-      plan_type: plantypeFound?.id?.toString()!,
+      defaultSub_id: defaultSub_id ? defaultSub_id : undefined,
+      amount: defaultSub_id ? undefined : amount$,
+      service_name: defaultSub_id ? undefined : subscriptionName,
+      plan_type: plantypeFound ? plantypeFound.id?.toString()! : planType,
       cycle: optionCycle!.toLocaleLowerCase(),
       payment_method: optionPayment!,
       reminder: reminder,
@@ -208,170 +174,182 @@ const AddSubscriptionComponent: FC<Props> = ({
     }
   };
 
+  let dateSelected = <p>Select date</p>;
+  if (selected) {
+    dateSelected = <p> {format(selected, "dd MMM yyyy")}</p>;
+  }
+
+  const isCustom = !defaultSub_id
+  // Determine if the form is being used to add a new custom subscription
+  const isAddingCustomSubscription = !defaultSub_id && !amount && !cycle && !planDetail && !dueDate;
+
+  console.log("is custom ", isCustom);
+
   return (
     <div className=" md:flex md:flex-col lg:flex-row items-start md:space-y-48 lg:space-y-0 md:px-[50px] lg:px-[100px] xl:px-[220px] 2xl:px-[20%] font-redRoseBold ">
-      <div className="relative flex flex-col justify-between h-[85vh] md:h-fit w-full md:space-y-10">
-        <div className={sizeLogo || logo ? "space-y-6" : "space-y-[42px]"}>
-          <div className=" flex justify-between ">
-            {logo && subscriptionLabel ? (
-              <div className="space-y-4">
-                {sizeLogo || logo ? (
-                  <LogoCard imgSrc={logo ? logo : dollar} s={sizeLogo} />
-                ) : null}
-                <h1 className="  text-2xl text-white-1 w-64">
-                  {subscriptionLabel}
-                </h1>
-              </div>
-            ) : (
-              <div className="space-y-4">
-                <span className=" bg-[#7c756f9b] opacity-50 rounded-xl w-11 h-11 flex items-center justify-center p-[2px]"></span>
-                <p className="text-2xl text-white-1 w-40 h-8 bg-[#7c756f9b] opacity-50 rounded-xl "></p>
-              </div>
-            )}
-
-            {amount && (
-              <div className="space-y-4 text-right text-white-0 ">
-                <h1 className=" text-[32px] text-white-1">${amount}</h1>
-                <p className="flex flex-col font-redRose">
-                  <div className="flex items-center space-x-1 justify-end ">
-                    {" "}
-                    <span> {cycle}</span>{" "}
-                    <span className="w-1 h-1 rounded-full bg-[#D9D9D9] "></span>{" "}
-                    <span>{planDetail}</span>{" "}
-                  </div>
-                  <span>
-                    {" "}
-                    Payment due in{" "}
-                    <span className=" text-[#1ED760] ">
-                      {dueDate} days
-                    </span>{" "}
-                  </span>
-                </p>
-              </div>
-            )}
-          </div>
-
-          <div className="space-y-4">
-            {!(sizeLogo || logo) && (
-              <div className=" flex flex-col space-y-4 font-redRoseLight text-sm ">
-                <input
-                  type="text"
-                  placeholder="Enter the subscription name"
-                  className=" p-4 outline-none rounded-xl bg-[#0B0B1A] text-[16px]"
-                />
-                <input
-                  type="text"
-                  placeholder="Enter a plan type"
-                  className=" p-4 outline-none rounded-xl bg-[#0B0B1A] text-[16px] "
-                />
-                <input
-                  type="text"
-                  placeholder="Enter the subscription amount"
-                  className=" p-4 outline-none rounded-xl bg-[#0B0B1A] text-[16px] "
-                />
-              </div>
-            )}
-
-            {/* Validation soumisssion */}
-            {options && !isSubmitable && (
-              <p className="text-red text-xs font-redRoseLight pl-2 ">
-                Svp Remplissez correction le formulaire, <br /> un des champ n'a
-                pas de selection.
-              </p>
-            )}
-            {/* fin validation */}
-
-            {amount && (
-              <InputDiv
-                label="Missed Payement On"
-                inputBg="text-black-2 bg-white-2"
-              >
-                <div className=" font-redRose text-red ">
-                  {`${detailSubscription?.end_on!}`}
+      {amount || buttonText ? (
+        <div className="relative flex flex-col justify-between h-[85vh] md:h-fit w-full md:space-y-10">
+          <div className={sizeLogo || logo ? "space-y-6" : "space-y-[42px]"}>
+            <div className=" flex justify-between ">
+              {logo && subscriptionLabel ? (
+                <div className="space-y-4">
+                  {sizeLogo || logo ? (
+                    <LogoCard imgSrc={logo ? logo : dollar} s={sizeLogo} />
+                  ) : null}
+                  <h1 className="  text-2xl text-white-1 w-64">
+                    {subscriptionLabel}
+                  </h1>
                 </div>
-              </InputDiv>
-            )}
-
-            <div ref={rootRef}>
-              <InputDiv label="Started on">
-                {!amount ? (
-                  <div
-                    className="cursor-pointer"
-                    onClick={() => setPickerOpen(!isDatePickerOpen)}
-                  >
-                    {dateSelected}
-                  </div>
-                ) : (
-                  <span>{`${detailSubscription?.end_on!}`}</span>
-                )}
-              </InputDiv>
-
-              <div
-                className={
-                  isDatePickerOpen ? "flex justify-end space-y-1 " : "hidden"
-                }
-              >
-                <div className="bg-[#00000006] backdrop-blur-[9px] border border-primary-2  handleSelectedOption rounded-xl absolute z-50">
-                  <style>{css}</style>
-                  <DayPicker
-                    mode="single"
-                    required
-                    showOutsideDays
-                    fixedWeeks
-                    fromYear={getYear(today) - 4}
-                    // toYear={getYear(today)}
-                    toDate={today}
-                    selected={selected}
-                    onSelect={setSelected}
-                    captionLayout="dropdown-buttons"
-                    // footer={footer}
-                    onDayClick={handleDaySelection}
-                    onDayMouseEnter={(day, modifiers, e) => {
-                      const target = e.target as HTMLElement;
-                      target.classList.add("DayPicker-Day--hover");
-                    }}
-                    onDayMouseLeave={(day, modifiers, e) => {
-                      const target = e.target as HTMLElement;
-                      target.classList.remove("DayPicker-Day--hover");
-                    }}
-                  />
+              ) : (
+                <div className="space-y-4">
+                  <span className=" bg-[#7c756f9b] opacity-50 rounded-xl w-11 h-11 flex items-center justify-center p-[2px]"></span>
+                  <p className="text-2xl text-white-1 w-40 h-8 bg-[#7c756f9b] opacity-50 rounded-xl "></p>
                 </div>
-              </div>
+              )}
+
+              {amount && (
+                <div className="space-y-4 text-right text-white-0 ">
+                  <h1 className=" text-[32px] text-white-1">${amount}</h1>
+                  <p className="flex flex-col font-redRose">
+                    <div className="flex items-center space-x-1 justify-end ">
+                      {" "}
+                      <span> {cycle}</span>{" "}
+                      <span className="w-1 h-1 rounded-full bg-[#D9D9D9] "></span>{" "}
+                      <span>{planDetail}</span>{" "}
+                    </div>
+                    <span>
+                      {" "}
+                      Payment due in{" "}
+                      <span className=" text-[#1ED760] ">
+                        {dueDate} days
+                      </span>{" "}
+                    </span>
+                  </p>
+                </div>
+              )}
             </div>
 
-            {/* {isDetail && } */}
+            <div className="space-y-4">
+              {/* Validation soumisssion */}
+              {options && !isSubmitable && (
+                <p className="text-red text-xs font-redRoseLight pl-2 ">
+                  Svp Remplissez correctement le formulaire, <br /> un des champ
+                  n'a pas de selection.
+                </p>
+              )}
+              
+              {/* fin validation */}
+              { isAddingCustomSubscription && (
+                <div className="flex flex-col space-y-4 font-redRoseLight text-sm">
+                  <Input
+                    inputType="text"
+                    inputClass="p-4 py-4 outline-none rounded-xl bg-[#0B0B1A] text-[16px] "
+                    placeholder="Enter the subscription name"
+                    handleChange={(e) => setName(e.target.value)}
+                  />
+                  <Input
+                    inputType="text"
+                    inputClass="p-4 py-4 outline-none rounded-xl bg-[#0B0B1A] text-[16px] "
+                    placeholder="Enter the plan type"
+                    handleChange={(e) => setPlanType(e.target.value)}
+                  />
+                  <Input
+                    inputType="number"
+                    inputClass="p-4 py-4 outline-none rounded-xl bg-[#0B0B1A] text-[16px] "
+                    placeholder="Enter the subscription amount"
+                    handleChange={(e) => setAmount(parseFloat(e.target.value))}
+                  />
+                </div>
+              )}
 
-            <SelectList
-              selectsLabels={selectsLabels}
-              options={options}
-              optionCycle={optionCycle}
-              setOptionCycle={setOptionCycle}
-              optionPayment={optionPayment}
-              setOptionPayment={setOptionPayment}
-              optionRemind={optionRemind}
-              setOptionRemind={setOptionRemind}
-              planType={planType}
-              setPlanType={setPlanType}
-              detailSubscription={detailSubscription}
-              // isSubmitable={isSubmitable}
-            />
+              {amount ? (
+                <InputDiv
+                  label="Missed Payement On"
+                  inputBg="text-black-2 bg-white-2"
+                >
+                  <div className=" font-redRose text-red ">
+                    {`${detailSubscription?.end_on!}`}
+                  </div>
+                </InputDiv>
+              ) : null}
+
+              <div ref={rootRef}>
+                <InputDiv label="Started on">
+                  {!amount ? (
+                    <div
+                      className="cursor-pointer"
+                      onClick={() => setPickerOpen(!isDatePickerOpen)}
+                    >
+                      {dateSelected}
+                    </div>
+                  ) : (
+                    <span>{`${detailSubscription?.end_on!}`}</span>
+                  )}
+                </InputDiv>
+
+                <div
+                  className={isDatePickerOpen ? "flex justify-end" : "hidden"}
+                >
+                  <div className="bg-[#00000006] backdrop-blur-[9px] border border-primary-2 rounded-xl absolute z-50">
+                    {/* <style>{css}</style> */}
+                    <DayPicker
+                      mode="single"
+                      required
+                      showOutsideDays
+                      fixedWeeks
+                      fromYear={getYear(new Date()) - 4}
+                      toDate={new Date()}
+                      selected={selected}
+                      onSelect={setSelected}
+                      captionLayout="dropdown-buttons"
+                      onDayClick={handleDaySelection}
+                      onDayMouseEnter={(day, modifiers, e) => {
+                        const target = e.target as HTMLElement;
+                        target.classList.add("DayPicker-Day--hover");
+                      }}
+                      onDayMouseLeave={(day, modifiers, e) => {
+                        const target = e.target as HTMLElement;
+                        target.classList.remove("DayPicker-Day--hover");
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* {isDetail && } */}
+
+              <SelectList
+                selectsLabels={selectsLabels}
+                options={options}
+                optionCycle={optionCycle}
+                setOptionCycle={setOptionCycle}
+                optionPayment={optionPayment}
+                setOptionPayment={setOptionPayment}
+                optionRemind={optionRemind}
+                setOptionRemind={setOptionRemind}
+                planType={planType}
+                setPlanType={setPlanType}
+                detailSubscription={detailSubscription}
+                // isSubmitable={isSubmitable}
+              />
+            </div>
           </div>
+
+          {buttonText && (
+            <div className=" flex justify-start md:py-4">
+              <Button
+                btnBg={btnBgColor}
+                btnBorder=" rounded-xl"
+                btnClass=" center w-full md:w-fit"
+                btnP="py-[14px] md:px-10 "
+                btnText="font-redRoseBold text-[16px] text-[#fff] "
+                buttonText={buttonText}
+                handleClick={submitSubscription}
+              />
+            </div>
+          )}
         </div>
-
-        {buttonText && (
-          <div className=" flex justify-start md:py-4">
-            <Button
-              btnBg={btnBgColor}
-              btnBorder=" rounded-xl"
-              btnClass=" center w-full md:w-fit"
-              btnP="py-[14px] md:px-10 "
-              btnText="font-redRoseBold text-[16px] text-[#fff] "
-              buttonText={buttonText}
-              handleClick={submitSubscription}
-            />
-          </div>
-        )}
-      </div>
+      ) : null}
     </div>
   );
 };

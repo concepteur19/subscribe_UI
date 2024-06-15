@@ -12,10 +12,10 @@ import AddSubscriptionParam from "./views/pages/subscription/subscriptionParam";
 import SubscriptionDetails from "./views/pages/subscription/subscriptionDetails";
 import { SignIn } from "./views/pages/Login/signIn";
 import { SignUp } from "./views/pages/signUp/signUp";
-import CustomSubscriptionDetail from "./views/pages/subscription/customSubscriptionDetail";
+// import CustomSubscriptionDetail from "./views/pages/subscription/customSubscriptionDetail";
 import AddCustomSubscription from "./views/pages/subscription/AddCustomSubscription";
 import ErrorPage from "./views/pages/ErrorPage";
-import PrivateRoute from "./views/components/auth/PrivateRoute";
+// import PrivateRoute from "./views/components/auth/PrivateRoute";
 
 function App() {
   return (
@@ -41,10 +41,10 @@ function App() {
               path="/home/addSubscription/custom"
               Component={AddCustomSubscription}
             />
-            <Route
+            {/* <Route
               path="/home/subscription/custom/:id"
               Component={CustomSubscriptionDetail}
-            />
+            /> */}
             <Route
               path="/home/addSubscription/:id"
               Component={AddSubscriptionParam}

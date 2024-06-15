@@ -136,8 +136,8 @@ function Setting() {
           />
         </div>
 
-        {successMessage ? (
-          <div className=" text-[#10B981] text-center py-4">
+        {successMessage !== null ? (
+          <div className=" text-[#10B981] text-center py-2">
             {successMessage}
           </div>
         ) : null}

@@ -3,6 +3,7 @@ import { useState } from "react";
 // import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import userRegisteration from "../../../controllers/auth/resgisterController";
+import RegisterController from "../../../controllers/auth/resgisterController";
 
 export function SignUp() {
     
@@ -50,7 +51,7 @@ export function SignUp() {
       !validationErrors.password
     ) {
       try {
-        const response = await userRegisteration({
+        const response = await RegisterController.userRegistration({
           username: data.username,
           email: data.email,
           password: data.password,

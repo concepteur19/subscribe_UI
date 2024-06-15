@@ -6,8 +6,8 @@ interface ButtonProps {
     btnBg?: string,
     btnBorder?: string,
     buttonText?: string,
-    btnIcon?: any,
-    btnClass?: any,
+    btnIcon?: React.ReactNode,
+    btnClass?: string,
     btnType?: "submit" | "reset" | "button" | undefined
 
     handleClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
@@ -16,7 +16,7 @@ interface ButtonProps {
 const Button: FC<ButtonProps> = ({btnType, btnBg, btnBorder, btnP, btnText, buttonText, btnIcon, btnClass, handleClick}) => {
   return (
     <>
-        <button type={btnType} onClick={handleClick} className={`flex items-center justify-center space-x-[6px] text-white-2 ${btnP} ${btnText} ${btnBg} ${btnBorder} ${btnClass}`} >
+        <button type={btnType} onClick={handleClick} className={`flex items-center justify-center space-x-[6px] ${btnP} ${btnText} ${btnBg} ${btnBorder} ${btnClass}`} >
             {btnIcon? btnIcon : ''}  <span>{buttonText}</span>
         </button>
     </>

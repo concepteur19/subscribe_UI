@@ -12,6 +12,7 @@ import spotify from "../../assets/images/png/spotify.png";
 
 import Button from "../components/basis/buttons/Button";
 import ScreenSizeContext from "../../contexts/screenSizeContext";
+import dollar from "@/src/assets/images/png/$.png"
 
 import {
   Dialog,
@@ -235,7 +236,8 @@ const Home = () => {
                     <CardOverview
                       key={index + "-" + subscription.service_name}
                       due={8}
-                      imgSrc={'http://localhost:8000/storage/'+subscription.logo}
+                      imgSrc={ subscription.logo ? 'http://localhost:8000/storage/'+subscription.logo : dollar}
+                      sizelogo={!subscription.logo ? 12 : undefined}
                       subscriName={subscription.service_name!}
                       price={subscription.amount!}
                       dMy={subscription.cycle}

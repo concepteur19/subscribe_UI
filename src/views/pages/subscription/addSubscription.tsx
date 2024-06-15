@@ -3,11 +3,8 @@ import CardSubscription from "../../components/basis/subscription_basis/card-sub
 import Input from "../../components/basis/Input";
 import { BiChevronRight, BiSearch } from "react-icons/bi";
 import { Link } from "react-router-dom";
-import DefaultSubscription from "../../../models/DefaultSubscription.model";
-import SubscriptionController from "../../../controllers/subscription/SubscriptionController";
-
-let netflix = require("../../../assets/images/png/netflix.png") as any;
-// let arrowLeft = require("../../../assets/images/png/Group.png") as any;
+import DefaultSubscription from "@/src/models/DefaultSubscription.model";
+import SubscriptionController from "@/src/controllers/subscription/SubscriptionController";
 
 const AddSubscription = () => {
   const [defaultSubs, setDefaultSub] = useState<
@@ -69,12 +66,6 @@ const AddSubscription = () => {
             </Link>
           );
         })}
-
-      {/* {Array.from({ length: 8 }).map((_, i) => (
-        <Link to={`/home/addSubscription/${i}`}>
-          <CardSubscription imgSrc={netflix} subscriName="Netflix" />
-        </Link>
-      ))} */}
     </div>
   );
 };

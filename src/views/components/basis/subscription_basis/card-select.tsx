@@ -47,6 +47,8 @@ const CardSelect: FC<CardSelectProps> = ({
   };
 
   useEffect(() => {
+    // console.log("les options", options);
+    
     document.addEventListener("click", handleClickOutside);
     return () => {
       document.removeEventListener("click", handleClickOutside);
@@ -55,12 +57,12 @@ const CardSelect: FC<CardSelectProps> = ({
 
   return (
     <div ref={selectRef}>
-      <InputDiv label={label}>
+      {options?.length !== 0 ? <InputDiv label={label}>
         <div
           className={`${
             options && "cursor-pointer"
           } flex items-center space-x-1`}
-          onClick={options && (() => setSelectOpen(!isSelectOpen))}
+          onClick={() => setSelectOpen(!isSelectOpen)}
         >
           {!options ? (
             <div>
@@ -88,9 +90,9 @@ const CardSelect: FC<CardSelectProps> = ({
             </span>
           )}
         </div>
-      </InputDiv>
+      </InputDiv> : null }
+      
 
-      {options && (
         <div className="flex justify-end relative">
           <ul
             className={
@@ -99,7 +101,7 @@ const CardSelect: FC<CardSelectProps> = ({
                 : "hidden"
             }
           >
-            {options.map((option, index) => {
+            {options?.map((option, index) => {
               return (
                 <li
                   key={option + index}
@@ -112,7 +114,6 @@ const CardSelect: FC<CardSelectProps> = ({
             })}
           </ul>
         </div>
-      )}
     </div>
   );
 };

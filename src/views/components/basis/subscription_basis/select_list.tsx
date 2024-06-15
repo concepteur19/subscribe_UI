@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 import { DetailSubscription } from "./addSubscriptionComponent";
 
 interface OptionProps {
-  plan: string[];
+  plan?: string[] | undefined;
   cycle: string[];
   payment: string[];
   remind: string[];
@@ -57,53 +57,67 @@ const SelectList: FC<Props> = ({
       {options &&
         selectsLabels &&
         selectsLabels.map((label, index) => {
-          let options$: string[] = [];
-          if (index === 0) {
-            options$ = options.plan;
-          } else if (index === 1) {
-            options$ = options.cycle;
-          } else if (index === 2) {
-            options$ = options.payment;
-          } else if (index === 3) {
-            options$ = options.remind;
+          let options$: string[] | undefined = [];
+          let isOptionEmpty: boolean = false
+
+          switch (index) {
+            case 0:
+              options$ = options.plan;
+              break;
+            case 1:
+              options$ = options.cycle;
+              break;
+            case 2:
+              options$ = options.payment;
+              break;
+            case 3:
+              options$ = options.remind;
+              break;
           }
 
-          return (
-            <div>
-              {pathTab[pathTab.length - 2] !== "subscription" && pathTab[pathTab.length - 2] !== "custom" ? (
-                <CardSelect
-                  key={label + index}
-                  setOption={
-                    index === 1
-                      ? setOptionCycle
-                      : index === 2
-                      ? setOptionPayment
-                      : index === 0
-                      ? setPlanType
-                      : setOptionRemind
-                  }
-                  option={
-                    index === 1
-                      ? optionCycle
-                      : index === 2
-                      ? optionPayment
-                      : index === 0
-                      ? planType
-                      : optionRemind
-                  }
-                  label={label}
-                  options={options$}
+          isOptionEmpty = options$?.length === 0  
 
-                  // isSubmitable={isSubmitable}
-                />
-              ) : (
-                <CardSelect
-                  label={label}
-                  type={detailSubscription?.type}
-                  cycle={detailSubscription?.cycle}
-                  payment={detailSubscription?.payment}
-                  remind={detailSubscription?.remind}
-                />
+          return (
+            <div key={label + index}>
+              {!isOptionEmpty && (
+                <>
+                  {pathTab[pathTab.length - 2] !== "subscription" &&
+                  pathTab[pathTab.length - 2] !== "custom" ? (
+                    <span>
+                      <CardSelect
+                        key={label + index}
+                        setOption={
+                          index === 1
+                            ? setOptionCycle
+                            : index === 2
+                            ? setOptionPayment
+                            : index === 0
+                            ? setPlanType
+                            : setOptionRemind
+                        }
+                        option={
+                          index === 1
+                            ? optionCycle
+                            : index === 2
+                            ? optionPayment
+                            : index === 0
+                            ? planType
+                            : optionRemind
+                        }
+                        label={label}
+                        options={options$}
+                      />
+                    </span>
+                  ) : (
+                    <CardSelect
+                      label={label}
+                      type={detailSubscription?.type}
+                      cycle={detailSubscription?.cycle}
+                      payment={detailSubscription?.payment}
+                      remind={detailSubscription?.remind}
+                    />
+                  )}
+                </>
               )}
             </div>
           );

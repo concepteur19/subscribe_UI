@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import AddSubscriptionComponent from "../../components/basis/subscription_basis/addSubscriptionComponent";
-import Netflix from "../../../assets/images/png/netflix.png";
+// import Netflix from "../../../assets/images/png/netflix.png";
 import { useParams } from "react-router-dom";
-import SubscriptionController from "../../../controllers/subscription/SubscriptionController";
+import SubscriptionController from "@/src/controllers/subscription/SubscriptionController";
 import DefaultSubscription from "@/src/models/DefaultSubscription.model";
 
 const AddSubscriptionParam = () => {
@@ -10,6 +10,7 @@ const AddSubscriptionParam = () => {
     id: 0,
     name: "",
     logo: "",
+    planTypes: [],
   });
 
   const { id } = useParams();
@@ -34,14 +35,10 @@ const AddSubscriptionParam = () => {
     fetchDefaultSubDetail();
   }, [id]);
 
-  // useEffect(() => {
-  //    setDefaultSubId(id);
-  //    console.log('montage du composant', id);
-  // }, [id]);
 
   return (
     <AddSubscriptionComponent
-    defaultSub_id={+id!}
+      defaultSub_id={+id!}
       subscriptionLabel={defaultSubscription.name}
       logo={"http://localhost:8000/storage/"+defaultSubscription.logo}
       sizeLogo={34}

@@ -5,7 +5,6 @@ const AddCustomSubscription = () => {
   return (
     <AddSubscriptionComponent
       subscriptionLabel="Create a customize subsription"
-    //   sizeLogo={14}
       buttonText="Add Subscription"
       btnBgColor=" bg-primary-0"
     />

@@ -12,6 +12,7 @@ interface CardOverviewProps {
   flexCard?: string;
   typePlan?: string;
   id?: number;
+  sizelogo?: number
 }
 
 const CardOverview: React.FC<CardOverviewProps> = ({
@@ -23,7 +24,8 @@ const CardOverview: React.FC<CardOverviewProps> = ({
   positionCard,
   flexCard,
   typePlan,
-  id
+  id,
+  sizelogo
 }) => {
   return (
     <div
@@ -35,7 +37,7 @@ const CardOverview: React.FC<CardOverviewProps> = ({
         <Link to={`/home/subscription/${id? id : 1}`}>
           {" "}
           <span className=" cursor-pointer">
-            <LogoCard imgSrc={imgSrc} />
+            <LogoCard imgSrc={imgSrc} s={sizelogo}/>
           </span>
         </Link>
 

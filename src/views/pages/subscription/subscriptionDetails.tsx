@@ -7,6 +7,8 @@ import { useParams } from "react-router-dom";
 import SubscriptionController from "@/src/controllers/subscription/SubscriptionController";
 import Subscription from "@/src/models/Subscription.model";
 import { format } from "date-fns";
+import dollar from "@/src/assets/images/png/$.png"
+
 
 const SubscriptionDetails = () => {
   const { id } = useParams();
@@ -60,7 +62,7 @@ const SubscriptionDetails = () => {
 
   return (
     <AddSubscriptionComponent
-      buttonText=" Delete Subscription"
+      buttonText="Delete Subscription"
       btnBgColor=" bg-red "
       subscriptionLabel={subscription?.service_name!}
       amount={subscription?.amount!.toString()}
@@ -68,7 +70,8 @@ const SubscriptionDetails = () => {
       cycle={subscription?.cycle}
       planDetail={subscription?.type}
       detailSubscription={detailSubscription}
-      logo={"http://localhost:8000/storage/" + subscription?.logo}
+      sizeLogo={!subscription?.logo ? 12 : undefined}
+      logo={subscription?.logo? 'http://localhost:8000/storage/'+ subscription.logo : dollar}
     />
   );
 };
