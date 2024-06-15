@@ -79,11 +79,11 @@ export function SignIn() {
   };
 
   const [user, setUser] = useState([]);
-  const [userToRegistrate, setUserToRe] = useState({})
+  const [userToRegistrate, setUserToRe] = useState({});
 
   const login = useGoogleLogin({
     onSuccess: (codeResponse) => setUser(codeResponse),
-    onError: (error) => console.log('Login Failed:', error)
+    onError: (error) => console.log("Login Failed:", error),
   });
 
   useEffect(() => {
@@ -100,35 +100,34 @@ export function SignIn() {
         )
         .then((res) => {
           console.log("response google", res.data);
-          setUserToRe(res.data)
+          setUserToRe(res.data);
         })
         .catch((err) => console.log(err));
     }
   }, [user]);
 
-  useEffect(
-    () => {
-      const registerUser = async () => {
-        const response = await RegisterController.googleRegistration({username: userToRegistrate.name, email: userToRegistrate.email})
-        console.log(response);
+  useEffect(() => {
+    const registerUser = async () => {
+      const response = await RegisterController.googleRegistration({
+        username: userToRegistrate.name,
+        email: userToRegistrate.email,
+      });
+      console.log(response);
 
-        if (response.status) {
-          const user = response.data;
-          localStorage.setItem("user", JSON.stringify(user));
-          // console.log(responseLogin.data.token);
-          localStorage.setItem("token", user.token);
-          navigate("/home");
-        } else {
-          console.log("Invalid credentials");
-          // setErrors({ ...errors, general: "Invalid credentials" });
-        }
+      if (response.status) {
+        const user = response.data;
+        localStorage.setItem("user", JSON.stringify(user));
+        // console.log(responseLogin.data.token);
+        localStorage.setItem("token", user.token);
+        navigate("/home");
+      } else {
+        console.log("Invalid credentials");
+        // setErrors({ ...errors, general: "Invalid credentials" });
       }
-      
-      registerUser()
-    },
-    [userToRegistrate]
-  )
+    };
 
+    registerUser();
+  }, [userToRegistrate]);
 
   return (
     <>
@@ -195,9 +194,9 @@ export function SignIn() {
               </div>
               {/* Bouton de connexion avec Google */}
               <div className=" w-full flex justify-center items-center hover:text-white-2 text-primary-0">
-                <Button 
+                <Button
                   handleClick={login}
-                  btnIcon={ <BiLogoGoogle className="" size={24}/> }
+                  btnIcon={<BiLogoGoogle className="" size={24} />}
                   buttonText=" Se connecter avec google "
                   btnP="py-3"
                   btnType="button"
@@ -205,7 +204,6 @@ export function SignIn() {
                   btnText="text-primary-0 hover:text-white-2 text-sm"
                   btnBorder="  rounded border border-primary-0 hover:border-none border-opacity-60 hover:bg-primary-0 "
                 />
-                
               </div>
 
               <button
@@ -214,8 +212,11 @@ export function SignIn() {
               >
                 Log in
               </button>
-              <p className='text-[14px] text-[#2F384F] text-center flex flex-col items-center gap-2'>By clicking continue, you acknowledge that you have read and agree to Terms of Service & Privacy Policy.</p>
-            </div>
+              <p className="text-[14px] text-[#2F384F] text-center flex flex-col items-center gap-2">
+                By clicking continue, you acknowledge that you have read and
+                agree to Terms of Service & Privacy Policy.
+              </p>
+            </form>
           </div>
         </div>
       </div>
