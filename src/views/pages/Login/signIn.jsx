@@ -44,6 +44,7 @@ export function SignIn() {
       const response = await RegisterController.googleRegistration({
         username: userToRegistrate.name,
         email: userToRegistrate.email,
+        image: userToRegistrate.image
       });
       console.log(response);
 
@@ -64,7 +65,7 @@ export function SignIn() {
 
   return (
     <>
-      <div className="px-3 pt-[120px] max-sm:pt-[70px]">
+      <div className="px-3 flex items-center h-screen">
         <div className="bg-[#fff] py-[35px] px-[25px] max-w-[370px] rounded-xl m-auto">
           <div className="flex flex-col items-center gap-6">
             <div className="flex items-center justify-center">

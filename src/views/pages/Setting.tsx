@@ -103,7 +103,7 @@ function Setting() {
 
   return (
     <>
-      <div className=" w-full md:space-y-12 ">
+      <div className=" w-full md:space-y-4 ">
         {/* Header section with profile photo and edit button */}
         <div className=" bg-gradient-to-b from-[#4649E566] via-[#24132f] to-[#F2474700] md:bg-none flex flex-col md:flex-row md:justify-between items-center sm:px-24 md:px-28 lg:px-36 xl:px-[25%] 2xl:px-[30%] py-16 md:py-0">
           <div className=" flex flex-col md:flex-row items-center justify-center md:justify-start space-y-4 md:space-y-0 sm:space-x-3 ">
