@@ -34,6 +34,8 @@ function App() {
             }
           >
             <Route path="/home" Component={Home} />
+            <Route path="/home/overview" Component={Home} />
+            <Route path="/home/upcoming" Component={Home} />
             <Route path="/payments" Component={Payment} />
             <Route path="/settings" Component={Setting} />
             <Route path="/home/addSubscription" Component={AddSubscription} />

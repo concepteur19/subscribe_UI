@@ -12,7 +12,7 @@ import spotify from "../../assets/images/png/spotify.png";
 
 import Button from "../components/basis/buttons/Button";
 import ScreenSizeContext from "../../contexts/screenSizeContext";
-import dollar from "@/src/assets/images/png/$.png"
+import dollar from "@/src/assets/images/png/$.png";
 
 import {
   Dialog,
@@ -38,6 +38,8 @@ const Home = () => {
   const [subscriptions, setUserSubscription] = useState<Subscription[]>([]);
   const [isDataReturn, setIsDataReturn] = useState<boolean>(false);
 
+  const [isActive, setActive] = useState<boolean>(true);
+
   useEffect(() => {
     const fetchUserSubsciptions = async () => {
       const response = await SubscriptionController.getUserSubscriptions(id!);
@@ -52,6 +54,14 @@ const Home = () => {
 
     fetchUserSubsciptions();
   }, [id]);
+
+  const handleNavClick = (param: string) => {
+    if (param === "over" && isActive === false) {
+      setActive(!isActive);
+    } else if (param === "upco" && isActive === true) {
+      setActive(!isActive);
+    }
+  };
 
   return (
     <>
@@ -170,7 +180,7 @@ const Home = () => {
                   <div className="space-y-3">
                     <div className="md:hidden w-full space-y-4">
                       <h1 className=" font-redRoseBold text-[16px]">
-                        Upcoming Payments
+                        Upcoming Subscriptions
                       </h1>
                       <div className="flex space-x-4">
                         {Array.from({ length: 2 }).map((_, i) => (
@@ -193,16 +203,26 @@ const Home = () => {
                         My Subscriptions
                       </h1>
                       <div className="flex flex-col space-y-4">
-                        {Array.from({ length: 3 }).map((_, i) => (
-                          <CardOverview
-                            due={8}
-                            imgSrc={netflix}
-                            subscriName="Netflix"
-                            price={8.36}
-                            dMy="Year"
-                            id={i}
-                          />
-                        ))}
+                        {subscriptions.map((subscription, index) => {
+                          return (
+                            <CardOverview
+                              key={index + "-" + subscription.service_name}
+                              due={8}
+                              imgSrc={
+                                subscription.logo
+                                  ? "http://localhost:8000/storage/" +
+                                    subscription.logo
+                                  : dollar
+                              }
+                              sizelogo={!subscription.logo ? 12 : undefined}
+                              subscriName={subscription.service_name!}
+                              price={subscription.amount!}
+                              dMy={subscription.cycle}
+                              typePlan={subscription.type}
+                              id={subscription.id}
+                            />
+                          );
+                        })}
                       </div>
                     </div>
                   </div>
@@ -227,7 +247,7 @@ const Home = () => {
           </div>
 
           <div className=" max-md:hidden w-[50%] xl:w-[57%] 2xl:w-[60%]  space-y-8">
-            <NavHome />
+            <NavHome handleNavClick={handleNavClick} />
 
             {isDataReturn ? (
               <div className="flex flex-col space-y-3">
@@ -236,7 +256,11 @@ const Home = () => {
                     <CardOverview
                       key={index + "-" + subscription.service_name}
                       due={8}
-                      imgSrc={ subscription.logo ? 'http://localhost:8000/storage/'+subscription.logo : dollar}
+                      imgSrc={
+                        subscription.logo
+                          ? "http://localhost:8000/storage/" + subscription.logo
+                          : dollar
+                      }
                       sizelogo={!subscription.logo ? 12 : undefined}
                       subscriName={subscription.service_name!}
                       price={subscription.amount!}
