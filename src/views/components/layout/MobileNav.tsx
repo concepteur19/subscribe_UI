@@ -15,7 +15,7 @@ const MobileNav = () => {
   console.log("le path dans subscribe param", pathTab);
 
   return (
-    <div className={pathTab.length > 3 || pathTab[1] === "settings" ? "hidden" : ""}>
+    <div className={pathTab.length > 3 || pathTab[1] === "settings" || pathTab[2] === "addSubscription" || pathTab[1] === "payments" ? "hidden" : ""}>
       <div className="md:hidden fixed bg-[#05051106] backdrop-blur-md bottom-0 flex justify-between items-center px-14 py-3 z-50 w-[100%] text-white-0 ">
         <span className="cursor-pointer ">
           <Link to="/home">

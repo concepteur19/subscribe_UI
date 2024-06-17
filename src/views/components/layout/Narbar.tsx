@@ -16,13 +16,27 @@ let theme = require("@/src/assets/images/png/theme.png") as any;
 const Narbar: FC = () => {
   const location = useLocation();
   const isPathTrue = location.pathname === "/";
-  // const [isNav, setIsNav] = useState<boolean>(false);
+  const [isNav, setIsNav] = useState<boolean>(false);
 
   useEffect(() => {
+    switch (location.pathname) {
+      case "/home/overview":
+      case "/home/upcomming":
+      case "/home":
+        setIsNav(false);
+        break;
+      case "/home/addSubscription":
+      case "/settings":
+      case "/payments":
+        setIsNav(true);
+        break;
+    }
+  }, [location]);
 
-  }, [])
-
-  const isPathHome = location.pathname === "/home" || location.pathname === "/home/overview" || location.pathname !== "/home/upcomming" || location.pathname !== "/home/upcomming";
+  // const isPathHome =
+  //   location.pathname === "/home" ||
+  //   location.pathname === "/home/overview" ||
+  //   location.pathname !== "/home/upcomming" ;
 
   const navigate = useNavigate();
   const navbarClick = () => {
@@ -35,9 +49,7 @@ const Narbar: FC = () => {
     <div className={`${isPathTrue && "hidden"}`}>
       {/* mobile nav */}
       <div
-        className={`${
-          !isPathHome && "hidden"
-        } px-6 sm:px-[52px] md:hidden w-full `}
+        className={`${isNav && "hidden"} px-6 sm:px-[52px] md:hidden w-full `}
       >
         <div className=" mx-auto flex flex-col items-center justify-center">
           <div className="flex justify-between items-center w-full pt-12 pb-3 text-sm">
