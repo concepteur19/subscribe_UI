@@ -39,28 +39,28 @@ export function SignIn() {
     }
   }, [user]);
 
+  const registerUser = async (user$) => {
+    const response = await RegisterController.googleRegistration({
+      username: user$.name,
+      email: user$.email,
+      photo: user$.picture
+    });
+    console.log("réponse", response);
+
+    if (response.status) {
+      const user = response.data;
+      localStorage.setItem("user", JSON.stringify(user));
+      // console.log(responseLogin.data.token);
+      localStorage.setItem("token", user.token);
+      navigate("/home");
+    } else {
+      console.log("Invalid credentials");
+      // setErrors({ ...errors, general: "Invalid credentials" });
+    }
+  };
+
   useEffect(() => {
-    const registerUser = async () => {
-      const response = await RegisterController.googleRegistration({
-        username: userToRegistrate.name,
-        email: userToRegistrate.email,
-        picture: userToRegistrate.picture
-      });
-      console.log(response);
-
-      if (response.status) {
-        const user = response.data;
-        localStorage.setItem("user", JSON.stringify(user));
-        // console.log(responseLogin.data.token);
-        localStorage.setItem("token", user.token);
-        navigate("/home");
-      } else {
-        console.log("Invalid credentials");
-        // setErrors({ ...errors, general: "Invalid credentials" });
-      }
-    };
-
-    registerUser();
+    registerUser(userToRegistrate);
   }, [userToRegistrate]);
 
   return (
