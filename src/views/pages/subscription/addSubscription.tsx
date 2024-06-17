@@ -11,20 +11,32 @@ const AddSubscription = () => {
     DefaultSubscription[] | undefined
   >([]);
 
+  const fetchDefaultSubscriptions = async () => {
+    await SubscriptionController.getDefaultSubscription()
+      .then((response) => {
+        setDefaultSub(response.data);
+      })
+      .catch((error) => {
+        console.log(error.message);
+        // setErrorServer(error.message);
+      });
+  };
+  
   useEffect(() => {
-    const fetchDefaultSubscriptions = async () => {
-      await SubscriptionController.getDefaultSubscription()
-        .then((response) => {
-          setDefaultSub(response.data);
-        })
-        .catch((error) => {
-          console.log(error.message);
-          // setErrorServer(error.message);
-        });
-    };
-
     fetchDefaultSubscriptions();
   }, []);
+
+  const searchBarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const searchValue = e.target.value;
+    const filteredData = defaultSubs?.filter((defaultSub) =>
+      defaultSub.name.toLowerCase().includes(searchValue.toLowerCase())
+    );
+    setDefaultSub(filteredData);
+
+    if (searchValue === "") {
+      fetchDefaultSubscriptions();
+    }
+  };
 
   return (
     <div className=" flex flex-col space-y-4 md:px-[73px] lg:px-[173px] xl:px-[273px] 2xl:px-[373px] ">
@@ -34,8 +46,9 @@ const AddSubscription = () => {
         <Input
           inputType="text"
           placeholder="Search"
-          // handleChange={searchBarChange}
-          inputClass=" bg-black-2 py-4 px-4 rounded-[8px] text-sm text-[#5B5B6F] w-full"
+          handleChange={searchBarChange}
+          inputClass=" bg-black-2 py-4 px-4 rounded-[8px] text-md text-[#fff] w-full"
+
         />
 
         <BiSearch

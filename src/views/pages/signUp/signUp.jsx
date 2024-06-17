@@ -1,7 +1,7 @@
 import subscribe from "../../../assets/images/subscribeIcon.svg";
 import { useState } from "react";
 // import axios from 'axios';
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"
 import userRegisteration from "../../../controllers/auth/resgisterController";
 import RegisterController from "../../../controllers/auth/resgisterController";
 

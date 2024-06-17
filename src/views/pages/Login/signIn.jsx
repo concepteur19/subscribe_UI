@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
+import subsLogin from '@/src/assets/subsLogin.svg'
 import { useNavigate } from "react-router-dom";
-import subscribe from "../../../assets/images/subscribeIcon.svg";
 import userSignIn from "../../../controllers/auth/loginController";
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
@@ -69,7 +69,7 @@ export function SignIn() {
         <div className="bg-[#fff] py-[35px] px-[25px] max-w-[370px] rounded-xl m-auto">
           <div className="flex flex-col items-center gap-6">
             <div className="flex items-center justify-center">
-              <img src={subscribe} alt="Logo" />
+              <img src={subsLogin} alt="Logo" />
             </div>
             <form
               className="flex flex-col items-center gap-4 w-full"

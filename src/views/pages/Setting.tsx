@@ -10,7 +10,7 @@ import InputDiv from "../components/basis/inputDiv";
 import Button from "../components/basis/buttons/Button";
 import ScreenSizeContext from "@/src/contexts/screenSizeContext";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import UserContext from "@/src/contexts/userDataContext";
 import UserController from "@/src/controllers/user/UserController";
 import ModalEdit from "../components/users/modalEdit";
@@ -129,8 +129,8 @@ function Setting() {
             btnP=" py-[14px]"
             btnBg=" bg-primary-0"
             buttonText=" Edit profile"
-            btnText="text-white-2"
-            btnBorder=" rounded-xl w-[134px] "
+            btnText="text-white-2 font-redRoseBold text-[16px] "
+            btnBorder=" rounded-[6px] w-[134px] "
             btnClass="mt-8 md:mt-0"
             handleClick={() => setModalEditOpen(true)}
           />
@@ -155,15 +155,18 @@ function Setting() {
             </InputDiv>
           </div>
 
-          <div className=" space-y-4">
+          <div className="flex flex-col space-y-4">
             <h1 className=" pb-2">Support</h1>
-            <InputDiv>
-              <div className=" text-[16px] ">Contact support</div>
-            </InputDiv>
-
-            <InputDiv>
-              <div className="text-[16px]">Support creators</div>
-            </InputDiv>
+            <Link to="mailto:talchrist10@gmail.com">
+              <InputDiv>
+                <div className=" text-[16px] ">Contact support</div>
+              </InputDiv>
+            </Link>
+            <Link to="https://www.buymeacoffee.com/ChristianLudovic">
+              <InputDiv >
+                  <div className="text-[16px]">Support creators</div>
+              </InputDiv>
+            </Link>
           </div>
         </div>
 
@@ -173,7 +176,7 @@ function Setting() {
             buttonText="Logout"
             btnClass="w-full md:w-[134px]"
             btnP=" px-auto py-[14px]"
-            btnBorder=" rounded-xl "
+            btnBorder=" rounded-[6px] "
             btnText=" text-[16px] font-redRoseBold "
             btnBg=" bg-red"
             handleClick={handleLogout}
