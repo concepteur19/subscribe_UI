@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Dialog, DialogContent } from "@/src/views/components/ui/dialog";
 import Button from "../../components/basis/buttons/Button";
 import Input from "../../components/basis/Input";
@@ -29,6 +29,18 @@ export default function ModalEdit({
   newPhoneNumber,
   setNewPhoneNumber,
 }: Props) {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    handleUserEdit(e);
+    setTimeout(() => {
+      setIsLoading(false);
+      setModalEditOpen(false);
+    }, 2000); // Simulating a delay for demonstration
+  };
+
   return (
     <>
       <Dialog open={isModalEditOpen} onOpenChange={setModalEditOpen}>
@@ -39,7 +51,7 @@ export default function ModalEdit({
         ></div>
         <DialogContent className="bg-white-2 rounded-3xl pt-6 pb-10 md:px-6 flex justify-center max-w-md">
           <div className="w-[95%] sm:w-full">
-            <form action="" onSubmit={handleUserEdit} className="space-y-3">
+            <form action="" onSubmit={handleSubmit} className="space-y-3">
               <h1 className="text-lg font-bold">Edit Profile</h1>
 
               {errorMessage && <div className="text-red-500">{errorMessage}</div>}
@@ -87,22 +99,24 @@ export default function ModalEdit({
                       }
                     />
                   </label>
-                  <span className="border border-[#CFCFDF] px-4 py-2 rounded">
+                  <span className="border border-[#CFCFDF] px-4 py-2 rounded bg-gray-100">
                     {newPhoto ? newPhoto.name : "Aucun fichier choisi"}
                   </span>
                 </div>
               </div>
 
               <div className="w-full pt-5">
-                <Button
-                  buttonText="Save changes"
-                  btnBorder="rounded-[6px] border-none"
-                  btnBg="bg-primary-0"
-                  btnClass="w-full text-white-2"
-                  btnP="p-4 py-[10px]"
-                  btnText="text-blue-500 font-bold text-[16px] justify-center"
-                  btnType="submit"
-                />
+                <button
+                  type="submit"
+                  className={`w-full p-4 py-[10px] rounded-[6px] border-none text-white-2 flex items-center justify-center ${isLoading ? "bg-primary-0" : "bg-primary-0"}`}
+                  disabled={isLoading}
+                >
+                  {isLoading ? (
+                    <i className="fas fa-spinner fa-spin"></i>
+                  ) : (
+                    "Save changes"
+                  )}
+                </button>
               </div>
             </form>
           </div>
@@ -111,3 +125,4 @@ export default function ModalEdit({
     </>
   );
 }
+

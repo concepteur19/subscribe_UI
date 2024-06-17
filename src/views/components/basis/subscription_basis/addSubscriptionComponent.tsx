@@ -339,7 +339,7 @@ const AddSubscriptionComponent: FC<Props> = ({
             <div className=" flex justify-start md:py-4">
               <Button
                 btnBg={btnBgColor}
-                btnBorder=" rounded-xl"
+                btnBorder=" rounded-[6px]"
                 btnClass=" center w-full md:w-fit"
                 btnP="py-[14px] md:px-10 "
                 btnText="font-redRoseBold text-[16px] text-[#fff] "
