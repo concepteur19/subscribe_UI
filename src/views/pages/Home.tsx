@@ -20,13 +20,12 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  // DialogTrigger,
   DialogFooter,
 } from "../components/ui/dialog";
 import { PiCheck } from "react-icons/pi";
 import { RxCross2 } from "react-icons/rx";
 import subscribe from "../../assets/images/subscribeIcon.svg";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import SubscriptionController from "../../controllers/subscription/SubscriptionController";
 import UserContext from "../../contexts/userDataContext";
 import Subscription from "@/src/models/Subscription.model";
@@ -37,30 +36,79 @@ const Home = () => {
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(true);
   const [subscriptions, setUserSubscription] = useState<Subscription[]>([]);
   const [isDataReturn, setIsDataReturn] = useState<boolean>(false);
+  const [filteredSubscriptions, setFilteredSubscriptions] = useState<
+    Subscription[]
+  >([]);
+  const [upcomingSubscriptions, setUpcomingSubscriptions] = useState<
+    Subscription[]
+  >([]);
 
   const [isActive, setActive] = useState<boolean>(true);
+  const location = useLocation();
+
+  const today = new Date();
 
   useEffect(() => {
-    const fetchUserSubsciptions = async () => {
+    const fetchUserSubscriptions = async () => {
       const response = await SubscriptionController.getUserSubscriptions(id!);
-
-      console.log("user subscription", response);
+      setIsDataReturn(response.data?.length! > 0);
       setUserSubscription(response.data!);
-      if (response.data?.length! > 0) {
-        console.log("data sup 0");
-        setIsDataReturn(true);
-      }
+      setFilteredSubscriptions(response.data!);
+
+      const subscriptionTopFilter = response
+        .data!.filter((subscription) => {
+          const daysDifference = getDaysDifference(today, subscription.end_on!);
+          return daysDifference <= 7;
+        })
+        .sort((a, b) => {
+          const dayDiffA = getDaysDifference(today, new Date(a.end_on!));
+          const dayDiffB = getDaysDifference(today, new Date(b.end_on!));
+          return dayDiffA - dayDiffB;
+        });
+      setUpcomingSubscriptions(subscriptionTopFilter);
     };
 
-    fetchUserSubsciptions();
+    fetchUserSubscriptions();
   }, [id]);
 
-  const handleNavClick = (param: string) => {
-    if (param === "over" && isActive === false) {
-      setActive(!isActive);
-    } else if (param === "upco" && isActive === true) {
-      setActive(!isActive);
+  useEffect(() => {
+    if (!isActive) {
+      const upcomingSubscriptions = subscriptions
+        .filter((subscription) => {
+          return getDaysDifference(today, subscription.end_on!) <= 7;
+        })
+        .sort((a, b) => {
+          const dayDiffA = getDaysDifference(today, new Date(a.end_on!));
+          const dayDiffB = getDaysDifference(today, new Date(b.end_on!));
+          return dayDiffA - dayDiffB;
+        });
+      setFilteredSubscriptions(upcomingSubscriptions);
+    } else {
+      setFilteredSubscriptions(subscriptions);
     }
+  }, [isActive, subscriptions]);
+
+  useEffect(() => {
+    if (
+      location.pathname === "/home" ||
+      location.pathname === "/home/overview"
+    ) {
+      setActive(true);
+    } else if (location.pathname === "/home/upcoming") {
+      setActive(false);
+    }
+  }, [location.pathname]);
+
+  const handleNavClick = (path: string): void => {
+    setActive(path === "/home/overview");
+  };
+
+  const getDaysDifference = (date1: Date, date2: Date): number => {
+    const oneDay = 24 * 60 * 60 * 1000;
+    const endOnDate = new Date(date2);
+    return Math.round(
+      Math.abs((endOnDate.getTime() - date1.getTime()) / oneDay)
+    );
   };
 
   return (
@@ -71,9 +119,6 @@ const Home = () => {
             isDialogOpen ? "block" : "hidden"
           }`}
         ></div>
-        {/* <DialogTrigger className=" bg-primary-0 p-4 rounded-lg">
-          Open
-        </DialogTrigger> */}
         <DialogContent className="text-[#ffffff] bg-[#0B0C26] border border-[#303163] rounded-3xl ">
           <DialogHeader>
             <DialogTitle className="text-2xl font-russOne font-normal text-white-2 text-center flex flex-col items-center space-y-4 ">
@@ -82,21 +127,19 @@ const Home = () => {
               </div>
               <h1>SubScribe Tracker</h1>
             </DialogTitle>
-
-            <div className=" space-y-6">
+            <div className="space-y-6">
               <div className="flex justify-between items-center">
-                <div className=" flex space-x-1 sm:space-x-4">
+                <div className="flex space-x-1 sm:space-x-4">
                   <img src={netflix} alt="" />
-                  <div className=" flex flex-col space-y-[6px]">
+                  <div className="flex flex-col space-y-[6px]">
                     <span className="text-[16px]">Netflix</span>
-                    <div className=" text-[13px] space-x-2 ">
-                      <span className=" text-[#9898AA] ">Due date :</span>{" "}
-                      <span className=" text-[#F01A16]">15/04/2024</span>
+                    <div className="text-[13px] space-x-2">
+                      <span className="text-[#9898AA]">Due date :</span>
+                      <span className="text-[#F01A16]">15/04/2024</span>
                     </div>
                   </div>
                 </div>
-
-                <div className=" font-redRose  space-x-2 space-y-2 sm:space-y-0 flex flex-col sm:flex-row  items-center">
+                <div className="font-redRose space-x-2 space-y-2 sm:space-y-0 flex flex-col sm:flex-row items-center">
                   <Button
                     btnText="text-[16px] text-[#9898AA] items-start space-x-[6px]"
                     buttonText="Rejected"
@@ -109,20 +152,18 @@ const Home = () => {
                   />
                 </div>
               </div>
-
               <div className="flex justify-between items-center">
-                <div className=" flex space-x-1 sm:space-x-4">
+                <div className="flex space-x-1 sm:space-x-4">
                   <img src={spotify} alt="" />
-                  <div className=" flex flex-col space-y-[6px]">
+                  <div className="flex flex-col space-y-[6px]">
                     <span className="text-[16px]">Spotify</span>
-                    <div className=" text-[13px] space-x-2 ">
-                      <span className=" text-[#9898AA] ">Due date :</span>{" "}
-                      <span className=" text-[#F01A16]">15/04/2024</span>
+                    <div className="text-[13px] space-x-2">
+                      <span className="text-[#9898AA]">Due date :</span>
+                      <span className="text-[#F01A16]">15/04/2024</span>
                     </div>
                   </div>
                 </div>
-
-                <div className=" font-redRose  space-x-2 space-y-2 sm:space-y-0 flex flex-col sm:flex-row justify-end items-center">
+                <div className="font-redRose space-x-2 space-y-2 sm:space-y-0 flex flex-col sm:flex-row justify-end items-center">
                   <Button
                     btnText="text-[16px] text-[#9898AA] items-start space-x-[6px]"
                     buttonText="Rejected"
@@ -140,78 +181,63 @@ const Home = () => {
           <DialogFooter className="w-full">
             <Button
               buttonText="Confirm"
-              btnBorder=" rounded-[6px] border-none"
-              btnBg=" bg-white-2 "
+              btnBorder="rounded-[6px] border-none"
+              btnBg="bg-white-2"
               btnP="p-4 py-[10px]"
-              btnText=" text-primary-0 font-redRoseBold text-[16px] justify-center "
+              btnText="text-primary-0 font-redRoseBold text-[16px] justify-center"
               handleClick={() => setIsDialogOpen(false)}
             />
-
-            <DialogDescription className=" font-redRose font-light text-sm text-white-2 text-center">
+            <DialogDescription className="font-redRose font-light text-sm text-white-2 text-center">
               By clicking Confirm, you approve all these subscriptions. This
               action is irreversible.
             </DialogDescription>
           </DialogFooter>
         </DialogContent>
       </Dialog>
-
-      <div className=" h-screen  bg-cover text-white-1 w-full ">
-        <div className=" mx-auto flex flex-1 flex-col sm:flex-row sm:items-start sm:space-x-[46px] items-center justify-center w-full">
-          <div className="flex flex-col space-y-3 md:space-y-11 w-full  md:w-[46.67%] xl:w-[39.67%] 2xl:w-[36.67%] ">
+      <div className="h-screen bg-cover text-white-1 w-full">
+        <div className="mx-auto flex flex-1 flex-col sm:flex-row sm:items-start sm:space-x-[46px] items-center justify-center w-full">
+          <div className="flex flex-col space-y-3 md:space-y-11 w-full md:w-[46.67%] xl:w-[39.67%] 2xl:w-[36.67%]">
             {screenSize.width < 768 && !isDataReturn ? null : (
               <CardAmountSpent />
             )}
-
-            <div className=" block text-[#697386] space-y-6 ">
-              <div className=" flex justify-between items-center max-md:hidden">
-                <span className=" text-[#fff] ">Latest payments</span>
-                <span>See all</span>
+            <div className="block text-[#697386] space-y-6">
+              <div className="flex justify-between items-center max-md:hidden">
+                <span className="text-[#fff]">Latest payments</span>
+                <span>
+                  <Link to="/payments">See all</Link>
+                </span>
               </div>
-
               {isDataReturn ? (
-                <div className=" flex flex-col ">
-                  <div className=" max-sm:hidden space-y-3 sm:mb-3 md:mb-0">
+                <div className="flex flex-col">
+                  <div className="max-sm:hidden space-y-3 sm:mb-3 md:mb-0">
                     {Array.from({ length: 7 }).map((_, i) => (
-                      <CardLatestPayment key={i + "LP"} />
+                      <CardLatestPayment key={i + "-LP"} />
                     ))}
                   </div>
-
                   {/* Mobile component */}
                   <div className="space-y-3">
                     <div className="md:hidden w-full space-y-4">
-                      <h1 className=" font-redRoseBold text-[16px]">
+                      <h1 className="font-redRoseBold text-[16px] flex justify-between">
                         Upcoming Subscriptions
+                        <span>
+                          <Link to="/payments">See all</Link>
+                        </span>
                       </h1>
                       <div className="flex space-x-4">
-                        {Array.from({ length: 2 }).map((_, i) => (
-                          <CardOverview
-                            positionCard=" absolute right-10 "
-                            flexCard=" flex-col justify-center items-start space-y-3"
-                            due={8}
-                            imgSrc={netflix}
-                            subscriName="Netflix"
-                            price={8.36}
-                            dMy="Year"
-                            id={i}
-                          />
-                        ))}
-                      </div>
-                    </div>
-
-                    <div className="md:hidden block w-full space-y-4">
-                      <h1 className=" font-redRoseBold text-[16px]">
-                        My Subscriptions
-                      </h1>
-                      <div className="flex flex-col space-y-4">
-                        {subscriptions.map((subscription, index) => {
-                          return (
+                        {upcomingSubscriptions
+                          .slice(0, 2)
+                          .map((subscription, index) => (
                             <CardOverview
-                              key={index + "-" + subscription.service_name}
-                              due={8}
+                              key={index + "." + subscription.service_name}
+                              positionCard="absolute right-10"
+                              flexCard="flex-col justify-center items-start space-y-3"
+                              due={getDaysDifference(
+                                today,
+                                subscription.end_on!
+                              )}
                               imgSrc={
                                 subscription.logo
-                                  ? "http://localhost:8000/storage/" +
-                                    subscription.logo
+                                  ? `http://localhost:8000/storage/${subscription.logo}`
                                   : dollar
                               }
                               sizelogo={!subscription.logo ? 12 : undefined}
@@ -221,8 +247,31 @@ const Home = () => {
                               typePlan={subscription.type}
                               id={subscription.id}
                             />
-                          );
-                        })}
+                          ))}
+                      </div>
+                    </div>
+                    <div className="md:hidden block w-full space-y-4 pb-20">
+                      <h1 className="font-redRoseBold text-[16px]">
+                        My Subscriptions
+                      </h1>
+                      <div className="flex flex-col space-y-4">
+                        {subscriptions.map((subscription, index) => (
+                          <CardOverview
+                            key={index + "-" + subscription.service_name}
+                            due={getDaysDifference(today, subscription.end_on!)}
+                            imgSrc={
+                              subscription.logo
+                                ? `http://localhost:8000/storage/${subscription.logo}`
+                                : dollar
+                            }
+                            sizelogo={!subscription.logo ? 12 : undefined}
+                            subscriName={subscription.service_name!}
+                            price={subscription.amount!}
+                            dMy={subscription.cycle}
+                            typePlan={subscription.type}
+                            id={subscription.id}
+                          />
+                        ))}
                       </div>
                     </div>
                   </div>
@@ -230,13 +279,12 @@ const Home = () => {
               ) : (
                 <div>
                   <hr className="mt-1 mb-11 text-[#303055] max-md:hidden" />
-
-                  <div className=" flex flex-col justify-center items-center space-y-4 max-md:mt-48">
+                  <div className="flex flex-col justify-center items-center space-y-4 max-md:mt-48">
                     <img
                       src={screenSize.width > 768 ? empty : emptyM}
                       alt="empty"
                     />
-                    <p className=" font-redRoseBold text-[16px] text-[#808080] ">
+                    <p className="font-redRoseBold text-[16px] text-[#808080]">
                       You don’t have any subscriptions now.
                     </p>
                   </div>
@@ -245,55 +293,39 @@ const Home = () => {
               )}
             </div>
           </div>
-
-          <div className=" max-md:hidden w-[50%] xl:w-[57%] 2xl:w-[60%]  space-y-8">
+          <div className="max-md:hidden w-[50%] xl:w-[57%] 2xl:w-[60%] space-y-8">
             <NavHome handleNavClick={handleNavClick} />
-
             {isDataReturn ? (
               <div className="flex flex-col space-y-3">
-                {subscriptions.map((subscription, index) => {
-                  return (
-                    <CardOverview
-                      key={index + "-" + subscription.service_name}
-                      due={8}
-                      imgSrc={
-                        subscription.logo
-                          ? "http://localhost:8000/storage/" + subscription.logo
-                          : dollar
-                      }
-                      sizelogo={!subscription.logo ? 12 : undefined}
-                      subscriName={subscription.service_name!}
-                      price={subscription.amount!}
-                      dMy={subscription.cycle}
-                      typePlan={subscription.type}
-                      id={subscription.id}
-                    />
-                  );
-                })}
-                {/* {Array.from({ length: 8 }).map((_, i) => (
+                {filteredSubscriptions.map((subscription, index) => (
                   <CardOverview
-                    key={i + "$"}
-                    due={8}
-                    imgSrc={netflix}
-                    subscriName="Netflix"
-                    price={8.36}
-                    dMy="Year"
-                    typePlan="Basic Plan"
-                    id={i}
+                    key={index + "-" + subscription.service_name}
+                    due={getDaysDifference(today, subscription.end_on!)}
+                    imgSrc={
+                      subscription.logo
+                        ? `http://localhost:8000/storage/${subscription.logo}`
+                        : dollar
+                    }
+                    sizelogo={!subscription.logo ? 12 : undefined}
+                    subscriName={subscription.service_name!}
+                    price={subscription.amount!}
+                    dMy={subscription.cycle}
+                    typePlan={subscription.type}
+                    id={subscription.id}
                   />
-                ))} */}
+                ))}
               </div>
             ) : (
-              <div className=" flex flex-col items-center justify-center pt-28 space-y-11 ">
-                <p className=" font-redRoseBold text-[16px] text-[#808080]">
+              <div className="flex flex-col items-center justify-center pt-28 space-y-11">
+                <p className="font-redRoseBold text-[16px] text-[#808080]">
                   You don’t have any subscriptions now.
                 </p>
                 <Link to="/home/addSubscription">
                   <Button
-                    btnBg=" bg-[#ffffff] "
-                    btnText=" text-black-0 font-redRoseBold"
-                    btnP="py-[6.5px] px-9 "
-                    btnBorder=" border border-primary-0 rounded"
+                    btnBg="bg-[#ffffff]"
+                    btnText="text-black-0 font-redRoseBold"
+                    btnP="py-[6.5px] px-9"
+                    btnBorder="border border-primary-0 rounded"
                     buttonText="Add subscription"
                     btnClass=""
                   />

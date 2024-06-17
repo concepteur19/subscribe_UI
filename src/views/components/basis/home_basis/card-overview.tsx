@@ -33,7 +33,7 @@ const CardOverview: React.FC<CardOverviewProps> = ({
         positionCard ? " bg-[#0B0B1A]" : "linear-gratient-card"
       }`}
     >
-      <div className={`flex ${flexCard ? flexCard : "space-x-3 items-center"}`}>
+      <div className={`flex ${flexCard ? flexCard : "space-x-3 items-center "}`}>
         <Link to={`/home/subscription/${id? id : 1}`}>
           {" "}
           <span className=" cursor-pointer">
@@ -46,10 +46,10 @@ const CardOverview: React.FC<CardOverviewProps> = ({
             positionCard ? "space-y-1" : "space-y-[6px]"
           }`}
         >
-          <span className=" text-[16px] ">{subscriName} </span>
+          <span className=" text-[16px] lg:24  ">{subscriName} </span>
           <span className=" font-redRoseLight text-white-0">
             Due in <span className=" font-redRoseBold text-white-1">{due}</span>{" "}
-            days
+            day{`${due > 1 ? 's' : ''}`}
           </span>
         </div>
       </div>

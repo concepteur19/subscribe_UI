@@ -1,4 +1,4 @@
-import { FC, useContext } from "react";
+import { FC, useContext, useEffect, useState } from "react";
 import SearchBar from "../basis/navBar_basis/searchBar";
 import Button from "../basis/buttons/Button";
 import Menu from "../basis/navBar_basis/menu";
@@ -16,8 +16,13 @@ let theme = require("@/src/assets/images/png/theme.png") as any;
 const Narbar: FC = () => {
   const location = useLocation();
   const isPathTrue = location.pathname === "/";
+  // const [isNav, setIsNav] = useState<boolean>(false);
 
-  const isPathHome = location.pathname !== "/home";
+  useEffect(() => {
+
+  }, [])
+
+  const isPathHome = location.pathname === "/home" || location.pathname === "/home/overview" || location.pathname !== "/home/upcomming" || location.pathname !== "/home/upcomming";
 
   const navigate = useNavigate();
   const navbarClick = () => {
@@ -31,13 +36,13 @@ const Narbar: FC = () => {
       {/* mobile nav */}
       <div
         className={`${
-          isPathHome && "hidden"
+          !isPathHome && "hidden"
         } px-6 sm:px-[52px] md:hidden w-full `}
       >
         <div className=" mx-auto flex flex-col items-center justify-center">
           <div className="flex justify-between items-center w-full pt-12 pb-3 text-sm">
             <div className="flex items-center space-x-3" onClick={navbarClick}>
-              {photo !== undefined ? (
+              {photo ? (
                 <img
                   src={"http://localhost:8000/storage/" + photo}
                   alt=""
@@ -72,7 +77,7 @@ const Narbar: FC = () => {
                 <img src={git} alt="gitimg" />
               </div> */}
               <div onClick={navbarClick}>
-                {photo !== undefined ? (
+                {photo ? (
                   <img
                     src={"http://localhost:8000/storage/" + photo}
                     alt=""
