@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import subsLogin from '@/src/assets/subsLogin.svg'
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import userSignIn from "../../../controllers/auth/loginController";
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
@@ -77,7 +77,7 @@ export function SignIn() {
             >
               <div className='flex flex-col items-center gap-2'>
                 <h1 className='text-[28px] font-redRoseBold text-[#4649E5] '>SubScribe Connect</h1>
-                <p className='text-[14px] text-[#2F384F]'>Welcome, Sign In to track your subscription</p>
+                <p className='text-[16px] text-[#2F384F]'>Sign In to track your subscription</p>
               </div>
               
               
@@ -86,19 +86,19 @@ export function SignIn() {
                 <Button
                   handleClick={login}
                   btnIcon={<BiLogoGoogle className="" size={24} />}
-                  buttonText=" Se connecter avec google "
+                  buttonText=" Continue with Google "
                   btnP="py-3"
                   btnType="button"
-                  btnClass="w-full hover:text-black-0 "
-                  btnText="text-primary-0 hover:text-white-2 text-sm"
-                  btnBorder="  rounded border border-primary-0 hover:border-none border-opacity-60 hover:bg-primary-0 "
+                  btnClass="w-full hover:text-black-0 font-redRoseBold"
+                  btnText="text-primary-0 hover:text-white-2 text-[16px]"
+                  btnBorder="  rounded-[6px] border border-primary-0 hover:border-none border-opacity-60 hover:bg-primary-0 "
                 />
               </div>
 
             
               <p className="text-[14px] text-[#2F384F] text-center flex flex-col items-center gap-2">
                 By clicking continue, you acknowledge that you have read and
-                agree to Terms of Service & Privacy Policy.
+                agree to <div className="inline"> <Link to="/terms"><span className="">Terms of Service</span></Link> & <Link to="/privacy"><span>Privacy Policy</span></Link></div>.
               </p>
             </form>
           </div>
