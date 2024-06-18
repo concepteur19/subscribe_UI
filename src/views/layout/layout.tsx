@@ -54,6 +54,8 @@ const Layout = () => {
       navigate(pathTab[1] + "/" + pathTab[2]);
     } else if (pathTab[1] === "settings") {
       navigate("home");
+    } else if (pathTab[1] === "payments") {
+      navigate("home");
     }
   };
 
@@ -72,7 +74,7 @@ const Layout = () => {
             }`}
           >
             {/* return button */}
-            {(pathTab[1] === "home" && pathTab.length > 2) ||
+            {((pathTab[1] === "home" && pathTab.length > 2) && pathTab[2] !== "upcoming" && pathTab[2] !== "overview"  ) ||
             pathTab[1] === "settings" ||
             pathTab[1] === "payments" ? (
               <div

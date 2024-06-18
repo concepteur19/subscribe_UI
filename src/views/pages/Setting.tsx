@@ -143,7 +143,7 @@ function Setting() {
         ) : null}
 
         {/* Account and support information section */}
-        <div className=" space-y-6 lg:space-y-10 p-6 sm:px-24 md:px-28 lg:px-36 xl:px-[25%] 2xl:px-[30%] ">
+        <div className=" space-y-6 lg:space-y-10 px-6 pb-10 sm:pb-0 sm:px-24 md:px-28 lg:px-36 xl:px-[25%] 2xl:px-[30%]">
           <div className=" space-y-4">
             <h1 className=" pb-2">My account</h1>
             <InputDiv label="Email">
@@ -171,7 +171,7 @@ function Setting() {
         </div>
 
         {/* Logout button section */}
-        <div className="fixed md:relative bottom-0 left-0 flex justify-center md:justify-start items-center p-6 w-full sm:px-24 md:px-28 lg:px-36 xl:px-[25%] 2xl:px-[30%] ">
+        <div className=" flex justify-center md:justify-start items-center px-6 pb-3 w-full sm:p-6 sm:px-24 md:px-28 lg:px-36 xl:px-[25%] 2xl:px-[30%] ">
           <Button
             buttonText="Logout"
             btnClass="w-full md:w-[134px]"

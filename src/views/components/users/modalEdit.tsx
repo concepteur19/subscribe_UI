@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Dialog, DialogContent } from "@/src/views/components/ui/dialog";
-import Button from "../../components/basis/buttons/Button";
+// import Button from "../../components/basis/buttons/Button";
 import Input from "../../components/basis/Input";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
