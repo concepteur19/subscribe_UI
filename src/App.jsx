@@ -15,6 +15,8 @@ import { SignUp } from "./views/pages/signUp/signUp";
 // import CustomSubscriptionDetail from "./views/pages/subscription/customSubscriptionDetail";
 import AddCustomSubscription from "./views/pages/subscription/AddCustomSubscription";
 import ErrorPage from "./views/pages/ErrorPage";
+import { TermsOfServices } from "./views/pages/termsOfServices";
+import { PrivacyPolicy } from "./views/pages/privacyPolicy";
 // import PrivateRoute from "./views/components/auth/PrivateRoute";
 
 function App() {
@@ -25,7 +27,9 @@ function App() {
           <Route path="/signUp" Component={SignUp} />
           <Route path="/Login" Component={SignIn} />
           <Route path="/" Component={LandingPage} />
-          <Route
+          <Route path="/terms" Component={TermsOfServices} />
+          <Route path="/privacy" Component={PrivacyPolicy} />
+          <Route 
             path="/"
             element={
               // <PrivateRoute>
