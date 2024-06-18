@@ -29,7 +29,7 @@ function Setting() {
   const [newUsername, setNewUsername] = useState<string>("");
   const [newPhoto, setNewPhoto] = useState<File | null>(null);
   const [newPhoneNumber, setNewPhoneNumber] = useState<string>("");
-  const [successMessage, setSuccessMessage] = useState<string | null>("");
+  const [successMessage, setSuccessMessage] = useState<string>();
   const [errorMessage, setErrorMessage] = useState<string>("");
 
   const navigate = useNavigate();
@@ -94,7 +94,7 @@ function Setting() {
       // Refresh the page after 5 seconds to observe changes
       setTimeout(() => {
         navigate(window.location.pathname);
-        setSuccessMessage(null);
+        setSuccessMessage(undefined);
       }, 1000);
     } catch (error) {
       console.error("Profile update error", error);
@@ -103,7 +103,7 @@ function Setting() {
 
   return (
     <>
-      <div className=" w-full md:space-y-4 ">
+      <div className=" w-full md:space-y-16 ">
         {/* Header section with profile photo and edit button */}
         <div className=" bg-gradient-to-b from-[#4649E566] via-[#24132f] to-[#F2474700] md:bg-none flex flex-col md:flex-row md:justify-between items-center sm:px-24 md:px-28 lg:px-36 xl:px-[25%] 2xl:px-[30%] py-16 md:py-0">
           <div className=" flex flex-col md:flex-row items-center justify-center md:justify-start space-y-4 md:space-y-0 sm:space-x-3 ">
@@ -136,7 +136,7 @@ function Setting() {
           />
         </div>
 
-        {successMessage !== null ? (
+        {successMessage !== undefined ? (
           <div className=" text-[#10B981] text-center py-2">
             {successMessage}
           </div>

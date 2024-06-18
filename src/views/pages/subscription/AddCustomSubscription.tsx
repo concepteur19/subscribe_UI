@@ -4,7 +4,13 @@ import AddSubscriptionComponent from "../../components/basis/subscription_basis/
 const AddCustomSubscription = () => {
   return (
     <AddSubscriptionComponent
-      subscriptionLabel="Create a customize subsription"
+      subscriptionLabel={
+        <>
+          Create a customize
+          <br />
+          subscription
+        </>
+      }
       buttonText="Add Subscription"
       btnBgColor=" bg-primary-0"
     />

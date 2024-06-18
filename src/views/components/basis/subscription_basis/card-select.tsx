@@ -48,7 +48,7 @@ const CardSelect: FC<CardSelectProps> = ({
 
   useEffect(() => {
     // console.log("les options", options);
-    
+
     document.addEventListener("click", handleClickOutside);
     return () => {
       document.removeEventListener("click", handleClickOutside);
@@ -57,63 +57,64 @@ const CardSelect: FC<CardSelectProps> = ({
 
   return (
     <div ref={selectRef}>
-      {options?.length !== 0 ? <InputDiv label={label}>
-        <div
-          className={`${
-            options && "cursor-pointer"
-          } flex items-center space-x-1`}
-          onClick={() => setSelectOpen(!isSelectOpen)}
-        >
-          {!options ? (
-            <div>
-              {label === "Type" ? (
-                <span> {type} </span>
-              ) : label === "Cycle" ? (
-                <span> {cycle} </span>
-              ) : label === "Payment Method" ? (
-                <span> {payment} </span>
-              ) : label === "Remind me" ? (
-                <span> {remind} </span>
-              ) : null}
-            </div>
-          ) : (
-            <option> {option} </option>
-          )}
-
-          {options && (
-            <span>
-              {!isSelectOpen ? (
-                <IoChevronDown size={18} />
-              ) : (
-                <IoChevronUp size={18} />
-              )}
-            </span>
-          )}
-        </div>
-      </InputDiv> : null }
-      
-
-        <div className="flex justify-end relative">
-          <ul
-            className={
-              isSelectOpen
-                ? "absolute bg-[#00000006] backdrop-blur-[9px] border border-primary-2 -top-3 right-3 rounded-xl py-3"
-                : "hidden"
-            }
+      {options?.length! > 0 ? (
+        <InputDiv label={label}>
+          <div
+            className={`${
+              options && "cursor-pointer"
+            } flex items-center space-x-1`}
+            onClick={() => setSelectOpen(!isSelectOpen)}
           >
-            {options?.map((option, index) => {
-              return (
-                <li
-                  key={option + index}
-                  className={`py-[10px] pl-5 pr-7 hover:bg-black-2 cursor-pointer `}
-                  onClick={() => handleSelectedOption(option)}
-                >
-                  {option}
-                </li>
-              );
-            })}
-          </ul>
-        </div>
+            {!options ? (
+              <div>
+                {label === "Type" ? (
+                  <span> {type} </span>
+                ) : label === "Cycle" ? (
+                  <span> {cycle} </span>
+                ) : label === "Payment Method" ? (
+                  <span> {payment} </span>
+                ) : label === "Remind me" ? (
+                  <span> {remind} </span>
+                ) : null}
+              </div>
+            ) : (
+              <option> {option} </option>
+            )}
+
+            {options && (
+              <span>
+                {!isSelectOpen ? (
+                  <IoChevronDown size={18} />
+                ) : (
+                  <IoChevronUp size={18} />
+                )}
+              </span>
+            )}
+          </div>
+        </InputDiv>
+      ) : null}
+
+      <div className="flex justify-end relative">
+        <ul
+          className={
+            isSelectOpen
+              ? "absolute bg-[#00000006] backdrop-blur-[9px] border border-primary-2 -top-3 right-3 rounded-xl py-3"
+              : "hidden"
+          }
+        >
+          {options?.map((option, index) => {
+            return (
+              <li
+                key={option + index}
+                className={`py-[10px] pl-5 pr-7 hover:bg-black-2 cursor-pointer `}
+                onClick={() => handleSelectedOption(option)}
+              >
+                {option}
+              </li>
+            );
+          })}
+        </ul>
+      </div>
     </div>
   );
 };
