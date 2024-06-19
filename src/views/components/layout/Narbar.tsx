@@ -18,6 +18,9 @@ const Narbar: FC = () => {
   const isPathTrue = location.pathname === "/";
   const [isNav, setIsNav] = useState<boolean>(false);
 
+  const path = location.pathname;
+  const pathTab = path.split("/");
+
   useEffect(() => {
     switch (location.pathname) {
       case "/home/overview":
@@ -30,6 +33,10 @@ const Narbar: FC = () => {
       case "/payments":
         setIsNav(true);
         break;
+    }
+
+    if(pathTab[2] === 'subscription' || pathTab[2] ==='addSubscription') {
+      setIsNav(true);
     }
   }, [location]);
 

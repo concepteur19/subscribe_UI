@@ -7,7 +7,7 @@ function Payment() {
       <h1>All Payments</h1>
       <div className="grid md:grid-flow-row md:grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3  gap-5 ">
         {Array.from({ length: 7 }).map((_, i) => (
-          <CardLatestPayment key={i + "-LP"} />
+          <CardLatestPayment key={i + "-LP"} amount={0} paymentDate={""} isApproved={false} />
         ))}
       </div>
     </div>

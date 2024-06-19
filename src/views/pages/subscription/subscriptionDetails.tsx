@@ -3,12 +3,11 @@ import AddSubscriptionComponent, {
   DetailSubscription,
 } from "@/src/views/components/basis/subscription_basis/addSubscriptionComponent";
 // import Netflix from "../../../assets/images/png/netflix.png";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import SubscriptionController from "@/src/controllers/subscription/SubscriptionController";
 import Subscription from "@/src/models/Subscription.model";
 import { format } from "date-fns";
-import dollar from "@/src/assets/images/png/$.png"
-
+import dollar from "@/src/assets/images/png/$.png";
 
 const SubscriptionDetails = () => {
   const { id } = useParams();
@@ -22,7 +21,8 @@ const SubscriptionDetails = () => {
     end_on: "",
   });
 
-  console.log("juste avant le montage", id);
+  const [responseMessage, setResponseMessage] = useState<string>();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchDefaultSubDetail = async () => {
@@ -44,16 +44,35 @@ const SubscriptionDetails = () => {
 
   useEffect(() => {
     if (subscription) {
-      const endOnDate = subscription.end_on ? format(new Date(subscription.end_on), "dd MMM yyyy") : 'Date not available';
+      const endOnDate = subscription.end_on
+        ? format(new Date(subscription.end_on), "dd MMM yyyy")
+        : "Date not available";
       setDetail({
         type: subscription.type!,
         cycle: subscription.cycle,
         payment: subscription.payment_method,
-        remind: `${subscription.reminder} day${subscription.reminder > 1 ? "s" : ""} before`,
+        remind: `${subscription.reminder} day${
+          subscription.reminder > 1 ? "s" : ""
+        } before`,
         end_on: endOnDate,
       });
     }
   }, [subscription]);
+
+  const deleteSubscription = async () => {
+    try {
+      const response = await SubscriptionController.deleteOneSubscription(+id!);
+      setResponseMessage(response?.message!);
+      
+      setTimeout(() => {
+        navigate('/home');
+        setResponseMessage(undefined);
+      }, 2000);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // // Vérifiez la validité de subscription.end_on avant d'utiliser format
   // const formattedEndDate = subscription?.end_on ? format(new Date(subscription.end_on), "dd MMM yyyy") : 'Date not available';
@@ -61,18 +80,28 @@ const SubscriptionDetails = () => {
   // console.log("end on", formattedEndDate);
 
   return (
-    <AddSubscriptionComponent
-      buttonText="Delete Subscription"
-      btnBgColor=" bg-red "
-      subscriptionLabel={subscription?.service_name!}
-      amount={subscription?.amount!.toString()}
-      dueDate="5"
-      cycle={subscription?.cycle}
-      planDetail={subscription?.type}
-      detailSubscription={detailSubscription}
-      sizeLogo={!subscription?.logo ? 12 : undefined}
-      logo={subscription?.logo? 'http://localhost:8000/storage/'+ subscription.logo : dollar}
-    />
+    <>
+      {responseMessage !== undefined ? (
+        <div className=" text-[#10B981] text-center py-2">{responseMessage}</div>
+      ) : null}
+      <AddSubscriptionComponent
+        buttonText="Delete Subscription"
+        btnBgColor=" bg-red "
+        subscriptionLabel={subscription?.service_name!}
+        amount={subscription?.amount!.toString()}
+        dueDate="5"
+        cycle={subscription?.cycle}
+        planDetail={subscription?.type}
+        detailSubscription={detailSubscription}
+        sizeLogo={!subscription?.logo ? 12 : undefined}
+        logo={
+          subscription?.logo
+            ? "http://localhost:8000/storage/" + subscription.logo
+            : dollar
+        }
+        deleteSubscription={deleteSubscription}
+      />
+    </>
   );
 };
 

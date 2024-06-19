@@ -31,6 +31,45 @@ import UserContext from "../../contexts/userDataContext";
 import Subscription from "@/src/models/Subscription.model";
 
 const Home = () => {
+  const payments = [
+    {
+      amount: 24.0,
+      currency: "USD",
+      paymentDate: "2 May, 2023",
+      isApproved: true,
+    },
+    {
+      amount: 15.75,
+      currency: "EUR",
+      paymentDate: "10 Jun, 2023",
+      isApproved: false,
+    },
+    {
+      amount: 99.99,
+      currency: "USD",
+      paymentDate: "1 Sep, 2023",
+      isApproved: true,
+    },
+    {
+      amount: 4.00,
+      currency: "USD",
+      paymentDate: "23 May, 2023",
+      isApproved: true,
+    },
+    {
+      amount: 19.99,
+      currency: "EUR",
+      paymentDate: "15 Jun, 2023",
+      isApproved: false,
+    },
+    {
+      amount: 9.09,
+      currency: "USD",
+      paymentDate: "1 Jul, 2023",
+      isApproved: true,
+    },
+  ];
+
   const { id } = useContext(UserContext)!;
   const { screenSize } = useContext(ScreenSizeContext)!;
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(true);
@@ -210,8 +249,13 @@ const Home = () => {
               {isDataReturn ? (
                 <div className="flex flex-col">
                   <div className="max-sm:hidden space-y-3 sm:mb-3 md:mb-0">
-                    {Array.from({ length: 7 }).map((_, i) => (
-                      <CardLatestPayment key={i + "-LP"} />
+                    {payments.map((payment, index) => (
+                      <CardLatestPayment
+                        key={index+`-${payment.amount}`}
+                        amount={payment.amount}
+                        paymentDate={payment.paymentDate}
+                        isApproved={payment.isApproved}
+                      />
                     ))}
                   </div>
                   {/* Mobile component */}
