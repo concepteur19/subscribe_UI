@@ -5,7 +5,7 @@ export function DashboardPresentationSection() {
     return (
         <>
             <div className='px-8 max-sm:px-4'>
-                <div className="flex flex-col justify-center items-center gap-[96.5px] mt-[105px] pb-[199.91px] mx-auto max-w-[1276.8px] max-sm:mt-[85px] max-sm:pb-[80px]">
+                <div className="flex flex-col justify-center items-center gap-[96.5px] mt-[105px] pb-[130px] mx-auto max-w-[1276.8px] max-sm:mt-[85px] max-sm:pb-[80px]">
                     <div className="flex flex-col items-center gap-[20px]">
                         <h2 className='text-[52.74px] leading-[110%] tracking-[-1.34px] font-redRoseBold text-[#fff] text-center max-w-[560px] max-sm:text-[32px]'>You have everything on the same page</h2>
                         <p className='text-[24.8px] leading-[150%] text-white text-center max-w-[560px] max-sm:text-[20px]'>Streamlined Subscription Management: All Services, One Simple Interface</p>

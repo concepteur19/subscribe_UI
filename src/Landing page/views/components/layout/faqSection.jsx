@@ -6,7 +6,7 @@ export function FaqSection (){
             <div className="pb-[85px] px-8 max-sm:px-4 ">
                 <div className="flex flex-col items-center gap-[66.14px] mx-auto max-w-[1276.8px] w-full">
                     <div className="flex flex-col items-center gap-[20px]">
-                        <h2 className='text-[52.74px] leading-[110%] tracking-[-1.34px] font-redRoseBold text-[#fff] text-center max-w-[847px] max-sm:text-[32px]'>Frequently Asked Questions</h2>
+                        <h2 className='text-[52.74px] leading-[110%] tracking-[-1.34px] font-redRoseBold text-[#fff] text-center max-w-[560px] max-sm:text-[32px]'>Frequently Asked Questions</h2>
                     </div>
                     <div className="flex gap-7 max-[875px]:flex-col max-[875px]:gap-8">
                         <div className="flex flex-col gap-7">

@@ -7,7 +7,6 @@ import axios from "axios";
 import Button from "../../components/basis/buttons/Button";
 import { BiLogoGoogle } from "react-icons/bi";
 import RegisterController from "@/src/controllers/auth/resgisterController";
-import { Link } from "react-router-dom";
 
 export function SignIn() {
   const navigate = useNavigate();
@@ -97,9 +96,9 @@ export function SignIn() {
               </div>
 
             
-              <p className="text-[14px] text-[#2F384F] text-center flex flex-col items-center gap-2">
+              <p className="text-[14px] text-[#2F384F] text-center">
                 By clicking continue, you acknowledge that you have read and
-                agree to <Link to="/terms" className="inline">Terms of Service</Link> & <Link to="/privacy" className="inline">Privacy Policy</Link>.
+                agree to <Link to='/terms' className="underline">Terms of Service</Link> & <Link to="/privacy" className="underline">Privacy Policy</Link>.
               </p>
             </form>
           </div>

@@ -8,8 +8,8 @@ export function Testimonial (){
             <div className="pb-[85px] px-8 max-sm:px-4 ">
                 <div className="flex flex-col items-center gap-[66.14px] mx-auto max-w-[1276.8px] w-full">
                     <div className="flex flex-col items-center gap-[20px]">
-                        <h2 className='text-[52.74px] leading-[110%] tracking-[-1.34px] font-redRoseBold text-[#fff] text-center max-w-[560px] max-sm:text-[32px]'>Features that meet the specific needs of users</h2>
-                        <p className='text-[24.8px] leading-[150%] text-white text-center max-w-[560px] max-sm:text-[20px]'>Power your subscription experience with features tailored to each user.</p>
+                        <h2 className='text-[52.74px] leading-[110%] tracking-[-1.34px] font-redRoseBold text-[#fff] text-center max-w-[560px] max-sm:text-[32px]'>You’re in great company</h2>
+                        <p className='text-[24.8px] leading-[150%] text-white text-center max-w-[560px] max-sm:text-[20px]'>Some feedback from our users</p>
                     </div>
                     <div className="inline-flex items-center gap-3 max-[875px]:flex-col max-[875px]:gap-8">
                         <div className="p-[58px] inline-flex flex-col border border-solid border-[#1B1B3D] rounded-[16px] max-xl:p-[30px] max-lg:px-[10px] max-[875px]:px-[18px] max-sm:w-full">
