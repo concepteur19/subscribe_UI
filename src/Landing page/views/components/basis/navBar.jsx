@@ -1,7 +1,15 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { motion } from "framer-motion";
 import logo from "../../../elements/logo.svg";
 
 export function Navbar() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+
   return (
     <>
       <div className="flex justify-center pt-7 pb-1 px-8 max-sm:px-4">
@@ -36,7 +44,10 @@ export function Navbar() {
             </a>
           </div>
           <div className="flex items-center gap-3">
-            <div className="flex items-center justify-center lg:hidden">
+            <div 
+              className="flex items-center justify-center lg:hidden"
+              onClick={toggleMenu}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="18"
@@ -64,7 +75,7 @@ export function Navbar() {
                   Login
                 </button>
               </Link>
-              <Link to="/signup">
+              <Link to="/login">
                 <button className="getStarted-button px-[24.34px] py-[11.59px] text-[15.5px] bg-[#4649E5] text-white rounded-[8px] cursor-pointer">
                   Get started
                 </button>
@@ -73,6 +84,29 @@ export function Navbar() {
           </div>
         </div>
       </div>
+      {menuOpen && (
+        <motion.div
+          initial={{ y: -100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.3 }}
+          className="burger-menu flex flex-col items-center bg-black text-white w-full py-4 lg:hidden"
+        >
+          <Link to="/login"
+            href="#product"
+            className="py-4 text-[15.5px]"
+            onClick={toggleMenu}
+          >
+            Login
+          </Link>
+          <Link to="/login"
+            className=" text-[15.5px]"
+            onClick={toggleMenu}
+          >
+            signUp
+          </Link>
+          
+        </motion.div>
+      )}
     </>
   );
 }

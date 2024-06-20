@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom"
+
 
 export function HeroSectionElements(){
     return (
@@ -34,9 +36,8 @@ export function HeroSectionElements(){
                     <div className="description flex flex-col justify-center">
                         <p className="text-[24.8px] text-white text-center font-normal leading-[150%] mb-[40px] max-w-[655px] max-sm:w-[350px] max-sm:text-[20px]">An intuitive platform to manage all your<br/> subscriptions, freeing up your time for what matters most: enjoying.</p>
                         <div className="hero-buttons flex items-center justify-center gap-3">
-                            <button 
-                                className="hero-getStarted-btn cursor-pointer pt-4 pl-8 pb-4 pr-8 text-[#fff] bg-[#4649E5] border border-solid border-[#232330] rounded-[8px] text-[15.5px] font-redRoseBold">Get Started</button>
-                            <button className="Book-demo-btn cursor-pointer pt-4 pl-8 pb-4 pr-8 text-[#4649E5] bg-[#fff] border border-solid border-[#232330] rounded-[8px] text-[15.5px] font-redRoseBold">Book a demo</button>
+                            <Link to="/login"><button className="hero-getStarted-btn cursor-pointer pt-4 pl-8 pb-4 pr-8 text-[#fff] bg-[#4649E5] border border-solid border-[#232330] rounded-[8px] text-[15.5px] font-redRoseBold">Get Started</button></Link>
+                            <Link to="/login"><button className="Book-demo-btn cursor-pointer pt-4 pl-8 pb-4 pr-8 text-[#4649E5] bg-[#fff] border border-solid border-[#232330] rounded-[8px] text-[15.5px] font-redRoseBold">Book a demo</button></Link>
                         </div>
                     </div>
                 </div>
