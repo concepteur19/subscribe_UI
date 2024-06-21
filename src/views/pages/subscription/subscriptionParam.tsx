@@ -24,7 +24,7 @@ const AddSubscriptionParam = () => {
         );
         if (response.status && response.data) {
           setDefaultSub(response.data);
-          console.log("detail default subscription", response.data);
+          // console.log("detail default subscription", response.data);
           
         }
       } catch (error) {

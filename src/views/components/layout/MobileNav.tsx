@@ -12,7 +12,7 @@ const MobileNav = () => {
 
   const pathTab = path.split("/");
 
-  console.log("le path dans subscribe param", pathTab);
+  // console.log("le path dans subscribe param", pathTab);
 
   return (
     <div className={pathTab.length > 3 || pathTab[1] === "settings" || pathTab[2] === "addSubscription" || pathTab[1] === "payments" ? "hidden" : ""}>

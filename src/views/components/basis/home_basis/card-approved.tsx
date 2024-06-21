@@ -18,20 +18,22 @@ import React from "react";
 
 // Définir les types des props
 interface CardStatusProps {
-  isApproved: boolean;
+  statusText: string;
 }
 
-const CardStatus: React.FC<CardStatusProps> = ({ isApproved }) => {
+const CardStatus: React.FC<CardStatusProps> = ({ statusText }) => {
+  // console.log("status", statusText);
   // Définir le texte et les couleurs en fonction du statut
-  const statusText = isApproved ? "Approved" : "Rejected";
-  const bgColor = isApproved ? "bg-[#D7F7C2]" : "bg-[#F7C2C2]";
-  const textColor = isApproved ? "text-[#006908]" : "text-[#690800]";
-  const iconColor = isApproved ? "bg-[#228403]" : "bg-[#840303]";
+  // const statusText = "Approved" || "Rejected" || "pending";
+  const bgColor = statusText === "approuved" ? "bg-[#D7F7C2]" : statusText === "rejected"? "bg-[#FBC4C3]" : "bg-[#C2D7F7]" ;
+  const textColor = statusText === "approuved" ? "text-[#006908]" : statusText === "rejected"? "text-[#F01A16]" : "text-[#311AF0]" ;
+  const iconBgColor = statusText === "approuved" ? "bg-[#006908]" : statusText === "rejected"? "bg-[#F01A16]" : "bg-[#311AF0]" ;
+  const iconColor = statusText === "approuved" ? "text-[#D7F7C2]" : statusText === "rejected"? "text-[#FBC4C3]" : "text-[#C2D7F7]" ;
   
   return (
-    <div className={`rounded text-xs px-[6px] flex space-x-1 items-center w-fit ${bgColor}`}>
-      <span className={`${textColor}`}>{statusText}</span>
-      <span className={`w-3 h-3 ${iconColor} text-[#D7F7C2] flex items-center justify-center rounded-sm text-[10px]`}>
+    <div className={`rounded text-xs px-[6px] flex space-x-1 items-center ${bgColor}`}>
+      <span className={`${textColor}`}>{statusText === "approuved" || statusText === "rejected" || statusText === "false" ? statusText : "Pending"  }</span>
+      <span className={`w-3 h-3 ${iconColor} ${iconBgColor}  flex items-center justify-center rounded text-xs my-[3px] `}>
         i
       </span>
     </div>

@@ -17,7 +17,7 @@ const AddSubscription = () => {
         setDefaultSub(response.data);
       })
       .catch((error) => {
-        console.log(error.message);
+        // console.log(error.message);
         // setErrorServer(error.message);
       });
   };

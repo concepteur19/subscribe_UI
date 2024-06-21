@@ -43,9 +43,9 @@ const SubscriptionController = {
     },
 
     // toute les souscriptions  d'un utilisateur
-    getUserSubscriptions: async (user_id: number): Promise<ResponseModel<Subscription[]>> => {
+    getUserSubscriptions: async (user_id: number): Promise<ResponseModel<any>> => {//Subscription[]>> => {
         try {
-            const response = await axiosAuth.get<ResponseModel<Subscription[]>>(`/subscriptions/${user_id}`);
+            const response = await axiosAuth.get<ResponseModel<any>>(`/subscriptions/${user_id}`);
             return response.data;
         } catch (error) {
             throw error;

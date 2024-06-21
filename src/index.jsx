@@ -4,16 +4,16 @@ import "./styles/index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
-//fonts exo2, isidora & poiretOne
-import "./fonts/Exo2-Bold.ttf";
-import "./fonts/Exo2-Regular.ttf";
-import "./fonts/Exo2-Light.ttf";
-import "./fonts/Exo2-SemiBold.ttf";
-import "./fonts/isidora-bold.otf";
-import "./fonts/isidora-medium.otf";
-import "./fonts/isidora-regular.otf";
-import "./fonts/PoiretOne-Regular.ttf";
-import "./fonts/RedRose-Regular.ttf";
+// fonts exo2, isidora & poiretOne
+// import "./fonts/Exo2-Bold.ttf";
+// import "./fonts/Exo2-Regular.ttf";
+// import "./fonts/Exo2-Light.ttf";
+// import "./fonts/Exo2-SemiBold.ttf";
+// import "./fonts/isidora-bold.otf";
+// import "./fonts/isidora-medium.otf";
+// import "./fonts/isidora-regular.otf";
+// import "./fonts/PoiretOne-Regular.ttf";
+// import "./fonts/RedRose-Regular.ttf";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

@@ -47,13 +47,13 @@ const CardSelect: FC<CardSelectProps> = ({
   };
 
   useEffect(() => {
-    // console.log("les options", options);
+    // console.log("les options", options, "option", option);
 
     document.addEventListener("click", handleClickOutside);
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
-  }, []);
+  }, [options, option]);
 
   return (
     <div ref={selectRef}>
@@ -92,29 +92,50 @@ const CardSelect: FC<CardSelectProps> = ({
             )}
           </div>
         </InputDiv>
+      ) : !options && !setOption ? (
+        <InputDiv label={label}>
+          <div
+            className={`
+         flex items-center space-x-1`}
+          >
+            <div>
+              {label === "Type" ? (
+                <span> {type} </span>
+              ) : label === "Cycle" ? (
+                <span> {cycle} </span>
+              ) : label === "Payment Method" ? (
+                <span> {payment} </span>
+              ) : label === "Remind me" ? (
+                <span> {remind} </span>
+              ) : null}
+            </div>
+          </div>
+        </InputDiv>
       ) : null}
 
-      <div className="flex justify-end relative">
-        <ul
-          className={
-            isSelectOpen
-              ? "absolute bg-[#00000006] backdrop-blur-[9px] border border-primary-2 -top-3 right-3 rounded-xl py-3"
-              : "hidden"
-          }
-        >
-          {options?.map((option, index) => {
-            return (
-              <li
-                key={option + index}
-                className={`py-[10px] pl-5 pr-7 hover:bg-black-2 cursor-pointer `}
-                onClick={() => handleSelectedOption(option)}
-              >
-                {option}
-              </li>
-            );
-          })}
-        </ul>
-      </div>
+      {options && (
+        <div className="flex justify-end relative">
+          <ul
+            className={
+              isSelectOpen
+                ? "absolute bg-[#00000006] backdrop-blur-[9px] border border-primary-2 -top-3 right-3 rounded-xl py-3"
+                : "hidden"
+            }
+          >
+            {options?.map((option, index) => {
+              return (
+                <li
+                  key={option + index}
+                  className={`py-[10px] pl-5 pr-7 hover:bg-black-2 cursor-pointer `}
+                  onClick={() => handleSelectedOption(option)}
+                >
+                  {option}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      )}
     </div>
   );
 };

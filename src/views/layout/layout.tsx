@@ -41,7 +41,7 @@ const Layout = () => {
   }, []);
 
   const handleReturn = () => {
-    console.log(pathTab);
+    // console.log(pathTab);
     if (pathTab[1] === "home" && pathTab.length === 3) {
       navigate(pathTab[1]);
     } else if (pathTab[pathTab.length - 2] === "custom") {

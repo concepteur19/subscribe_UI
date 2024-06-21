@@ -81,8 +81,7 @@ const SelectList: FC<Props> = ({
             <div key={label + index}>
               {!isOptionEmpty && (
                 <>
-                  {pathTab[pathTab.length - 2] !== "subscription" &&
-                  pathTab[pathTab.length - 2] !== "custom" ? (
+                  {pathTab[2]  === "addSubscription" ? (
                     <span>
                       <CardSelect
                         key={label + index}

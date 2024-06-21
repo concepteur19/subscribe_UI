@@ -32,7 +32,7 @@ export function SignIn() {
           }
         )
         .then((res) => {
-          console.log("response google", res.data);
+          // console.log("response google", res.data);
           setUserToRe(res.data);
         })
         .catch((err) => console.log(err));
@@ -45,12 +45,12 @@ export function SignIn() {
       email: user$.email,
       photo: user$.picture
     });
-    console.log("réponse", response);
+    // console.log("réponse", response);
 
     if (response.status) {
       const user = response.data;
       localStorage.setItem("user", JSON.stringify(user));
-      // console.log(responseLogin.data.token);
+      // console.log(user.token);
       localStorage.setItem("token", user.token);
       navigate("/home");
     } else {

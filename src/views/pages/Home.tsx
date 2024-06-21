@@ -7,11 +7,11 @@ import CardOverview from "../components/basis/home_basis/card-overview";
 
 import emptyM from "../../assets/images/png/emptymobile.png";
 import empty from "../../assets/images/png/empty.png";
-import netflix from "../../assets/images/png/netflix.png";
-import spotify from "../../assets/images/png/spotify.png";
+// import netflix from "../../assets/images/png/netflix.png";
+// import spotify from "../../assets/images/png/spotify.png";
 
 import Button from "../components/basis/buttons/Button";
-import ScreenSizeContext from "../../contexts/screenSizeContext";
+import ScreenSizeContext from "@/src/contexts/screenSizeContext";
 import dollar from "@/src/assets/images/png/$.png";
 
 import {
@@ -29,50 +29,16 @@ import { Link, useLocation } from "react-router-dom";
 import SubscriptionController from "../../controllers/subscription/SubscriptionController";
 import UserContext from "../../contexts/userDataContext";
 import Subscription from "@/src/models/Subscription.model";
+import NotifPush from "../components/basis/home_basis/notif-push";
+import NotificationController from "@/src/controllers/notification/NotificationController";
 
 const Home = () => {
-  const payments = [
-    {
-      amount: 24.0,
-      currency: "USD",
-      paymentDate: "2 May, 2023",
-      isApproved: true,
-    },
-    {
-      amount: 15.75,
-      currency: "EUR",
-      paymentDate: "10 Jun, 2023",
-      isApproved: false,
-    },
-    {
-      amount: 99.99,
-      currency: "USD",
-      paymentDate: "1 Sep, 2023",
-      isApproved: true,
-    },
-    {
-      amount: 4.00,
-      currency: "USD",
-      paymentDate: "23 May, 2023",
-      isApproved: true,
-    },
-    {
-      amount: 19.99,
-      currency: "EUR",
-      paymentDate: "15 Jun, 2023",
-      isApproved: false,
-    },
-    {
-      amount: 9.09,
-      currency: "USD",
-      paymentDate: "1 Jul, 2023",
-      isApproved: true,
-    },
-  ];
-
   const { id } = useContext(UserContext)!;
   const { screenSize } = useContext(ScreenSizeContext)!;
-  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(true);
+  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
+  const [payments$, setPayment] = useState<any[]>([]);
+  const [notifPushs, setNotifPush] = useState<any[]>([]);
+  const [amountSpent, setAmounSpent] = useState<string>();
   const [subscriptions, setUserSubscription] = useState<Subscription[]>([]);
   const [isDataReturn, setIsDataReturn] = useState<boolean>(false);
   const [filteredSubscriptions, setFilteredSubscriptions] = useState<
@@ -88,27 +54,8 @@ const Home = () => {
   const today = new Date();
 
   useEffect(() => {
-    const fetchUserSubscriptions = async () => {
-      const response = await SubscriptionController.getUserSubscriptions(id!);
-      setIsDataReturn(response.data?.length! > 0);
-      setUserSubscription(response.data!);
-      setFilteredSubscriptions(response.data!);
-
-      const subscriptionTopFilter = response
-        .data!.filter((subscription) => {
-          const daysDifference = getDaysDifference(today, subscription.end_on!);
-          return daysDifference <= 7;
-        })
-        .sort((a, b) => {
-          const dayDiffA = getDaysDifference(today, new Date(a.end_on!));
-          const dayDiffB = getDaysDifference(today, new Date(b.end_on!));
-          return dayDiffA - dayDiffB;
-        });
-      setUpcomingSubscriptions(subscriptionTopFilter);
-    };
-
-    fetchUserSubscriptions();
-  }, [id]);
+    fetchUserData();
+  }, []);
 
   useEffect(() => {
     if (!isActive) {
@@ -150,6 +97,60 @@ const Home = () => {
     );
   };
 
+  const handleApproveClick = async (notificationId: number) => {
+    try {
+      await NotificationController.updateNotification("approuved", notificationId);
+      await fetchUserData(); // Rafraîchir les données après mise à jour
+      alert('Paiement approuvé');
+    } catch (error) {
+      console.error("Error approving payment:", error);
+    }
+  };
+
+  const handleRejectClick = async (notificationId: number) => {
+    const confirmReject = window.confirm('Êtes-vous sûr de vouloir rejeter ce paiement ?');
+    if (confirmReject) {
+      try {
+        await NotificationController.updateNotification("rejected", notificationId);
+        await fetchUserData(); // Rafraîchir les données après mise à jour
+        alert('Paiement rejeté');
+      } catch (error) {
+        console.error("Error rejecting payment:", error);
+      }
+    }
+  };
+
+  const fetchUserData = async () => {
+    try {
+      const response = await SubscriptionController.getUserSubscriptions(id!);
+
+      setIsDataReturn(response.data?.subscriptions.length! > 0);
+      setUserSubscription(response.data?.subscriptions);
+      setFilteredSubscriptions(response.data?.subscriptions);
+      setPayment(response.data?.payments);
+      setAmounSpent(response.data?.totalAmount);
+      setNotifPush(response.data?.notificationsToPush);
+      setIsDialogOpen(response.data!.notificationsToPush.length > 0 ? true : false);
+      // console.log("push", response.data!);
+
+      localStorage.setItem("payments", JSON.stringify(response.data?.payments));
+
+      const subscriptionTopFilter = response.data!.subscriptions.filter((subscription: Subscription) => {
+        const daysDifference = getDaysDifference(today, subscription.end_on!);
+        return daysDifference <= 7;
+      }).sort((a: Subscription, b: Subscription) => {
+        const dayDiffA = getDaysDifference(today, new Date(a.end_on!));
+        const dayDiffB = getDaysDifference(today, new Date(b.end_on!));
+        return dayDiffA - dayDiffB;
+      });
+
+      setUpcomingSubscriptions(subscriptionTopFilter);
+
+    } catch (error) {
+      console.error("Error refreshing data:", error);
+    }
+  };  
+
   return (
     <>
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
@@ -166,56 +167,30 @@ const Home = () => {
               </div>
               <h1>SubScribe Tracker</h1>
             </DialogTitle>
-            <div className="space-y-6">
-              <div className="flex justify-between items-center">
-                <div className="flex space-x-1 sm:space-x-4">
-                  <img src={netflix} alt="" />
-                  <div className="flex flex-col space-y-[6px]">
-                    <span className="text-[16px]">Netflix</span>
-                    <div className="text-[13px] space-x-2">
-                      <span className="text-[#9898AA]">Due date :</span>
-                      <span className="text-[#F01A16]">15/04/2024</span>
+            {notifPushs &&
+              notifPushs.map((notif) => {
+                return (
+                  <div className="space-y-6">
+                    <div className="flex justify-between items-center">
+                      <NotifPush notif={notif} />
+                      <div className="font-redRose space-x-2 space-y-2 sm:space-y-0 flex flex-col sm:flex-row items-center">
+                        <Button
+                          btnText="text-[16px] text-[#9898AA] items-start space-x-[6px]"
+                          buttonText="Rejected"
+                          btnIcon={<RxCross2 size={14} />}
+                          handleClick={() => handleRejectClick(notif.id)}
+                        />
+                        <Button
+                          btnText="text-[16px] text-[#625AFA] items-start space-x-[6px]"
+                          buttonText="Done"
+                          btnIcon={<PiCheck size={14} />}
+                          handleClick={() => handleApproveClick(notif.id)}
+                        />
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="font-redRose space-x-2 space-y-2 sm:space-y-0 flex flex-col sm:flex-row items-center">
-                  <Button
-                    btnText="text-[16px] text-[#9898AA] items-start space-x-[6px]"
-                    buttonText="Rejected"
-                    btnIcon={<RxCross2 size={14} />}
-                  />
-                  <Button
-                    btnText="text-[16px] text-[#625AFA] items-start space-x-[6px]"
-                    buttonText="Done"
-                    btnIcon={<PiCheck size={14} />}
-                  />
-                </div>
-              </div>
-              <div className="flex justify-between items-center">
-                <div className="flex space-x-1 sm:space-x-4">
-                  <img src={spotify} alt="" />
-                  <div className="flex flex-col space-y-[6px]">
-                    <span className="text-[16px]">Spotify</span>
-                    <div className="text-[13px] space-x-2">
-                      <span className="text-[#9898AA]">Due date :</span>
-                      <span className="text-[#F01A16]">15/04/2024</span>
-                    </div>
-                  </div>
-                </div>
-                <div className="font-redRose space-x-2 space-y-2 sm:space-y-0 flex flex-col sm:flex-row justify-end items-center">
-                  <Button
-                    btnText="text-[16px] text-[#9898AA] items-start space-x-[6px]"
-                    buttonText="Rejected"
-                    btnIcon={<RxCross2 size={14} />}
-                  />
-                  <Button
-                    btnText="text-[16px] text-[#625AFA] items-start space-x-[6px]"
-                    buttonText="Done"
-                    btnIcon={<PiCheck size={14} />}
-                  />
-                </div>
-              </div>
-            </div>
+                );
+              })}
           </DialogHeader>
           <DialogFooter className="w-full">
             <Button
@@ -237,7 +212,7 @@ const Home = () => {
         <div className="mx-auto flex flex-1 flex-col sm:flex-row sm:items-start sm:space-x-[46px] items-center justify-center w-full">
           <div className="flex flex-col space-y-3 md:space-y-11 w-full md:w-[46.67%] xl:w-[39.67%] 2xl:w-[36.67%]">
             {screenSize.width < 768 && !isDataReturn ? null : (
-              <CardAmountSpent />
+              <CardAmountSpent amount={amountSpent} />
             )}
             <div className="block text-[#697386] space-y-6">
               <div className="flex justify-between items-center max-md:hidden">
@@ -249,12 +224,12 @@ const Home = () => {
               {isDataReturn ? (
                 <div className="flex flex-col">
                   <div className="max-sm:hidden space-y-3 sm:mb-3 md:mb-0">
-                    {payments.map((payment, index) => (
+                    {payments$.slice(0, 8).map((payment, index) => (
                       <CardLatestPayment
-                        key={index+`-${payment.amount}`}
+                        key={index + `-${payment.service_name}`}
                         amount={payment.amount}
-                        paymentDate={payment.paymentDate}
-                        isApproved={payment.isApproved}
+                        paymentDate={payment.notif_date}
+                        status={payment.notification_status}
                       />
                     ))}
                   </div>

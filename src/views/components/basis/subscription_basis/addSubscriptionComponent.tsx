@@ -58,7 +58,7 @@ const AddSubscriptionComponent: FC<Props> = ({
   const [planName, setPlan] = useState<string[] | undefined>([]);
   const [subscriptionName, setName] = useState<string>("");
   const [amount$, setAmount] = useState<number>();
-  const [selected, setSelected] = useState<Date | undefined>();
+  const [selected, setSelected] = useState<Date | undefined>(new Date());
   const [isDatePickerOpen, setPickerOpen] = useState<Boolean>(false);
   const [isInputShow, setIsInputShow] = useState<boolean>(false);
   const [isSubmitable, setIsSubmitable] = useState<boolean>(true);
@@ -158,6 +158,8 @@ const AddSubscriptionComponent: FC<Props> = ({
       (plantype$) => plantype$.type === planType
     );
 
+    // console.log("date dfdf--------------", selected);
+
     const response = await SubscriptionController.addSubscription({
       user_id: id!,
       defaultSub_id: defaultSub_id ? defaultSub_id : undefined,
@@ -170,7 +172,7 @@ const AddSubscriptionComponent: FC<Props> = ({
       start_on: selected!,
     });
 
-    console.log("add subscription response", response);
+    // console.log("add subscription response", response);
     if (response.status) {
       navigate("/home");
     }

@@ -32,7 +32,7 @@ const SubscriptionDetails = () => {
         );
         if (response.status && response.data) {
           setSubscription(response.data);
-          console.log("detail subscription", response.data);
+          // console.log("detail subscription", response.data);
         }
       } catch (error) {
         console.log("erreur requette détail souscription par défaut");
@@ -68,7 +68,7 @@ const SubscriptionDetails = () => {
         navigate('/home');
         setResponseMessage(undefined);
       }, 2000);
-      console.log(response);
+      // console.log(response);
     } catch (error) {
       console.log(error);
     }

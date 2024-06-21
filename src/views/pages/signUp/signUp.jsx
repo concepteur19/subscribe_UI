@@ -62,10 +62,10 @@ export function SignUp() {
         //     password: data.password
         // });
 
-        console.log("-----------------------user", response, "--------------------");
+        // console.log("-----------------------user", response, "--------------------");
 
         if (response.code === 200) {
-            console.log("-----------------------user", response.data, "--------------------");
+            // console.log("-----------------------user", response.data, "--------------------");
           // Redirect to login page
           navigate("/Login");
 

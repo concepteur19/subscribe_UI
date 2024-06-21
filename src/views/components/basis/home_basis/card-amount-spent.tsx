@@ -1,7 +1,7 @@
 import React from "react";
 
 interface AmountSpentProps {
-  amount?: number;
+  amount?: string;
 }
 
 const CardAmountSpent: React.FC<AmountSpentProps> = ({ amount }) => {
@@ -12,7 +12,7 @@ const CardAmountSpent: React.FC<AmountSpentProps> = ({ amount }) => {
       </span>
 
       <div className="flex flex-col space-y-2 z-20">
-        <span className=" text-[28px] mb-2">{amount ? amount : "000.00"}</span>
+        <span className=" text-[28px] mb-2">{amount ? Number.parseFloat(amount).toFixed(3) : "000.00"}</span>
         <span className=" text-sm font-redRose">{amount ? "Amount Spent this month." : "You haven't spent anything this month."}</span>
       </div>
 
