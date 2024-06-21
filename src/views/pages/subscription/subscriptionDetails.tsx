@@ -8,6 +8,7 @@ import SubscriptionController from "@/src/controllers/subscription/SubscriptionC
 import Subscription from "@/src/models/Subscription.model";
 import { format } from "date-fns";
 import dollar from "@/src/assets/images/png/$.png";
+import getDaysDifference from "@/src/lib/dayDifference";
 
 const SubscriptionDetails = () => {
   const { id } = useParams();
@@ -19,10 +20,13 @@ const SubscriptionDetails = () => {
     remind: "",
     payment: "",
     end_on: "",
+    start_on: ""
   });
 
   const [responseMessage, setResponseMessage] = useState<string>();
   const navigate = useNavigate();
+  const [endOn, setEndOn] = useState<Date>();
+  const [due$, setDue] = useState<string>();
 
   useEffect(() => {
     const fetchDefaultSubDetail = async () => {
@@ -32,6 +36,7 @@ const SubscriptionDetails = () => {
         );
         if (response.status && response.data) {
           setSubscription(response.data);
+          setEndOn(response.data.end_on)
           // console.log("detail subscription", response.data);
         }
       } catch (error) {
@@ -47,6 +52,10 @@ const SubscriptionDetails = () => {
       const endOnDate = subscription.end_on
         ? format(new Date(subscription.end_on), "dd MMM yyyy")
         : "Date not available";
+
+        const startOnDate = subscription.start_on
+        ? format(new Date(subscription.start_on), "dd MMM yyyy")
+        : "Date not available";
       setDetail({
         type: subscription.type!,
         cycle: subscription.cycle,
@@ -55,9 +64,18 @@ const SubscriptionDetails = () => {
           subscription.reminder > 1 ? "s" : ""
         } before`,
         end_on: endOnDate,
+        start_on: startOnDate
       });
     }
   }, [subscription]);
+
+  useEffect(() => {
+    const today = new Date();
+    const daydiff = endOn && getDaysDifference(today, endOn);
+    setDue(daydiff?.toString())
+
+    console.log("due date", daydiff)
+  }, [endOn] )
 
   const deleteSubscription = async () => {
     try {
@@ -89,7 +107,7 @@ const SubscriptionDetails = () => {
         btnBgColor=" bg-red "
         subscriptionLabel={subscription?.service_name!}
         amount={subscription?.amount!.toString()}
-        dueDate="5"
+        dueDate={due$}
         cycle={subscription?.cycle}
         planDetail={subscription?.type}
         detailSubscription={detailSubscription}
