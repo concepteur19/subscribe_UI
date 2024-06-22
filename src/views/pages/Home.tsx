@@ -47,6 +47,7 @@ const Home = () => {
   const [upcomingSubscriptions, setUpcomingSubscriptions] = useState<
     Subscription[]
   >([]);
+  
 
   const [isActive, setActive] = useState<boolean>(true);
   const location = useLocation();
