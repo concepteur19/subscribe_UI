@@ -18,7 +18,8 @@ export interface DetailSubscription {
   cycle: string;
   remind: string;
   payment: string;
-  end_on: Date | string;
+  end_on?: Date | string;
+  start_on?: Date | string;
 }
 interface Props {
   amount?: string;
@@ -226,7 +227,7 @@ const AddSubscriptionComponent: FC<Props> = ({
                     <span>
                       {" "}
                       Payment due in{" "}
-                      <span className=" text-[#1ED760] ">
+                      <span className={Number(dueDate) > 0 ? " text-[#1ED760] " : " text-red " } >
                         {dueDate} days
                       </span>{" "}
                     </span>
@@ -289,7 +290,7 @@ const AddSubscriptionComponent: FC<Props> = ({
                       {dateSelected}
                     </div>
                   ) : (
-                    <span>{`${detailSubscription?.end_on!}`}</span>
+                    <span>{`${detailSubscription?.start_on!}`}</span>
                   )}
                 </InputDiv>
 

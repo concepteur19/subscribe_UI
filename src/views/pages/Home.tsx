@@ -31,6 +31,7 @@ import UserContext from "../../contexts/userDataContext";
 import Subscription from "@/src/models/Subscription.model";
 import NotifPush from "../components/basis/home_basis/notif-push";
 import NotificationController from "@/src/controllers/notification/NotificationController";
+import getDaysDifference from "@/src/lib/dayDifference";
 
 const Home = () => {
   const { id } = useContext(UserContext)!;
@@ -89,13 +90,13 @@ const Home = () => {
     setActive(path === "/home/overview");
   };
 
-  const getDaysDifference = (date1: Date, date2: Date): number => {
-    const oneDay = 24 * 60 * 60 * 1000;
-    const endOnDate = new Date(date2);
-    return Math.round(
-      Math.abs((endOnDate.getTime() - date1.getTime()) / oneDay)
-    );
-  };
+  // const getDaysDifference = (date1: Date, date2: Date): number => {
+  //   const oneDay = 24 * 60 * 60 * 1000;
+  //   const endOnDate = new Date(date2);
+  //   return Math.round(
+  //     Math.abs((endOnDate.getTime() - date1.getTime()) / oneDay)
+  //   );
+  // };
 
   const handleApproveClick = async (notificationId: number) => {
     try {
