@@ -234,11 +234,11 @@ const Home = () => {
                     ))}
                   </div>
                   {/* Mobile component */}
-                  <div className="space-y-3">
-                    <div className="md:hidden w-full space-y-4">
+                  <div className="space-y-8">
+                    <div className="md:hidden w-full space-y-5">
                       <h1 className="font-redRoseBold text-[16px] flex justify-between">
                         Upcoming Subscriptions
-                        <span>
+                        <span className="max-md:hidden">
                           <Link to="/payments">See all</Link>
                         </span>
                       </h1>
@@ -269,7 +269,7 @@ const Home = () => {
                           ))}
                       </div>
                     </div>
-                    <div className="md:hidden block w-full space-y-4 pb-20">
+                    <div className="md:hidden block w-full space-y-5 pb-20">
                       <h1 className="font-redRoseBold text-[16px]">
                         My Subscriptions
                       </h1>
