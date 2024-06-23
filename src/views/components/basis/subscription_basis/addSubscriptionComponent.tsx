@@ -196,11 +196,11 @@ const AddSubscriptionComponent: FC<Props> = ({
     dateSelected = <p> {format(selected, "dd MMM yyyy")}</p>;
   }
 
-  const isCustom = !defaultSub_id
+  // const isCustom = !defaultSub_id
   // Determine if the form is being used to add a new custom subscription
   const isAddingCustomSubscription = !defaultSub_id && !amount && !cycle && !planDetail && !dueDate;
 
-  console.log("is custom ", isCustom);
+  // console.log("is custom ", isCustom);
 
   return (
     <div className=" md:flex md:flex-col lg:flex-row items-start md:space-y-48 lg:space-y-0 md:px-[50px] lg:px-[100px] xl:px-[220px] 2xl:px-[20%] font-redRoseBold ">

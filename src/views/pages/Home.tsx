@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import "../../styles/card-circle-gradient.css";
 import CardLatestPayment from "../components/basis/home_basis/card-latest-payment";
 import CardAmountSpent from "../components/basis/home_basis/card-amount-spent";
@@ -56,35 +56,62 @@ const Home = () => {
   const [upcomingSubscriptions, setUpcomingSubscriptions] = useState<
     Subscription[]
   >([]);
-  
 
   const [isActive, setActive] = useState<boolean>(true);
   const location = useLocation();
 
-  const today = new Date();
+  
+  const fetchUserData =  useCallback (async () => {
+    try {
+      const response = subscriptionResponse;
+
+      setIsDataReturn(response.subscriptions.length > 0);
+      setUserSubscription(response.subscriptions);
+      setFilteredSubscriptions(response.subscriptions);
+      setPayment(response.payments);
+      setAmountSpent(response.totalAmount);
+      setNotifPush(response.notificationsToPush);
+      setIsDialogOpen(response.notificationsToPush.length > 0);
+
+      // console.log("push", response);
+
+      localStorage.setItem("payments", JSON.stringify(response.payments));
+      const subscriptionToFilter = response.subscriptions
+        .filter((subscription: Subscription) => {
+          const daysDifference = getDaysDifference(new Date(), subscription.end_on!);
+          return daysDifference <= 7 && daysDifference > 0;
+        })
+        .sort((a: Subscription, b: Subscription) => {
+          const dayDiffA = getDaysDifference(new Date(), new Date(a.end_on!));
+          const dayDiffB = getDaysDifference(new Date(), new Date(b.end_on!));
+          return dayDiffA - dayDiffB;
+        });
+
+      setUpcomingSubscriptions(subscriptionToFilter);
+    } catch (error) {
+      console.error("Error refreshing data:", error);
+    }
+  }, [subscriptionResponse])
 
   useEffect(() => {
     fetchUserData();
-  }, [subscriptionResponse]);
+  }, [fetchUserData, subscriptionResponse]);
 
   useEffect(() => {
     if (!isActive) {
       const upcomingSubscriptions$ = subscriptionResponse.subscriptions
         .filter((subscription: Subscription) => {
-          const daysDifference = getDaysDifference(today, subscription.end_on!);
+          const daysDifference = getDaysDifference(new Date(), subscription.end_on!);
           return daysDifference <= 7 && daysDifference > 0;
         })
         .sort((a: Subscription, b: Subscription) => {
-          const dayDiffA = getDaysDifference(today, new Date(a.end_on!));
-          const dayDiffB = getDaysDifference(today, new Date(b.end_on!));
+          const dayDiffA = getDaysDifference(new Date(), new Date(a.end_on!));
+          const dayDiffB = getDaysDifference(new Date(), new Date(b.end_on!));
           return dayDiffA - dayDiffB;
         });
-      console.log("upcomming", upcomingSubscriptions);
       setFilteredSubscriptions(upcomingSubscriptions$);
-    } else {
-      setFilteredSubscriptions(subscriptionResponse.subscriptions);
     }
-  }, [isActive, subscriptions]);
+  }, [isActive, subscriptionResponse]);
 
   useEffect(() => {
     if (
@@ -131,40 +158,6 @@ const Home = () => {
       } catch (error) {
         console.error("Error rejecting payment:", error);
       }
-    }
-  };
-
-  const fetchUserData = async () => {
-    try {
-      const response = subscriptionResponse;
-
-      setIsDataReturn(response.subscriptions.length > 0);
-      setUserSubscription(response.subscriptions);
-      setFilteredSubscriptions(response.subscriptions);
-      setPayment(response.payments);
-      setAmountSpent(response.totalAmount);
-      setNotifPush(response.notificationsToPush);
-      setIsDialogOpen(response.notificationsToPush.length > 0);
-
-      console.log("push", response);
-
-      localStorage.setItem("payments", JSON.stringify(response.payments));
-
-      const today = new Date(); // Assuming you define 'today' here
-      const subscriptionToFilter = response.subscriptions
-        .filter((subscription: Subscription) => {
-          const daysDifference = getDaysDifference(today, subscription.end_on!);
-          return daysDifference <= 7 && daysDifference > 0;
-        })
-        .sort((a: Subscription, b: Subscription) => {
-          const dayDiffA = getDaysDifference(today, new Date(a.end_on!));
-          const dayDiffB = getDaysDifference(today, new Date(b.end_on!));
-          return dayDiffA - dayDiffB;
-        });
-
-      setUpcomingSubscriptions(subscriptionToFilter);
-    } catch (error) {
-      console.error("Error refreshing data:", error);
     }
   };
 
@@ -268,7 +261,7 @@ const Home = () => {
                               positionCard="absolute right-10"
                               flexCard="flex-col justify-center items-start space-y-3"
                               due={getDaysDifference(
-                                today,
+                                new Date(),
                                 subscription.end_on!
                               )}
                               imgSrc={
@@ -294,7 +287,7 @@ const Home = () => {
                         {subscriptions.map((subscription, index) => (
                           <CardOverview
                             key={index + "-" + subscription.service_name}
-                            due={getDaysDifference(today, subscription.end_on!)}
+                            due={getDaysDifference(new Date(), subscription.end_on!)}
                             imgSrc={
                               subscription.logo
                                 ? `http://localhost:8000/storage/${subscription.logo}`
@@ -336,7 +329,7 @@ const Home = () => {
                 {filteredSubscriptions.map((subscription, index) => (
                   <CardOverview
                     key={index + "-" + subscription.service_name}
-                    due={getDaysDifference(today, subscription.end_on!)}
+                    due={getDaysDifference(new Date(), subscription.end_on!)}
                     imgSrc={
                       subscription.logo
                         ? `http://localhost:8000/storage/${subscription.logo}`
