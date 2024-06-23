@@ -46,11 +46,15 @@ const CardOverview: React.FC<CardOverviewProps> = ({
             positionCard ? "space-y-1" : "space-y-[6px]"
           }`}
         >
-          <span className=" text-[16px] lg:24  ">{subscriName} </span>
-          <span className=" font-redRoseLight text-white-0">
+          <span className=" text-[16px] xl:w-28  ">{subscriName} </span>
+
+          { due >= 0 ? 
+            <span className="xl:w-32 font-redRoseLight text-white-0">
             Due in <span className=" font-redRoseBold text-white-1">{due}</span>{" "}
             day{`${due > 1 ? 's' : ''}`}
-          </span>
+          </span> : <span className="xl:w-32 font-redRoseLight"> Due date passed </span>
+        }
+          
         </div>
       </div>
 

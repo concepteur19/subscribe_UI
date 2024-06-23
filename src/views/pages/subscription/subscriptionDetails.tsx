@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import AddSubscriptionComponent, {
   DetailSubscription,
 } from "@/src/views/components/basis/subscription_basis/addSubscriptionComponent";
@@ -9,9 +9,18 @@ import Subscription from "@/src/models/Subscription.model";
 import { format } from "date-fns";
 import dollar from "@/src/assets/images/png/$.png";
 import getDaysDifference from "@/src/lib/dayDifference";
+import { SubscriptionContext } from "@/src/contexts/SubscriptionContext";
 
 const SubscriptionDetails = () => {
   const { id } = useParams();
+  const context = useContext(SubscriptionContext);
+
+  // Ensure the context is not undefined
+  if (!context) {
+    throw new Error('ModifySubscription must be used within a SubscriptionProvider');
+  }
+
+  const { setIsSubscriptionsModified } = context;
 
   const [subscription, setSubscription] = useState<Subscription | undefined>();
   const [detailSubscription, setDetail] = useState<DetailSubscription>({
@@ -83,6 +92,7 @@ const SubscriptionDetails = () => {
       setResponseMessage(response?.message!);
       
       setTimeout(() => {
+        setIsSubscriptionsModified(true);
         navigate('/home');
         setResponseMessage(undefined);
       }, 2000);

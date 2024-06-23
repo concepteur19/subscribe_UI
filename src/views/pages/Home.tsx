@@ -26,20 +26,28 @@ import { PiCheck } from "react-icons/pi";
 import { RxCross2 } from "react-icons/rx";
 import subscribe from "../../assets/images/subscribeIcon.svg";
 import { Link, useLocation } from "react-router-dom";
-import SubscriptionController from "../../controllers/subscription/SubscriptionController";
-import UserContext from "../../contexts/userDataContext";
+// import SubscriptionController from "../../controllers/subscription/SubscriptionController";
+// import UserContext from "../../contexts/userDataContext";
 import Subscription from "@/src/models/Subscription.model";
 import NotifPush from "../components/basis/home_basis/notif-push";
 import NotificationController from "@/src/controllers/notification/NotificationController";
 import getDaysDifference from "@/src/lib/dayDifference";
+import { SubscriptionContext } from "@/src/contexts/SubscriptionContext";
 
 const Home = () => {
-  const { id } = useContext(UserContext)!;
+  // const { id } = useContext(UserContext)!;
   const { screenSize } = useContext(ScreenSizeContext)!;
+  const context = useContext(SubscriptionContext);
+  if (!context) {
+    throw new Error(
+      "ModifySubscription must be used within a SubscriptionProvider"
+    );
+  }
+  const { subscriptionResponse, setIsSubscriptionsModified } = context;
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
   const [payments$, setPayment] = useState<any[]>([]);
   const [notifPushs, setNotifPush] = useState<any[]>([]);
-  const [amountSpent, setAmounSpent] = useState<string>();
+  const [amountSpent, setAmountSpent] = useState<string>();
   const [subscriptions, setUserSubscription] = useState<Subscription[]>([]);
   const [isDataReturn, setIsDataReturn] = useState<boolean>(false);
   const [filteredSubscriptions, setFilteredSubscriptions] = useState<
@@ -56,22 +64,24 @@ const Home = () => {
 
   useEffect(() => {
     fetchUserData();
-  }, []);
+  }, [subscriptionResponse]);
 
   useEffect(() => {
     if (!isActive) {
-      const upcomingSubscriptions = subscriptions
-        .filter((subscription) => {
-          return getDaysDifference(today, subscription.end_on!) <= 7;
+      const upcomingSubscriptions$ = subscriptionResponse.subscriptions
+        .filter((subscription: Subscription) => {
+          const daysDifference = getDaysDifference(today, subscription.end_on!);
+          return daysDifference <= 7 && daysDifference > 0;
         })
-        .sort((a, b) => {
+        .sort((a: Subscription, b: Subscription) => {
           const dayDiffA = getDaysDifference(today, new Date(a.end_on!));
           const dayDiffB = getDaysDifference(today, new Date(b.end_on!));
           return dayDiffA - dayDiffB;
         });
-      setFilteredSubscriptions(upcomingSubscriptions);
+      console.log("upcomming", upcomingSubscriptions);
+      setFilteredSubscriptions(upcomingSubscriptions$);
     } else {
-      setFilteredSubscriptions(subscriptions);
+      setFilteredSubscriptions(subscriptionResponse.subscriptions);
     }
   }, [isActive, subscriptions]);
 
@@ -90,31 +100,33 @@ const Home = () => {
     setActive(path === "/home/overview");
   };
 
-  // const getDaysDifference = (date1: Date, date2: Date): number => {
-  //   const oneDay = 24 * 60 * 60 * 1000;
-  //   const endOnDate = new Date(date2);
-  //   return Math.round(
-  //     Math.abs((endOnDate.getTime() - date1.getTime()) / oneDay)
-  //   );
-  // };
-
   const handleApproveClick = async (notificationId: number) => {
     try {
-      await NotificationController.updateNotification("approuved", notificationId);
-      await fetchUserData(); // Rafraîchir les données après mise à jour
-      alert('Paiement approuvé');
+      await NotificationController.updateNotification(
+        "approuved",
+        notificationId
+      );
+      await fetchUserData();
+      setIsSubscriptionsModified(true); // Rafraîchir les données après mise à jour
+      alert("Paiement approuvé");
     } catch (error) {
       console.error("Error approving payment:", error);
     }
   };
 
   const handleRejectClick = async (notificationId: number) => {
-    const confirmReject = window.confirm('Êtes-vous sûr de vouloir rejeter ce paiement ?');
+    const confirmReject = window.confirm(
+      "Êtes-vous sûr de vouloir rejeter ce paiement ?"
+    );
     if (confirmReject) {
       try {
-        await NotificationController.updateNotification("rejected", notificationId);
+        await NotificationController.updateNotification(
+          "rejected",
+          notificationId
+        );
         await fetchUserData(); // Rafraîchir les données après mise à jour
-        alert('Paiement rejeté');
+        setIsSubscriptionsModified(true);
+        alert("Paiement rejeté");
       } catch (error) {
         console.error("Error rejecting payment:", error);
       }
@@ -123,34 +135,37 @@ const Home = () => {
 
   const fetchUserData = async () => {
     try {
-      const response = await SubscriptionController.getUserSubscriptions(id!);
+      const response = subscriptionResponse;
 
-      setIsDataReturn(response.data?.subscriptions.length! > 0);
-      setUserSubscription(response.data?.subscriptions);
-      setFilteredSubscriptions(response.data?.subscriptions);
-      setPayment(response.data?.payments);
-      setAmounSpent(response.data?.totalAmount);
-      setNotifPush(response.data?.notificationsToPush);
-      setIsDialogOpen(response.data!.notificationsToPush.length > 0 ? true : false);
-      // console.log("push", response.data!);
+      setIsDataReturn(response.subscriptions.length > 0);
+      setUserSubscription(response.subscriptions);
+      setFilteredSubscriptions(response.subscriptions);
+      setPayment(response.payments);
+      setAmountSpent(response.totalAmount);
+      setNotifPush(response.notificationsToPush);
+      setIsDialogOpen(response.notificationsToPush.length > 0);
 
-      localStorage.setItem("payments", JSON.stringify(response.data?.payments));
+      console.log("push", response);
 
-      const subscriptionTopFilter = response.data!.subscriptions.filter((subscription: Subscription) => {
-        const daysDifference = getDaysDifference(today, subscription.end_on!);
-        return daysDifference <= 7;
-      }).sort((a: Subscription, b: Subscription) => {
-        const dayDiffA = getDaysDifference(today, new Date(a.end_on!));
-        const dayDiffB = getDaysDifference(today, new Date(b.end_on!));
-        return dayDiffA - dayDiffB;
-      });
+      localStorage.setItem("payments", JSON.stringify(response.payments));
 
-      setUpcomingSubscriptions(subscriptionTopFilter);
+      const today = new Date(); // Assuming you define 'today' here
+      const subscriptionToFilter = response.subscriptions
+        .filter((subscription: Subscription) => {
+          const daysDifference = getDaysDifference(today, subscription.end_on!);
+          return daysDifference <= 7 && daysDifference > 0;
+        })
+        .sort((a: Subscription, b: Subscription) => {
+          const dayDiffA = getDaysDifference(today, new Date(a.end_on!));
+          const dayDiffB = getDaysDifference(today, new Date(b.end_on!));
+          return dayDiffA - dayDiffB;
+        });
 
+      setUpcomingSubscriptions(subscriptionToFilter);
     } catch (error) {
       console.error("Error refreshing data:", error);
     }
-  };  
+  };
 
   return (
     <>
@@ -237,11 +252,11 @@ const Home = () => {
                   {/* Mobile component */}
                   <div className="space-y-8">
                     <div className="md:hidden w-full space-y-5">
+                      <span className="font-redRoseBold text-[16px] flex justify-between">
+                        <Link to="/payments">See all payments </Link>
+                      </span>
                       <h1 className="font-redRoseBold text-[16px] flex justify-between">
                         Upcoming Subscriptions
-                        <span className="max-md:hidden">
-                          <Link to="/payments">See all</Link>
-                        </span>
                       </h1>
                       <div className="flex space-x-4">
                         {upcomingSubscriptions

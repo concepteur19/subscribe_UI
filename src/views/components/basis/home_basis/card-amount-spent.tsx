@@ -1,7 +1,7 @@
 import React from "react";
 
 interface AmountSpentProps {
-  amount?: string;
+  amount?: string ;
 }
 
 const CardAmountSpent: React.FC<AmountSpentProps> = ({ amount }) => {

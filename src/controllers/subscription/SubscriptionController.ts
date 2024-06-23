@@ -1,3 +1,4 @@
+import SubscriptionResponse from "@/src/models/SubscriptionResponse";
 import axiosAuth from "../../lib/axios";
 import DefaultSubscription from "../../models/DefaultSubscription.model";
 import ResponseModel from "../../models/Response.model";
@@ -43,9 +44,9 @@ const SubscriptionController = {
     },
 
     // toute les souscriptions  d'un utilisateur
-    getUserSubscriptions: async (user_id: number): Promise<ResponseModel<any>> => {//Subscription[]>> => {
+    getUserSubscriptions: async (user_id: number): Promise<ResponseModel<SubscriptionResponse>> => {//Subscription[]>> => {
         try {
-            const response = await axiosAuth.get<ResponseModel<any>>(`/subscriptions/${user_id}`);
+            const response = await axiosAuth.get<ResponseModel<SubscriptionResponse>>(`/subscriptions/${user_id}`);
             return response.data;
         } catch (error) {
             throw error;

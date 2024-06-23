@@ -12,6 +12,7 @@ import SubscriptionController from "@/src/controllers/subscription/SubscriptionC
 import { useNavigate } from "react-router-dom";
 import UserContext from "@/src/contexts/userDataContext";
 import Input from "../Input";
+import { SubscriptionContext } from "@/src/contexts/SubscriptionContext";
 
 export interface DetailSubscription {
   type: string;
@@ -55,6 +56,14 @@ const AddSubscriptionComponent: FC<Props> = ({
   defaultSub_id,
 }) => {
   const { id } = useContext(UserContext)!;
+  const context = useContext(SubscriptionContext);
+
+  // Ensure the context is not undefined
+  if (!context) {
+    throw new Error('ModifySubscription must be used within a SubscriptionProvider');
+  }
+
+  const { setIsSubscriptionsModified } = context;
 
   const [planName, setPlan] = useState<string[] | undefined>([]);
   const [subscriptionName, setName] = useState<string>("");
@@ -175,6 +184,7 @@ const AddSubscriptionComponent: FC<Props> = ({
 
     // console.log("add subscription response", response);
     if (response.status) {
+      setIsSubscriptionsModified(true)
       navigate("/home");
     }
   };
@@ -226,9 +236,10 @@ const AddSubscriptionComponent: FC<Props> = ({
                     </div>
                     <span>
                       {" "}
-                      Payment due in{" "}
+                      { Number(dueDate) > 0 && " Payment due in "}
                       <span className={Number(dueDate) > 0 ? " text-[#1ED760] " : " text-red " } >
-                        {dueDate} days
+                        {Number(dueDate) > 0 ? `${dueDate} days` : "Due date passed"}
+                        {/* {dueDate}  */}
                       </span>{" "}
                     </span>
                   </p>
