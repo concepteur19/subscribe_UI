@@ -1,125 +1,58 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import "../../styles/card-circle-gradient.css";
-import CardLatestPayment from "../components/basis/home_basis/card-latest-payment";
 import CardAmountSpent from "../components/basis/home_basis/card-amount-spent";
 import NavHome from "../components/basis/home_basis/nav-home";
-import CardOverview from "../components/basis/home_basis/card-overview";
-
 import emptyM from "../../assets/images/png/emptymobile.png";
 import empty from "../../assets/images/png/empty.png";
-// import netflix from "../../assets/images/png/netflix.png";
-// import spotify from "../../assets/images/png/spotify.png";
-
 import Button from "../components/basis/buttons/Button";
 import ScreenSizeContext from "@/src/contexts/screenSizeContext";
-import dollar from "@/src/assets/images/png/$.png";
-
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-} from "../components/ui/dialog";
-import { PiCheck } from "react-icons/pi";
-import { RxCross2 } from "react-icons/rx";
-import subscribe from "../../assets/images/subscribeIcon.svg";
-import { Link, useLocation } from "react-router-dom";
-// import SubscriptionController from "../../controllers/subscription/SubscriptionController";
-// import UserContext from "../../contexts/userDataContext";
-import Subscription from "@/src/models/Subscription.model";
-import NotifPush from "../components/basis/home_basis/notif-push";
+import useFetchUserData from "@/src/hooks/useFetchUserData";
+import SubscriptionList from "../components/basis/home_basis/subscription-list";
+import CustomDialogContent from "../components/basis/home_basis/dialog-content";
 import NotificationController from "@/src/controllers/notification/NotificationController";
-import getDaysDifference from "@/src/lib/dayDifference";
-import { SubscriptionContext } from "@/src/contexts/SubscriptionContext";
+import CardLatestPayment from "../components/basis/home_basis/card-latest-payment";
 
-const Home = () => {
-  // const { id } = useContext(UserContext)!;
+const Home: React.FC = () => {
   const { screenSize } = useContext(ScreenSizeContext)!;
-  const context = useContext(SubscriptionContext);
-  if (!context) {
-    throw new Error(
-      "ModifySubscription must be used within a SubscriptionProvider"
-    );
-  }
-  const { subscriptionResponse, setIsSubscriptionsModified } = context;
-  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
-  const [payments$, setPayment] = useState<any[]>([]);
-  const [notifPushs, setNotifPush] = useState<any[]>([]);
-  const [amountSpent, setAmountSpent] = useState<string>();
-  const [subscriptions, setUserSubscription] = useState<Subscription[]>([]);
-  const [isDataReturn, setIsDataReturn] = useState<boolean>(false);
-  const [filteredSubscriptions, setFilteredSubscriptions] = useState<
-    Subscription[]
-  >([]);
-  const [upcomingSubscriptions, setUpcomingSubscriptions] = useState<
-    Subscription[]
-  >([]);
+  const {
+    isDialogOpen,
+    setIsDialogOpen,
+    payments$,
+    notifPushs,
+    amountSpent,
+    subscriptions,
+    isDataReturn,
+    filteredSubscriptions,
+    setFilteredSubscriptions,
+    upcomingSubscriptions,
+    fetchUserData,
+    setIsSubscriptionsModified,
+  } = useFetchUserData();
 
   const [isActive, setActive] = useState<boolean>(true);
   const location = useLocation();
 
-  
-  const fetchUserData =  useCallback (async () => {
-    try {
-      const response = subscriptionResponse;
-
-      setIsDataReturn(response.subscriptions.length > 0);
-      setUserSubscription(response.subscriptions);
-      setFilteredSubscriptions(response.subscriptions);
-      setPayment(response.payments);
-      setAmountSpent(response.totalAmount);
-      setNotifPush(response.notificationsToPush);
-      setIsDialogOpen(response.notificationsToPush.length > 0);
-
-      // console.log("push", response);
-
-      localStorage.setItem("payments", JSON.stringify(response.payments));
-      const subscriptionToFilter = response.subscriptions
-        .filter((subscription: Subscription) => {
-          const daysDifference = getDaysDifference(new Date(), subscription.end_on!);
-          return daysDifference <= 7 && daysDifference > 0;
-        })
-        .sort((a: Subscription, b: Subscription) => {
-          const dayDiffA = getDaysDifference(new Date(), new Date(a.end_on!));
-          const dayDiffB = getDaysDifference(new Date(), new Date(b.end_on!));
-          return dayDiffA - dayDiffB;
-        });
-
-      setUpcomingSubscriptions(subscriptionToFilter);
-    } catch (error) {
-      console.error("Error refreshing data:", error);
-    }
-  }, [subscriptionResponse])
-
-  useEffect(() => {
-    fetchUserData();
-  }, [fetchUserData, subscriptionResponse]);
-
   useEffect(() => {
     if (!isActive) {
-      const upcomingSubscriptions$ = subscriptionResponse.subscriptions
-        .filter((subscription: Subscription) => {
-          const daysDifference = getDaysDifference(new Date(), subscription.end_on!);
-          return daysDifference <= 7 && daysDifference > 0;
-        })
-        .sort((a: Subscription, b: Subscription) => {
-          const dayDiffA = getDaysDifference(new Date(), new Date(a.end_on!));
-          const dayDiffB = getDaysDifference(new Date(), new Date(b.end_on!));
-          return dayDiffA - dayDiffB;
-        });
+      console.log(upcomingSubscriptions);
+
+      const upcomingSubscriptions$ = filteredSubscriptions;
       setFilteredSubscriptions(upcomingSubscriptions$);
     }
-  }, [isActive, subscriptionResponse]);
+    // else setFilteredSubscriptions(filteredSubscriptions);
+  }, [isActive]);
 
   useEffect(() => {
     if (
       location.pathname === "/home" ||
       location.pathname === "/home/overview"
     ) {
+      console.log(true);
+
       setActive(true);
     } else if (location.pathname === "/home/upcoming") {
+      console.log(false);
       setActive(false);
     }
   }, [location.pathname]);
@@ -135,7 +68,7 @@ const Home = () => {
         notificationId
       );
       await fetchUserData();
-      setIsSubscriptionsModified(true); // Rafraîchir les données après mise à jour
+      setIsSubscriptionsModified(true);
       alert("Paiement approuvé");
     } catch (error) {
       console.error("Error approving payment:", error);
@@ -152,7 +85,7 @@ const Home = () => {
           "rejected",
           notificationId
         );
-        await fetchUserData(); // Rafraîchir les données après mise à jour
+        await fetchUserData();
         setIsSubscriptionsModified(true);
         alert("Paiement rejeté");
       } catch (error) {
@@ -163,61 +96,13 @@ const Home = () => {
 
   return (
     <>
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <div
-          className={`fixed inset-0 z-50 bg-[#050511] bg-opacity-0 backdrop-blur-[6px] ${
-            isDialogOpen ? "block" : "hidden"
-          }`}
-        ></div>
-        <DialogContent className="text-[#ffffff] bg-[#0B0C26] border border-[#303163] rounded-3xl ">
-          <DialogHeader>
-            <DialogTitle className="text-2xl font-russOne font-normal text-white-2 text-center flex flex-col items-center space-y-4 ">
-              <div className="p-[23px] rounded-full bg-[#4649E512] ">
-                <img src={subscribe} alt="Logo" />
-              </div>
-              <h1>SubScribe Tracker</h1>
-            </DialogTitle>
-            {notifPushs &&
-              notifPushs.map((notif) => {
-                return (
-                  <div className="space-y-6">
-                    <div className="flex justify-between items-center">
-                      <NotifPush notif={notif} />
-                      <div className="font-redRose space-x-2 space-y-2 sm:space-y-0 flex flex-col sm:flex-row items-center">
-                        <Button
-                          btnText="text-[16px] text-[#9898AA] items-start space-x-[6px]"
-                          buttonText="Rejected"
-                          btnIcon={<RxCross2 size={14} />}
-                          handleClick={() => handleRejectClick(notif.id)}
-                        />
-                        <Button
-                          btnText="text-[16px] text-[#625AFA] items-start space-x-[6px]"
-                          buttonText="Done"
-                          btnIcon={<PiCheck size={14} />}
-                          handleClick={() => handleApproveClick(notif.id)}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-          </DialogHeader>
-          <DialogFooter className="w-full">
-            <Button
-              buttonText="Confirm"
-              btnBorder="rounded-[6px] border-none"
-              btnBg="bg-white-2"
-              btnP="p-4 py-[10px]"
-              btnText="text-primary-0 font-redRoseBold text-[16px] justify-center"
-              handleClick={() => setIsDialogOpen(false)}
-            />
-            <DialogDescription className="font-redRose font-light text-sm text-white-2 text-center">
-              By clicking Confirm, you approve all these subscriptions. This
-              action is irreversible.
-            </DialogDescription>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      <CustomDialogContent
+        notifPushs={notifPushs}
+        isDialogOpen={isDialogOpen}
+        setIsDialogOpen={setIsDialogOpen}
+        handleApproveClick={handleApproveClick}
+        handleRejectClick={handleRejectClick}
+      />
       <div className="h-screen bg-cover text-white-1 w-full">
         <div className="mx-auto flex flex-1 flex-col sm:flex-row sm:items-start sm:space-x-[46px] items-center justify-center w-full">
           <div className="flex flex-col space-y-3 md:space-y-11 w-full md:w-[46.67%] xl:w-[39.67%] 2xl:w-[36.67%]">
@@ -243,65 +128,27 @@ const Home = () => {
                       />
                     ))}
                   </div>
-                  {/* Mobile component */}
                   <div className="space-y-8">
                     <div className="md:hidden w-full space-y-5">
                       <span className="font-redRoseBold text-[16px] flex justify-between">
                         <Link to="/payments">See all payments </Link>
                       </span>
-                      <h1 className="font-redRoseBold text-[16px] flex justify-between">
-                        Upcoming Subscriptions
-                      </h1>
-                      <div className="flex space-x-4">
-                        {upcomingSubscriptions
-                          .slice(0, 2)
-                          .map((subscription, index) => (
-                            <CardOverview
-                              key={index + "." + subscription.service_name}
-                              positionCard="absolute right-10"
-                              flexCard="flex-col justify-center items-start space-y-3"
-                              due={getDaysDifference(
-                                new Date(),
-                                subscription.end_on!
-                              )}
-                              imgSrc={
-                                subscription.logo
-                                  ? `http://localhost:8000/storage/${subscription.logo}`
-                                  : dollar
-                              }
-                              sizelogo={!subscription.logo ? 12 : undefined}
-                              subscriName={subscription.service_name!}
-                              price={subscription.amount!}
-                              dMy={subscription.cycle}
-                              typePlan={subscription.type}
-                              id={subscription.id}
-                            />
-                          ))}
-                      </div>
+                      {upcomingSubscriptions.length > 0 && (
+                        <>
+                          <h1 className="font-redRoseBold text-[16px] flex justify-between">
+                            Upcoming Subscriptions
+                          </h1>
+                          <SubscriptionList
+                            subscriptions={upcomingSubscriptions}
+                          />
+                        </>
+                      )}
                     </div>
                     <div className="md:hidden block w-full space-y-5 pb-20">
                       <h1 className="font-redRoseBold text-[16px]">
                         My Subscriptions
                       </h1>
-                      <div className="flex flex-col space-y-4">
-                        {subscriptions.map((subscription, index) => (
-                          <CardOverview
-                            key={index + "-" + subscription.service_name}
-                            due={getDaysDifference(new Date(), subscription.end_on!)}
-                            imgSrc={
-                              subscription.logo
-                                ? `http://localhost:8000/storage/${subscription.logo}`
-                                : dollar
-                            }
-                            sizelogo={!subscription.logo ? 12 : undefined}
-                            subscriName={subscription.service_name!}
-                            price={subscription.amount!}
-                            dMy={subscription.cycle}
-                            typePlan={subscription.type}
-                            id={subscription.id}
-                          />
-                        ))}
-                      </div>
+                      <SubscriptionList subscriptions={subscriptions} />
                     </div>
                   </div>
                 </div>
@@ -326,23 +173,11 @@ const Home = () => {
             <NavHome handleNavClick={handleNavClick} />
             {isDataReturn ? (
               <div className="flex flex-col space-y-3">
-                {filteredSubscriptions.map((subscription, index) => (
-                  <CardOverview
-                    key={index + "-" + subscription.service_name}
-                    due={getDaysDifference(new Date(), subscription.end_on!)}
-                    imgSrc={
-                      subscription.logo
-                        ? `http://localhost:8000/storage/${subscription.logo}`
-                        : dollar
-                    }
-                    sizelogo={!subscription.logo ? 12 : undefined}
-                    subscriName={subscription.service_name!}
-                    price={subscription.amount!}
-                    dMy={subscription.cycle}
-                    typePlan={subscription.type}
-                    id={subscription.id}
-                  />
-                ))}
+                {isActive ? (
+                  <SubscriptionList subscriptions={filteredSubscriptions} />
+                ) : (
+                  <SubscriptionList subscriptions={upcomingSubscriptions} />
+                )}
               </div>
             ) : (
               <div className="flex flex-col items-center justify-center pt-28 space-y-11">
