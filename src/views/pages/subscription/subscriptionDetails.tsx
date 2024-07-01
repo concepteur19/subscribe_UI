@@ -17,7 +17,9 @@ const SubscriptionDetails = () => {
 
   // Ensure the context is not undefined
   if (!context) {
-    throw new Error('ModifySubscription must be used within a SubscriptionProvider');
+    throw new Error(
+      "ModifySubscription must be used within a SubscriptionProvider"
+    );
   }
 
   const { setIsSubscriptionsModified } = context;
@@ -25,11 +27,13 @@ const SubscriptionDetails = () => {
   const [subscription, setSubscription] = useState<Subscription | undefined>();
   const [detailSubscription, setDetail] = useState<DetailSubscription>({
     type: "",
+    logo: "",
+    service_name: "",
     cycle: "",
     remind: "",
     payment: "",
     end_on: "",
-    start_on: ""
+    start_on: "",
   });
 
   const [responseMessage, setResponseMessage] = useState<string>();
@@ -45,7 +49,7 @@ const SubscriptionDetails = () => {
         );
         if (response.status && response.data) {
           setSubscription(response.data);
-          setEndOn(response.data.end_on)
+          setEndOn(response.data.end_on);
           // console.log("detail subscription", response.data);
         }
       } catch (error) {
@@ -62,10 +66,15 @@ const SubscriptionDetails = () => {
         ? format(new Date(subscription.end_on), "dd MMM yyyy")
         : "Date not available";
 
-        const startOnDate = subscription.start_on
+      const startOnDate = subscription.start_on
         ? format(new Date(subscription.start_on), "dd MMM yyyy")
         : "Date not available";
-      setDetail({
+
+      const subDetail = {
+        defaultSub_id: subscription.defaultSub_id,
+        id: subscription.id,
+        service_name: subscription.service_name ,
+        logo: subscription.logo,
         type: subscription.type!,
         cycle: subscription.cycle,
         payment: subscription.payment_method,
@@ -73,27 +82,34 @@ const SubscriptionDetails = () => {
           subscription.reminder > 1 ? "s" : ""
         } before`,
         end_on: endOnDate,
-        start_on: startOnDate
-      });
+        start_on: startOnDate,
+      };
+
+      // console.log("**************", subscription);
+      
+
+      localStorage.setItem('subscriptionDetail', JSON.stringify(subDetail))
+
+      setDetail(subDetail);
     }
   }, [subscription]);
 
   useEffect(() => {
     const today = new Date();
     const daydiff = endOn && getDaysDifference(today, endOn);
-    setDue(daydiff?.toString())
+    setDue(daydiff?.toString());
 
-    console.log("due date", daydiff)
-  }, [endOn] )
+    console.log("due date", daydiff);
+  }, [endOn]);
 
   const deleteSubscription = async () => {
     try {
       const response = await SubscriptionController.deleteOneSubscription(+id!);
       setResponseMessage(response?.message!);
-      
+
       setTimeout(() => {
         setIsSubscriptionsModified(true);
-        navigate('/home');
+        navigate("/home");
         setResponseMessage(undefined);
       }, 2000);
       // console.log(response);
@@ -110,10 +126,13 @@ const SubscriptionDetails = () => {
   return (
     <>
       {responseMessage !== undefined ? (
-        <div className=" text-[#10B981] text-center py-2">{responseMessage}</div>
+        <div className=" text-[#10B981] text-center py-2">
+          {responseMessage}
+        </div>
       ) : null}
       <AddSubscriptionComponent
         buttonText="Delete Subscription"
+        editButton="Edit Subscription"
         btnBgColor=" bg-red "
         subscriptionLabel={subscription?.service_name!}
         amount={subscription?.amount!.toString()}
