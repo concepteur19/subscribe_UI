@@ -218,6 +218,8 @@ const AddSubscriptionComponent: FC<Props> = ({
     );
 
     const subscriptionToUpdate = {
+      amount: defaultSub_id ? undefined : amount$,
+      service_name: defaultSub_id ? undefined : subscriptionName,
       plan_type: plantypeFound ? plantypeFound.id?.toString()! : planType,
       cycle: optionCycle!.toLocaleLowerCase(),
       payment_method: optionPayment!,
