@@ -4,6 +4,7 @@ import CardLatestPayment from "../components/basis/home_basis/card-latest-paymen
 import CardAmountSpent from "../components/basis/home_basis/card-amount-spent";
 import NavHome from "../components/basis/home_basis/nav-home";
 import CardOverview from "../components/basis/home_basis/card-overview";
+import { motion } from "framer-motion";
 
 import emptyM from "../../assets/images/png/emptymobile.png";
 import empty from "../../assets/images/png/empty.png";
@@ -109,17 +110,13 @@ const Home = () => {
       );
       await fetchUserData();
       setIsSubscriptionsModified(true); // Rafraîchir les données après mise à jour
-      alert("Paiement approuvé");
     } catch (error) {
       console.error("Error approving payment:", error);
     }
   };
 
   const handleRejectClick = async (notificationId: number) => {
-    const confirmReject = window.confirm(
-      "Êtes-vous sûr de vouloir rejeter ce paiement ?"
-    );
-    if (confirmReject) {
+
       try {
         await NotificationController.updateNotification(
           "rejected",
@@ -127,11 +124,9 @@ const Home = () => {
         );
         await fetchUserData(); // Rafraîchir les données après mise à jour
         setIsSubscriptionsModified(true);
-        alert("Paiement rejeté");
       } catch (error) {
         console.error("Error rejecting payment:", error);
       }
-    }
   };
 
   const fetchUserData = async () => {
@@ -191,18 +186,30 @@ const Home = () => {
                     <div className="flex justify-between items-center">
                       <NotifPush notif={notif} />
                       <div className="font-redRose space-x-2 space-y-2 sm:space-y-0 flex flex-col sm:flex-row items-center">
+                      <motion.div
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.3 }}
+                      >
                         <Button
                           btnText="text-[16px] text-[#9898AA] items-start space-x-[6px]"
                           buttonText="Rejected"
                           btnIcon={<RxCross2 size={14} />}
                           handleClick={() => handleRejectClick(notif.id)}
                         />
+                      </motion.div>
+                      <motion.div
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.3 }}
+                      >
                         <Button
                           btnText="text-[16px] text-[#625AFA] items-start space-x-[6px]"
                           buttonText="Done"
                           btnIcon={<PiCheck size={14} />}
                           handleClick={() => handleApproveClick(notif.id)}
                         />
+                      </motion.div>
                       </div>
                     </div>
                   </div>
