@@ -13,8 +13,13 @@ import { useNavigate } from "react-router-dom";
 import UserContext from "@/src/contexts/userDataContext";
 import Input from "../Input";
 import { SubscriptionContext } from "@/src/contexts/SubscriptionContext";
+import Subscription from "@/src/models/Subscription.model";
 
 export interface DetailSubscription {
+  defaultSub_id?: number;
+  id?: number;
+  logo?: string;
+  service_name?: string;
   type: string;
   cycle: string;
   remind: string;
@@ -30,11 +35,13 @@ interface Props {
   subscriptionLabel: string | React.ReactNode;
   btnBgColor?: string;
   buttonText?: string;
+  editButton?: string;
   detailSubscription?: DetailSubscription | undefined;
   logo?: string;
   sizeLogo?: number;
   planTypes?: PlanType[];
   deleteSubscription?: () => void;
+  updateSubscription?: (subscription: any) => void;
 
   defaultSub_id?: number;
 }
@@ -47,11 +54,13 @@ const AddSubscriptionComponent: FC<Props> = ({
   subscriptionLabel,
   btnBgColor,
   buttonText,
+  editButton,
   logo,
   sizeLogo,
   planTypes,
 
   deleteSubscription,
+  updateSubscription,
   detailSubscription,
   defaultSub_id,
 }) => {
@@ -60,7 +69,9 @@ const AddSubscriptionComponent: FC<Props> = ({
 
   // Ensure the context is not undefined
   if (!context) {
-    throw new Error('ModifySubscription must be used within a SubscriptionProvider');
+    throw new Error(
+      "ModifySubscription must be used within a SubscriptionProvider"
+    );
   }
 
   const { setIsSubscriptionsModified } = context;
@@ -137,6 +148,7 @@ const AddSubscriptionComponent: FC<Props> = ({
 
   const navigate = useNavigate();
 
+  // fonction qui permet de gérer l'ajout d'une souscription
   const submitSubscription = async (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
@@ -184,23 +196,51 @@ const AddSubscriptionComponent: FC<Props> = ({
 
     // console.log("add subscription response", response);
     if (response.status) {
-      setIsSubscriptionsModified(true)
+      setIsSubscriptionsModified(true);
       navigate("/home");
     }
   };
 
-  
+  const handleSubscriptionUpdate = () => {
+    const indexOfRemind = options.remind.indexOf(optionRemind!);
+    const reminder =
+      indexOfRemind === 0
+        ? 0
+        : indexOfRemind === 1
+        ? 1
+        : indexOfRemind === 2
+        ? 3
+        : indexOfRemind === 3
+        ? 5
+        : 7;
+    const plantypeFound = planTypes?.find(
+      (plantype$) => plantype$.type === planType
+    );
+
+    const subscriptionToUpdate = {
+      amount: defaultSub_id ? undefined : amount$,
+      service_name: defaultSub_id ? undefined : subscriptionName,
+      plan_type: plantypeFound ? plantypeFound.id?.toString()! : planType,
+      cycle: optionCycle!.toLocaleLowerCase(),
+      payment_method: optionPayment!,
+      reminder: reminder,
+      start_on: selected!,
+    };
+
+    if(updateSubscription) updateSubscription(subscriptionToUpdate) 
+  };
 
   let dateSelected = <p>Select date</p>;
   if (selected) {
     dateSelected = <p> {format(selected, "dd MMM yyyy")}</p>;
   }
 
-  const isCustom = !defaultSub_id
+  // const isCustom = !defaultSub_id
   // Determine if the form is being used to add a new custom subscription
-  const isAddingCustomSubscription = !defaultSub_id && !amount && !cycle && !planDetail && !dueDate;
+  const isAddingCustomSubscription =
+    !defaultSub_id && !amount && !cycle && !planDetail && !dueDate;
 
-  console.log("is custom ", isCustom);
+  // console.log("is custom ", isCustom);
 
   return (
     <div className=" md:flex md:flex-col lg:flex-row items-start md:space-y-48 lg:space-y-0 md:px-[50px] lg:px-[100px] xl:px-[220px] 2xl:px-[20%] font-redRoseBold ">
@@ -214,7 +254,7 @@ const AddSubscriptionComponent: FC<Props> = ({
                     <LogoCard imgSrc={logo ? logo : dollar} s={sizeLogo} />
                   ) : null}
                   <h1 className="  text-2xl text-white-1 ">
-                    { subscriptionLabel }
+                    {subscriptionLabel}
                   </h1>
                 </div>
               ) : (
@@ -236,9 +276,17 @@ const AddSubscriptionComponent: FC<Props> = ({
                     </div>
                     <span>
                       {" "}
-                      { Number(dueDate) > 0 && " Payment due in "}
-                      <span className={Number(dueDate) > 0 ? " text-[#1ED760] " : " text-red " } >
-                        {Number(dueDate) > 0 ? `${dueDate} days` : "Due date passed"}
+                      {Number(dueDate) > 0 && " Payment due in "}
+                      <span
+                        className={
+                          Number(dueDate) > 0
+                            ? " text-[#1ED760] "
+                            : " text-red "
+                        }
+                      >
+                        {Number(dueDate) > 0
+                          ? `${dueDate} days`
+                          : "Due date passed"}
                         {/* {dueDate}  */}
                       </span>{" "}
                     </span>
@@ -255,9 +303,9 @@ const AddSubscriptionComponent: FC<Props> = ({
                   n'a pas de selection.
                 </p>
               )}
-              
+
               {/* fin validation */}
-              { isAddingCustomSubscription && (
+              {isAddingCustomSubscription && (
                 <div className="flex flex-col space-y-4 font-redRoseLight text-sm">
                   <Input
                     inputType="text"
@@ -352,9 +400,8 @@ const AddSubscriptionComponent: FC<Props> = ({
               />
             </div>
           </div>
-
-          {buttonText && (
-            <div className=" flex justify-start md:py-4">
+          <div className=" flex justify-start md:py-4 space-x-4">
+            {buttonText && (
               <Button
                 btnBg={btnBgColor}
                 btnBorder=" rounded-[6px]"
@@ -362,10 +409,30 @@ const AddSubscriptionComponent: FC<Props> = ({
                 btnP="py-[14px] md:px-10 "
                 btnText="font-redRoseBold text-[16px] text-[#fff] "
                 buttonText={buttonText}
-                handleClick={ buttonText === "Delete Subscription" ? deleteSubscription : submitSubscription}
+                handleClick={
+                  buttonText === "Delete Subscription"
+                    ? deleteSubscription
+                    : buttonText === "Save update"
+                    ? handleSubscriptionUpdate
+                    : submitSubscription
+                }
               />
-            </div>
-          )}
+            )}
+
+            {editButton && (
+              <Button
+                btnBg=" bg-primary-0 "
+                btnBorder=" rounded-[6px]"
+                btnClass=" center w-full md:w-fit"
+                btnP="py-[14px] md:px-10 "
+                btnText="font-redRoseBold text-[16px] text-[#fff] "
+                buttonText={editButton}
+                handleClick={() =>
+                  navigate(`/home/editSubscription/${detailSubscription?.id}`)
+                }
+              />
+            )}
+          </div>
         </div>
       ) : null}
     </div>

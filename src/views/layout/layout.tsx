@@ -41,7 +41,7 @@ const Layout = () => {
       const user$: User = JSON.parse(localStorage.getItem("user")!);
       setUser(user$);
 
-      console.log("user", user$);
+      // console.log("user", user$);
 
     };
 

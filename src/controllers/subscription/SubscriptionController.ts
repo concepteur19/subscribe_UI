@@ -64,9 +64,9 @@ const SubscriptionController = {
     },
 
     // modifier une souscription
-    updateSubscription: async (subscription_id: number, reminder: number): Promise<ResponseModel<undefined>> => {
+    updateSubscription: async (subscription_id: number, subscriptionUpdate: any): Promise<ResponseModel<undefined>> => {
         try {
-            const response = await axiosAuth.put<ResponseModel<undefined>>(`/subscriptions/edit/${subscription_id}`, reminder);
+            const response = await axiosAuth.put<ResponseModel<undefined>>(`/subscriptions/edit/${subscription_id}`, subscriptionUpdate);
             return response.data;
         } catch (error) {
             throw error;

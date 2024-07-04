@@ -17,6 +17,7 @@ import AddCustomSubscription from "./views/pages/subscription/AddCustomSubscript
 import ErrorPage from "./views/pages/ErrorPage";
 import { TermsOfServices } from "./views/pages/termsOfServices";
 import { PrivacyPolicy } from "./views/pages/privacyPolicy";
+import SubscriptionUpdate from "./views/pages/subscription/subscriptionUpdate";
 // import PrivateRoute from "./views/components/auth/PrivateRoute";
 
 function App() {
@@ -58,6 +59,10 @@ function App() {
             <Route
               path="/home/subscription/:id"
               Component={SubscriptionDetails}
+            />
+            <Route
+              path="/home/editSubscription/:id"
+              Component={SubscriptionUpdate}
             />
           </Route>
           <Route path="/error" Component={ErrorPage} />
