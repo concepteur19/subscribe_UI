@@ -17,8 +17,6 @@ interface DialogContentProps {
   notifPushs: any[];
   isDialogOpen: boolean;
   setIsDialogOpen: (open: boolean) => void;
-  // handleApproveClick: (notificationId: number) => void;
-  // handleRejectClick: (notificationId: number) => void;
 }
 
 const CustomDialogContent: React.FC<DialogContentProps> = ({
@@ -62,27 +60,26 @@ const CustomDialogContent: React.FC<DialogContentProps> = ({
       .filter((notif) => notif.isApprouve)
       .map((notif) => notif.id);
 
-      const idReject = notifMap
+    const idReject = notifMap
       .filter((notif) => notif.isReject)
       .map((notif) => notif.id);
 
     try {
       await NotificationController.updateNotifications(idApprouve, idReject)
-      .then((response) => {
-        setMessage(response.message);
-        setShowSuccessMessage(true);
-      })
-      .catch(error => {
-        console.log('error updatting notifications');
-      });
+        .then((response) => {
+          setMessage(response.message);
+          setShowSuccessMessage(true);
+        })
+        .catch((error) => {
+          console.log("error updatting notifications");
+        });
 
       setTimeout(() => {
-      setIsDialogOpen(false);
-      setShowSuccessMessage(false);
-      setMessage(undefined);
-      window.location.reload();
-      }, 2000)
-
+        setIsDialogOpen(false);
+        setShowSuccessMessage(false);
+        setMessage(undefined);
+        window.location.reload();
+      }, 3000);
     } catch (error) {
       console.error("Error approving payment:", error);
     }
@@ -95,12 +92,15 @@ const CustomDialogContent: React.FC<DialogContentProps> = ({
           isDialogOpen ? "block" : "hidden"
         }`}
       ></div>
-      
-        { showSuccessMessage && <div className=" transition-all duration-300 animate-bounce rounded-lg shadow-lg p-4 text-center py-6">
-          <p className=" text-primary-0 font-poppinsbold text-xl">{message}</p>
-        </div>}
-      
+
       <DialogContent className="text-[#ffffff] bg-[#0B0C26] border border-[#303163] rounded-3xl ">
+        {showSuccessMessage && (
+          <div className=" transition-all duration-300 rounded-lg p-4 text-center py-6">
+            <p className=" text-primary-0 font-poppinsbold text-xl">
+              {message}
+            </p>
+          </div>
+        )}
         <form action="" onSubmit={handleSubmit}>
           <DialogHeader>
             <DialogTitle className="text-2xl font-russOne font-normal text-white-2 text-center flex flex-col items-center space-y-4 ">
