@@ -10,7 +10,6 @@ import ScreenSizeContext from "@/src/contexts/screenSizeContext";
 import useFetchUserData from "@/src/hooks/useFetchUserData";
 import SubscriptionList from "../components/basis/home_basis/subscription-list";
 import CustomDialogContent from "../components/basis/home_basis/dialog-content";
-import NotificationController from "@/src/controllers/notification/NotificationController";
 import CardLatestPayment from "../components/basis/home_basis/card-latest-payment";
 
 const Home: React.FC = () => {
@@ -26,8 +25,6 @@ const Home: React.FC = () => {
     filteredSubscriptions,
     setFilteredSubscriptions,
     upcomingSubscriptions,
-    fetchUserData,
-    setIsSubscriptionsModified,
   } = useFetchUserData();
 
   const [isActive, setActive] = useState<boolean>(true);
@@ -35,12 +32,11 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     if (!isActive) {
-      console.log(upcomingSubscriptions);
+      // console.log(upcomingSubscriptions);
 
       const upcomingSubscriptions$ = filteredSubscriptions;
       setFilteredSubscriptions(upcomingSubscriptions$);
     }
-    // else setFilteredSubscriptions(filteredSubscriptions);
   }, [isActive]);
 
   useEffect(() => {
@@ -48,11 +44,11 @@ const Home: React.FC = () => {
       location.pathname === "/home" ||
       location.pathname === "/home/overview"
     ) {
-      console.log(true);
+      // console.log(true);
 
       setActive(true);
     } else if (location.pathname === "/home/upcoming") {
-      console.log(false);
+      // console.log(false);
       setActive(false);
     }
   }, [location.pathname]);
@@ -61,47 +57,12 @@ const Home: React.FC = () => {
     setActive(path === "/home/overview");
   };
 
-  const handleApproveClick = async (notificationId: number) => {
-    try {
-      await NotificationController.updateNotification(
-        "approuved",
-        notificationId
-      );
-      await fetchUserData();
-      setIsSubscriptionsModified(true);
-      alert("Paiement approuvé");
-    } catch (error) {
-      console.error("Error approving payment:", error);
-    }
-  };
-
-  const handleRejectClick = async (notificationId: number) => {
-    const confirmReject = window.confirm(
-      "Êtes-vous sûr de vouloir rejeter ce paiement ?"
-    );
-    if (confirmReject) {
-      try {
-        await NotificationController.updateNotification(
-          "rejected",
-          notificationId
-        );
-        await fetchUserData();
-        setIsSubscriptionsModified(true);
-        alert("Paiement rejeté");
-      } catch (error) {
-        console.error("Error rejecting payment:", error);
-      }
-    }
-  };
-
   return (
     <>
       <CustomDialogContent
         notifPushs={notifPushs}
         isDialogOpen={isDialogOpen}
         setIsDialogOpen={setIsDialogOpen}
-        handleApproveClick={handleApproveClick}
-        handleRejectClick={handleRejectClick}
       />
       <div className="h-screen bg-cover text-white-1 w-full">
         <div className="mx-auto flex flex-1 flex-col sm:flex-row sm:items-start sm:space-x-[46px] items-center justify-center w-full">

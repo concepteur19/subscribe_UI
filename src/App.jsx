@@ -11,7 +11,7 @@ import AddSubscriptionParam from "./views/pages/subscription/subscriptionParam";
 
 import SubscriptionDetails from "./views/pages/subscription/subscriptionDetails";
 import { SignIn } from "./views/pages/Login/signIn";
-import { SignUp } from "./views/pages/signUp/signUp";
+// import { SignUp } from "./views/pages/signUp/signUp";
 // import CustomSubscriptionDetail from "./views/pages/subscription/customSubscriptionDetail";
 import AddCustomSubscription from "./views/pages/subscription/AddCustomSubscription";
 import ErrorPage from "./views/pages/ErrorPage";
@@ -25,7 +25,7 @@ function App() {
     <BrowserRouter>
       <div className="app-container relative text-white-2 text-sm font-redRose">
         <Routes>
-          <Route path="/signUp" Component={SignUp} />
+          {/* <Route path="/signUp" Component={SignUp} /> */}
           <Route path="/Login" Component={SignIn} />
           <Route path="/" Component={LandingPage} />
           <Route path="/terms" Component={TermsOfServices} />

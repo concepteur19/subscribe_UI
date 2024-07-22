@@ -53,7 +53,7 @@ const SubscriptionDetails = () => {
           // console.log("detail subscription", response.data);
         }
       } catch (error) {
-        console.log("erreur requette détail souscription par défaut");
+        // console.log("erreur requette détail souscription par défaut");
       }
     };
 
@@ -99,7 +99,7 @@ const SubscriptionDetails = () => {
     const daydiff = endOn && getDaysDifference(today, endOn);
     setDue(daydiff?.toString());
 
-    console.log("due date", daydiff);
+    // console.log("due date", daydiff);
   }, [endOn]);
 
   const deleteSubscription = async () => {
@@ -114,7 +114,7 @@ const SubscriptionDetails = () => {
       }, 2000);
       // console.log(response);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 

@@ -62,17 +62,20 @@ export function SignUp() {
         //     password: data.password
         // });
 
-        // console.log("-----------------------user", response, "--------------------");
+        // console.log("-----------------------user", response);
+        // alert(response.status)
+
+
 
         if (response.code === 200) {
             // console.log("-----------------------user", response.data, "--------------------");
           // Redirect to login page
-          navigate("/Login");
+          navigate("/home");
 
         } else if (response.code === 422) {
           validationErrors.email = "Email is taken";
         } else {
-          console.log("Invalid informations");
+          // console.log("Invalid informations");
         }
       } catch (error) {
         console.error(error);

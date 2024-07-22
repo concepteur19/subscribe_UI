@@ -5,3 +5,8 @@
 .active-home{
   color: #625AFA;
 }
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}

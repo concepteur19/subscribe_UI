@@ -157,8 +157,8 @@ const Home = () => {
         notifPushs={notifPushs}
         isDialogOpen={isDialogOpen}
         setIsDialogOpen={setIsDialogOpen}
-        handleApproveClick={handleApproveClick}
-        handleRejectClick={handleRejectClick}
+        // handleApproveClick={handleApproveClick}
+        // handleRejectClick={handleRejectClick}
       />
 
       <div className="h-screen bg-cover text-white-1 w-full">

@@ -28,7 +28,7 @@ const AddSubscriptionParam = () => {
           
         }
       } catch (error) {
-        console.log("erreur requette détail souscription par défaut");
+        // console.log("erreur requette détail souscription par défaut");
       }
     };
 

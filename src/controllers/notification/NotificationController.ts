@@ -12,16 +12,25 @@ const NotificationController = {
         }
     },
 
-    // modifier une souscription
+    // modifier une notification
     updateNotification: async (status: string, notification_id: number): Promise<ResponseModel<Notification>> => {
         try {
-            const response = await axiosAuth.put<ResponseModel<Notification>>(`/subscriptions/notificationUpdate/${notification_id}`, {status});
+            const response = await axiosAuth.put<ResponseModel<Notification>>(`/subscriptions/notificationUpdate/${notification_id}`, { status });
             return response.data;
         } catch (error) {
             throw error;
         }
     },
-     
+
+    updateNotifications: async (approuve: number[], reject: number[]): Promise<ResponseModel<Notification>> => {
+        try {
+            const response = await axiosAuth.post<ResponseModel<Notification>>(`/subscriptions/notifications/Update`, { idsApprouve: approuve, idsReject: reject });
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    },
+
 }
 
 export default NotificationController;

@@ -42,7 +42,7 @@ export const SubscriptionProvider: React.FC<SubscriptionProviderProps> = ({
     if (isSubscriptionsModified) {
       SubscriptionController.getUserSubscriptions(userId)
         .then((response) => {
-          console.log("contexte", response);
+          // console.log("contexte", response);
           
           setSubscriptionResponse(response.data!);
           // Reset the flag after fetching data
