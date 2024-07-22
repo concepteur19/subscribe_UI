@@ -32,7 +32,7 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     if (!isActive) {
-      console.log(upcomingSubscriptions);
+      // console.log(upcomingSubscriptions);
 
       const upcomingSubscriptions$ = filteredSubscriptions;
       setFilteredSubscriptions(upcomingSubscriptions$);
@@ -44,11 +44,11 @@ const Home: React.FC = () => {
       location.pathname === "/home" ||
       location.pathname === "/home/overview"
     ) {
-      console.log(true);
+      // console.log(true);
 
       setActive(true);
     } else if (location.pathname === "/home/upcoming") {
-      console.log(false);
+      // console.log(false);
       setActive(false);
     }
   }, [location.pathname]);

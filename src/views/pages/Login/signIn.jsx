@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import subsLogin from '@/src/assets/subsLogin.svg'
+import subsLogin from "@/src/assets/subsLogin.svg";
 import { useNavigate, Link } from "react-router-dom";
 // import userSignIn from "../../../controllers/auth/loginController";
 import { useGoogleLogin } from "@react-oauth/google";
@@ -35,7 +35,9 @@ export function SignIn() {
           // console.log("response google", res.data);
           setUserToRe(res.data);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          // console.log(err)
+        });
     }
   }, [user]);
 
@@ -43,7 +45,7 @@ export function SignIn() {
     const response = await RegisterController.googleRegistration({
       username: user$.name,
       email: user$.email,
-      photo: user$.picture
+      photo: user$.picture,
     });
     // console.log("réponse", response);
 
@@ -54,7 +56,7 @@ export function SignIn() {
       localStorage.setItem("token", user.token);
       navigate("/home");
     } else {
-      console.log("Invalid credentials");
+      // console.log("Invalid credentials");
       // setErrors({ ...errors, general: "Invalid credentials" });
     }
   };
@@ -71,16 +73,16 @@ export function SignIn() {
             <div className="flex items-center justify-center">
               <img src={subsLogin} alt="Logo" />
             </div>
-            <form
-              className="flex flex-col items-center gap-4 w-full"
-              
-            >
-              <div className='flex flex-col items-center gap-2'>
-                <h1 className='text-[28px] font-redRoseBold text-[#4649E5] '>SubScribe Connect</h1>
-                <p className='text-[16px] text-[#2F384F]'>Sign In to track your subscription</p>
+            <form className="flex flex-col items-center gap-4 w-full">
+              <div className="flex flex-col items-center gap-2">
+                <h1 className="text-[28px] font-redRoseBold text-[#4649E5] ">
+                  SubScribe Connect
+                </h1>
+                <p className="text-[16px] text-[#2F384F]">
+                  Sign In to track your subscription
+                </p>
               </div>
-              
-              
+
               {/* Bouton de connexion avec Google */}
               <div className=" w-full flex justify-center items-center hover:text-white-2 text-primary-0">
                 <Button
@@ -95,10 +97,17 @@ export function SignIn() {
                 />
               </div>
 
-            
               <p className="text-[14px] text-[#2F384F] text-center">
                 By clicking continue, you acknowledge that you have read and
-                agree to <Link to='/terms' className="underline">Terms of Service</Link> & <Link to="/privacy" className="underline">Privacy Policy</Link>.
+                agree to{" "}
+                <Link to="/terms" className="underline">
+                  Terms of Service
+                </Link>{" "}
+                &{" "}
+                <Link to="/privacy" className="underline">
+                  Privacy Policy
+                </Link>
+                .
               </p>
             </form>
           </div>

@@ -56,7 +56,7 @@ const SubscriptionUpdate = () => {
             // console.log("detail default subscription", response.data);
           }
         } catch (error) {
-          console.log("erreur requette détail souscription par défaut", error);
+          // console.log("erreur requette détail souscription par défaut", error);
         }
       };
 
@@ -66,7 +66,7 @@ const SubscriptionUpdate = () => {
 
   const updateSubscription = async (subscriptionToUpdate: any) => {
     try {
-      console.log("***************************", subscriptionToUpdate);
+      // console.log("***************************", subscriptionToUpdate);
       const response = await SubscriptionController.updateSubscription(
         detailSubscription?.id!,
         subscriptionToUpdate
@@ -81,7 +81,7 @@ const SubscriptionUpdate = () => {
         // console.log("detail default subscription", response.message);
       }
     } catch (error) {
-      console.log("erreur requette détail souscription par défaut");
+      // console.log("erreur requette détail souscription par défaut", error);
     }
   };
 

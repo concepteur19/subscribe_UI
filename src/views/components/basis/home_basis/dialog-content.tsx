@@ -71,7 +71,7 @@ const CustomDialogContent: React.FC<DialogContentProps> = ({
           setShowSuccessMessage(true);
         })
         .catch((error) => {
-          console.log("error updatting notifications");
+          // console.log("error updatting notifications");
         });
 
       setTimeout(() => {

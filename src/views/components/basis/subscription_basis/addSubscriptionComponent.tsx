@@ -182,23 +182,29 @@ const AddSubscriptionComponent: FC<Props> = ({
 
     // console.log("date dfdf--------------", selected);
 
-    const response = await SubscriptionController.addSubscription({
-      user_id: id!,
-      defaultSub_id: defaultSub_id ? defaultSub_id : undefined,
-      amount: defaultSub_id ? undefined : amount$,
-      service_name: defaultSub_id ? undefined : subscriptionName,
-      plan_type: plantypeFound ? plantypeFound.id?.toString()! : planType,
-      cycle: optionCycle!.toLocaleLowerCase(),
-      payment_method: optionPayment!,
-      reminder: reminder,
-      start_on: selected!,
-    });
-
-    // console.log("add subscription response", response);
-    if (response.status) {
-      setIsSubscriptionsModified(true);
-      navigate("/home");
+    try {
+      const response = await SubscriptionController.addSubscription({
+        user_id: id!,
+        defaultSub_id: defaultSub_id ? defaultSub_id : undefined,
+        amount: defaultSub_id ? undefined : amount$,
+        service_name: defaultSub_id ? undefined : subscriptionName,
+        plan_type: plantypeFound ? plantypeFound.id?.toString()! : planType,
+        cycle: optionCycle!.toLocaleLowerCase(),
+        payment_method: optionPayment!,
+        reminder: reminder,
+        start_on: selected!,
+      });
+  
+      // console.log("add subscription response", response.data);
+      if (response.status) {
+        setIsSubscriptionsModified(true);
+        navigate("/home");
+      }
+    } catch (error: any) {
+      // console.log(error.response.data.message);
     }
+
+    
   };
 
   const handleSubscriptionUpdate = () => {
