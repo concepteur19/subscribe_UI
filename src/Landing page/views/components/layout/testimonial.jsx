@@ -17,7 +17,7 @@ export function Testimonial (){
                                 <p className='text-[18.6px] leading-[150%] text-[#ACABAA] max-w-[307px] pl-5 max-sm:text-base'>This site has really simplified my life by bringing all my subscriptions together in one place. It's so much easier to manage now!</p>
                             </div>
                             <div className="flex flex-col gap-1">
-                                <div class="div-quote-author">
+                                <div className="div-quote-author">
                                     <img src={authorQuoteGreen} alt="" />
                                 </div>
                                 <p className='text-[16.53px] leading-[150%] text-[#ACABAA] max-w-[313.84px] pl-5'>Co-Founder @SubScribe</p>
@@ -28,7 +28,7 @@ export function Testimonial (){
                                 <p className='text-[18.6px] leading-[150%] text-[#ACABAA] max-w-[307px] pl-5 max-sm:text-base'>I love subscription renewal notifications. It's saved me many a time from forgetting to renew my favourite services.</p>
                             </div>
                             <div className="flex flex-col gap-1">
-                                <div class="div-quote-author">
+                                <div className="div-quote-author">
                                     <img src={authorQuoteBlue} alt="" />
                                 </div>
                                 <p className='text-[16.53px] leading-[150%] text-[#ACABAA] max-w-[313.84px] pl-5'>Co-Founder @SubScribe</p>
@@ -39,7 +39,7 @@ export function Testimonial (){
                                 <p className='text-[18.6px] leading-[150%] text-[#ACABAA] max-w-[307px] pl-5 max-sm:text-base'>The interface is so intuitive and user-friendly. I can add, modify and delete subscriptions in just a few clicks</p>
                             </div>
                             <div className="flex flex-col gap-1">
-                                <div class="div-quote-author">
+                                <div className="div-quote-author">
                                     <img src={authorQuoteYellow} alt="" />
                                 </div>
                                 <p className='text-[16.53px] leading-[150%] text-[#ACABAA] max-w-[313.84px] pl-5'>Co-Founder @SubScribe</p>

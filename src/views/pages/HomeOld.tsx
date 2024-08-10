@@ -209,7 +209,7 @@ const Home = () => {
                               )}
                               imgSrc={
                                 subscription.logo
-                                  ? `http://localhost:8000/storage/${subscription.logo}`
+                                  ? `${process.env.REACT_APP_API_URL}/storage/${subscription.logo}`
                                   : dollar
                               }
                               sizelogo={!subscription.logo ? 12 : undefined}
@@ -259,7 +259,7 @@ const Home = () => {
                     due={getDaysDifference(new Date(), subscription.end_on!)}
                     imgSrc={
                       subscription.logo
-                        ? `http://localhost:8000/storage/${subscription.logo}`
+                        ? `${process.env.REACT_APP_API_URL}/storage/${subscription.logo}`
                         : dollar
                     }
                     sizelogo={!subscription.logo ? 12 : undefined}

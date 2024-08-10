@@ -2,8 +2,10 @@ import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const axiosAuth = axios.create({
-    baseURL: 'http://localhost:8000/api'
+    baseURL: process.env.REACT_APP_API_URL
 });
+
+// console.log("url", process.env.REACT_APP_API_URL);
 
 axiosAuth.interceptors.request.use((config: InternalAxiosRequestConfig) => {
     const token = localStorage.getItem('token');

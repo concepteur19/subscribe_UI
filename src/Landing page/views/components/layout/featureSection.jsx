@@ -51,8 +51,8 @@ export function FeatureSection() {
                 </span>
                 <div className="right-arrow-icon flex items-center justify-center w-6 h-6">
                   <svg className="svg" width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M13.7882 6.48001L20.0114 11.7751C20.4572 12.1544 20.4833 12.8339 20.0679 13.2464L13.7882 19.48" stroke="white" stroke-width="3" stroke-miterlimit="10" />
-                    <path d="M19.9507 12.48H4.84003" stroke="white" stroke-width="3" stroke-miterlimit="10" />
+                    <path d="M13.7882 6.48001L20.0114 11.7751C20.4572 12.1544 20.4833 12.8339 20.0679 13.2464L13.7882 19.48" stroke="white" strokeWidth="3" strokeMiterlimit="10" />
+                    <path d="M19.9507 12.48H4.84003" stroke="white" strokeWidth="3" strokeMiterlimit="10" />
                   </svg>
                 </div>
               </div>
