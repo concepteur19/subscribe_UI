@@ -39,7 +39,7 @@ function Setting() {
     try {
       const token = localStorage.getItem("token");
       await axios.post(
-        "http://localhost:8000/api/logout",
+        `${process.env.REACT_APP_API_URL}/api/logout`,
         {},
         {
           headers: {
@@ -110,7 +110,7 @@ function Setting() {
             <div className="  ">
               {photo !== undefined ? (
                 <img
-                  src={"http://localhost:8000/storage/" + photo}
+                src={`${process.env.REACT_APP_API_URL}/storage/${photo}`}
                   alt=""
                   className="w-[120px] h-[120px] md:w-[58px] md:h-[58px] rounded-full"
                 />

@@ -40,7 +40,7 @@ const AddSubscriptionParam = () => {
     <AddSubscriptionComponent
       defaultSub_id={+id!}
       subscriptionLabel={defaultSubscription.name}
-      logo={"http://localhost:8000/storage/"+defaultSubscription.logo}
+      logo={`${process.env.REACT_APP_API_URL}/storage/${defaultSubscription.logo}`}
       sizeLogo={34}
       buttonText="Add Subscription"
       btnBgColor=" bg-primary-0"

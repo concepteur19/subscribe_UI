@@ -63,7 +63,7 @@ const Narbar: FC = () => {
             <div className="flex items-center space-x-3" onClick={navbarClick}>
               {photo ? (
                 <img
-                  src={"http://localhost:8000/storage/" + photo}
+                  src={`${process.env.REACT_APP_API_URL}/storage/${photo}`}
                   alt=""
                   className="w-[32px] h-[32px] rounded-full"
                 />
@@ -98,7 +98,7 @@ const Narbar: FC = () => {
               <div onClick={navbarClick}>
                 {photo ? (
                   <img
-                    src={"http://localhost:8000/storage/" + photo}
+                    src={`${process.env.REACT_APP_API_URL}/storage/${photo}`}
                     alt=""
                     className="w-[32px] h-[32px] rounded-full"
                   />

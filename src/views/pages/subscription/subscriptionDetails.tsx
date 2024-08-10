@@ -143,7 +143,7 @@ const SubscriptionDetails = () => {
         sizeLogo={!subscription?.logo ? 12 : undefined}
         logo={
           subscription?.logo
-            ? "http://localhost:8000/storage/" + subscription.logo
+            ? `${process.env.REACT_APP_API_URL}/storage/${subscription.logo}`
             : dollar
         }
         deleteSubscription={deleteSubscription}

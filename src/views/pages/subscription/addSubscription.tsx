@@ -75,7 +75,7 @@ const AddSubscription = () => {
         defaultSubs.map((defaultSub, index) => {
           return (
             <Link key={"link-"+index} to={`/home/addSubscription/${defaultSub.id}`}>
-              <CardSubscription key={index + '-' + defaultSub.id} imgSrc={"http://localhost:8000/storage/" + defaultSub.logo} subscriName={defaultSub.name} />
+              <CardSubscription key={index + '-' + defaultSub.id} imgSrc={`${process.env.REACT_APP_API_URL}/storage/${defaultSub.logo}`} subscriName={defaultSub.name} />
             </Link>
           );
         })}
