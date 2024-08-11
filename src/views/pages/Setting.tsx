@@ -112,7 +112,9 @@ function Setting() {
             <div className="  ">
               {photo !== undefined ? (
                 <img
-                src={`${process.env.REACT_APP_API_URL}/storage/${photo}`}
+                // src={`${process.env.REACT_APP_S3_URL}/${photo}`}
+                src={`${ process.env.REACT_APP_S3_URL }/${photo}`}
+
                   alt=""
                   className="w-[120px] h-[120px] md:w-[58px] md:h-[58px] rounded-full"
                 />

@@ -96,7 +96,7 @@ const SubscriptionUpdate = () => {
         subscriptionLabel={detailSubscription?.service_name}
         logo={
           detailSubscription?.logo
-            ? `${process.env.REACT_APP_API_URL}/storage/${detailSubscription.logo}`
+            ? `${process.env.REACT_APP_S3_URL}/${detailSubscription.logo}`
             : dollar
         }
         sizeLogo={!detailSubscription?.logo ? 12 : undefined}
