@@ -2,7 +2,7 @@ import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const axiosAuth = axios.create({
-    baseURL: process.env.REACT_APP_API_URL
+    baseURL: `${process.env.REACT_APP_API_URL}/api`
 });
 
 // console.log("url", process.env.REACT_APP_API_URL);
