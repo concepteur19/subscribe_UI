@@ -26,7 +26,8 @@
     "src/App.jsx",
     "src/views/components/layout/Narbar.tsx",
     "src/views/pages/signIn/basis/connexion.tsx",
-    "src", "src/custom.d.ts"
+    "src",
+    "src/custom.d.ts"
   ],
   "exclude": ["node_modules"]
 }

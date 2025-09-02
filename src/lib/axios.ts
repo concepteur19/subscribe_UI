@@ -2,7 +2,7 @@ import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const axiosAuth = axios.create({
-    baseURL: process.env.REACT_APP_API_URL
+    baseURL: process.env.REACT_APP_API_URL + "/api"
 });
 
 // console.log("url", process.env.REACT_APP_API_URL);
@@ -10,7 +10,7 @@ const axiosAuth = axios.create({
 axiosAuth.interceptors.request.use((config: InternalAxiosRequestConfig) => {
     const token = localStorage.getItem('token');
 
-    const isAuthRequest = config.url?.includes('/Login' || '/signUp');
+    const isAuthRequest = config.url?.includes('/Login') || config.url?.includes('/signUp');
     if(token && !isAuthRequest) {
         config.headers.Authorization = `Bearer ${token}`;
     }

@@ -80,7 +80,7 @@ const AddSubscriptionComponent: FC<Props> = ({
   const [subscriptionName, setName] = useState<string>("");
   const [amount$, setAmount] = useState<number>();
   const [selected, setSelected] = useState<Date | undefined>(new Date());
-  const [isDatePickerOpen, setPickerOpen] = useState<Boolean>(false);
+  const [isDatePickerOpen, setPickerOpen] = useState<boolean>(false);
   const [isInputShow, setIsInputShow] = useState<boolean>(false);
   const [isSubmitable, setIsSubmitable] = useState<boolean>(true);
 
