@@ -111,13 +111,7 @@ function Setting() {
           <div className=" flex flex-col md:flex-row items-center justify-center md:justify-start space-y-4 md:space-y-0 sm:space-x-3 ">
             <div className="  ">
               {photo !== undefined ? (
-                <img
-                // src={`${process.env.REACT_APP_S3_URL}/${photo}`}
-                src={`${ process.env.REACT_APP_S3_URL }/${photo}`}
-
-                  alt=""
-                  className="w-[120px] h-[120px] md:w-[58px] md:h-[58px] rounded-full"
-                />
+                <imgsrc={`${process.env.REACT_APP_API_URL}/storage/${photo}`} alt="" className="w-[120px] h-[120px] md:w-[58px] md:h-[58px] rounded-full object-cover" />
               ) : (
                 <img
                   src={screenSize.width > 768 ? profileM : profilePhoto}
@@ -167,8 +161,8 @@ function Setting() {
               </InputDiv>
             </Link>
             <Link to="https://www.buymeacoffee.com/ChristianLudovic">
-              <InputDiv >
-                  <div className="text-[16px]">Support creators</div>
+              <InputDiv>
+                <div className="text-[16px]">Support creators</div>
               </InputDiv>
             </Link>
           </div>
@@ -201,7 +195,6 @@ function Setting() {
         setNewPhoto={setNewPhoto}
         errorMessage={errorMessage}
       />
-       
     </>
   );
 }

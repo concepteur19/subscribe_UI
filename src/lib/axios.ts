@@ -10,7 +10,7 @@ const axiosAuth = axios.create({
 axiosAuth.interceptors.request.use((config: InternalAxiosRequestConfig) => {
     const token = localStorage.getItem('token');
 
-    const isAuthRequest = config.url?.includes('/Login' || '/signUp');
+    const isAuthRequest = config.url?.includes('/Login') || config.url?.includes('/signUp');
     if(token && !isAuthRequest) {
         config.headers.Authorization = `Bearer ${token}`;
     }
