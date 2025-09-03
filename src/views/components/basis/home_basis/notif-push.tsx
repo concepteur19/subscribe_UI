@@ -20,7 +20,7 @@ const NotifPush = ({notif}: NotifPushProps) => {
   return (
     <div className="flex justify-center items-center space-x-1 sm:space-x-4">
       <img
-        src={`${process.env.REACT_APP_API_URL}/storage/${notif.logo}`}
+        src={`${process.env.REACT_APP_S3_URL}/${notif.logo}`}
         width={46}
         height={46}
         alt=""

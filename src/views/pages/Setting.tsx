@@ -14,6 +14,7 @@ import { Link, useNavigate } from "react-router-dom";
 import UserContext from "@/src/contexts/userDataContext";
 import UserController from "@/src/controllers/user/UserController";
 import ModalEdit from "../components/users/modalEdit";
+import axiosAuth from "@/src/lib/axios";
 
 function Setting() {
   // Get screen size from context
@@ -37,16 +38,17 @@ function Setting() {
   // Handle logout functionality
   const handleLogout = async () => {
     try {
-      const token = localStorage.getItem("token");
-      await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/logout`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      // const token = localStorage.getItem("token");
+      await axiosAuth.post("/logout")
+      // await axios.post(
+      //   `${process.env.REACT_APP_API_URL}/logout`,
+      //   {},
+      //   {
+      //     headers: {
+      //       Authorization: `Bearer ${token}`,
+      //     },
+      //   }
+      // );
 
       // Clear local storage and navigate to login page
       localStorage.clear();

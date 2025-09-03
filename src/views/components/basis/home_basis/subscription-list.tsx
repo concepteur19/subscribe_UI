@@ -15,7 +15,7 @@ const SubscriptionList: React.FC<SubscriptionListProps> = ({ subscriptions }) =>
         <CardOverview
           key={index + "-" + subscription.service_name}
           due={getDaysDifference(new Date(), subscription.end_on!)}
-          imgSrc={subscription.logo ? `${process.env.REACT_APP_API_URL}/storage/${subscription.logo}` : dollar}
+          imgSrc={subscription.logo ? `${process.env.REACT_APP_S3_URL}/${subscription.logo}` : dollar}
           sizelogo={!subscription.logo ? 12 : undefined}
           subscriName={subscription.service_name!}
           price={subscription.amount!}
@@ -37,7 +37,7 @@ export default SubscriptionList;
 //                             due={getDaysDifference(new Date(), subscription.end_on!)}
 //                             imgSrc={
 //                               subscription.logo
-//                                 ? `${process.env.REACT_APP_API_URL}/storage/${subscription.logo}`
+//                                 ? `${process.env.REACT_APP_S3_URL}/${subscription.logo}`
 //                                 : dollar
 //                             }
 //                             sizelogo={!subscription.logo ? 12 : undefined}

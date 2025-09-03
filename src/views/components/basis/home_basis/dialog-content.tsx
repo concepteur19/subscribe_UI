@@ -12,6 +12,9 @@ import Button from "../buttons/Button";
 import { Dialog, DialogDescription } from "../../ui/dialog";
 import subscribe from "@/src/assets/images/subscribeIcon.svg";
 import NotificationController from "@/src/controllers/notification/NotificationController";
+import { IconType } from "react-icons";
+
+const CrossIcon: IconType = RxCross2;
 
 interface DialogContentProps {
   notifPushs: any[];
@@ -120,7 +123,7 @@ const CustomDialogContent: React.FC<DialogContentProps> = ({
                       } ${notif.isApprouve ? "disabled" : ""}`}
                       onClick={() => handleClick(notif.id, "reject")}
                     >
-                      <RxCross2 size={14} /> <span> Rejected</span>
+                      <CrossIcon size={14} /> <span> Rejected</span>
                     </span>
 
                     <span
