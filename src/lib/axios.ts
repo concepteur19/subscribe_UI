@@ -5,8 +5,6 @@ const axiosAuth = axios.create({
     baseURL: process.env.REACT_APP_API_URL + "/api"
 });
 
-// console.log("url", process.env.REACT_APP_API_URL);
-
 axiosAuth.interceptors.request.use((config: InternalAxiosRequestConfig) => {
     const token = localStorage.getItem('token');
 

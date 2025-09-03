@@ -110,11 +110,10 @@ function Setting() {
             <div className="  ">
               {photo !== undefined ? (
                 <img
-  src={`${process.env.REACT_APP_API_URL}/storage/${photo}`}
-  alt=""
-  className="w-[120px] h-[120px] md:w-[58px] md:h-[58px] rounded-full object-cover"
-/>
-
+                  src={`${process.env.REACT_APP_API_URL}/storage/${photo}`}
+                  alt=""
+                  className="w-[120px] h-[120px] md:w-[58px] md:h-[58px] rounded-full object-cover"
+                />
               ) : (
                 <img
                   src={screenSize.width > 768 ? profileM : profilePhoto}
